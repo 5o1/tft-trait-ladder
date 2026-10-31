@@ -1,0 +1,787 @@
+{
+  "checked_at": "2026-10-29",
+  "method": "读取在线原图的 Base64 响应并验证 PNG 签名与尺寸；生产页面仍引用外部 URL",
+  "verified_images": 130,
+  "images": [
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100299.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 18536
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100300.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 18970
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100301.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 22760
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100302.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 20071
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100303.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 22340
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100304.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21160
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100305.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 20604
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100306.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 19609
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100307.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21100
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100308.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 22727
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100309.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 19591
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100310.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 20962
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100311.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21212
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100312.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 22789
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100313.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21340
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100314.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 23052
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100315.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21042
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100316.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 19800
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100317.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 20752
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100318.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21646
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100319.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21632
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100320.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21488
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100321.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 20753
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100322.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 22160
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100323.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 18971
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100324.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21387
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100325.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 22608
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100326.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21984
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100327.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 20471
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100328.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21519
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100329.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 23387
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100330.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 18778
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100331.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 22486
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100332.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 20270
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100333.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21086
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100334.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 23973
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100335.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 18587
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100336.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 22398
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100337.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 22281
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100338.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 20144
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100339.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21977
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100340.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 22658
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100341.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 20609
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100342.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 22505
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100343.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 23470
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100344.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21193
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100345.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21132
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100346.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 20045
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100347.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 24177
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100348.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 22868
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100349.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 23172
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100350.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21065
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100351.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 23956
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100352.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21116
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100353.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21793
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100354.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 22150
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100355.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 22175
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100356.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 18999
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100357.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21308
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100358.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 22756
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100359.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 20886
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100360.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21515
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100361.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 20096
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100362.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 19938
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100363.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21466
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100364.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 20908
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100365.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 20850
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100366.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21123
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100367.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21260
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100368.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21624
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100369.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 21469
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100370.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 20440
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100371.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 20119
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/champions/100372.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 19122
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/classes/10379.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 401
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/classes/10384.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 459
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/classes/10387.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 336
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/classes/10390.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 419
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/classes/10393.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 448
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/classes/10395.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 407
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/classes/10399.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 497
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/classes/10401.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 502
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/classes/10403.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 308
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/classes/10405.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 426
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/classes/10406.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 422
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/classes/10412.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 357
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92863.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 14036
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92864.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 17672
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92865.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 15815
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92866.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 17094
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92867.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 15836
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92868.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 15672
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92869.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 16917
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92870.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 18476
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92871.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 16865
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92873.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 17384
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92874.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 14954
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92875.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 16283
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92876.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 15845
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92877.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 16635
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92878.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 15540
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92879.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 16029
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92880.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 17864
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92881.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 14815
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92882.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 15933
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/equip/92883.png",
+      "width": 128,
+      "height": 128,
+      "bytes": 15372
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10380.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 508
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10381.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 436
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10382.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 445
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10383.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 409
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10385.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 367
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10386.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 479
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10388.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 435
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10389.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 399
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10391.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 488
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10392.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 444
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10394.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 418
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10396.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 468
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10397.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 367
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10398.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 433
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10400.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 443
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10402.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 529
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10404.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 435
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10407.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 514
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10408.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 406
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10409.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 395
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10410.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 432
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10411.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 445
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10413.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 459
+    },
+    {
+      "url": "https://game.gtimg.cn/images/lol/act/img/tft/origins/10414.png",
+      "width": 32,
+      "height": 32,
+      "bytes": 468
+    }
+  ]
+}

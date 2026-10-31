@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#07141b">
+  <meta name="description" content="A trait-ladder optimizer for TFT and Golden Spatula that ranks lineups by acquisition cost and plans Kha'Zix evolutions.">
+  <title>TFT Trait Ladder · Set 18</title>
+  <link rel="icon" href="./assets/crest.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <div class="app-shell">
+    <header class="masthead">
+      <a class="brand" href="./" aria-label="Home"><img src="./assets/crest.svg" alt=""><span><strong>TFT Trait Ladder</strong><small>Set 18 · Enchanted Wilds</small></span></a>
+      <div class="header-actions"><div class="calculation-status" role="status" id="calculationStatus">Loading…</div><span class="calculation-actions"><button type="button" class="text-button cancel-button" id="cancelButton" hidden>Cancel calculation</button></span><button class="text-button" id="rulesButton" aria-label="Rules">Rules ?</button></div>
+    </header>
+    <main class="workspace">
+      <aside class="sidebar">
+      <section class="conditions frame" aria-label="Game settings">
+        <div class="section-heading"><h2 class="panel-title"><span class="title-ornament"></span>Game settings<span class="title-line"></span></h2><button type="button" class="text-button panel-reset" id="resetButton">Reset</button></div>
+        <form id="conditionsForm">
+          <label class="field-caption" for="emblemButton">Emblems</label>
+          <button type="button" id="emblemButton" class="emblem-select beveled"><span id="emblemPreview"></span><span id="emblemName">Executioner Emblem</span><span class="select-caret">⌄</span></button>
+          <div class="shop-odds" id="shopOdds" aria-label="Shop odds by cost"></div>
+          <section class="lux-field"><div class="field-caption" id="luxLabel">Lux</div><div id="luxOptions" class="lux-options" role="radiogroup" aria-labelledby="luxLabel"></div></section>
+        </form>
+      </section>
+      <section id="gamePoolPanel" class="session-pool frame" aria-label="Session pool"><div class="subsection-title"><span>Session pool</span><span>Owned <output id="ownedCount">0</output></span></div><div id="gamePool"></div><button type="button" class="secondary-button full" id="ownedButton">＋ Add unit</button><button type="button" id="excludedButton" class="secondary-button full">Banned units · <span id="excludedCount">0</span></button><div id="excludedSlots" class="owned-slots"></div></section>
+      </aside>
+      <section class="results-column" aria-label="Lineups">
+        <div class="population-controls">
+        <div class="population-nav frame"><span class="small-heading">Tactician's Crowns</span><div id="crownButtons" class="population-tabs" role="radiogroup" aria-label="Number of Tactician's Crowns"></div></div>
+        <div class="population-nav frame"><span class="small-heading">Player level</span><div id="populationTabs" class="population-tabs"></div></div>
+        <div class="population-nav evolution-nav frame"><span class="small-heading">Kha'Zix evolutions</span><div id="evolutionButtons" class="population-tabs" role="radiogroup" aria-label="Kha'Zix evolutions"></div><div id="evolutionControls" class="evolution-controls" hidden><div id="evolutionMemory" class="evolution-memory" aria-label="Kha'Zix evolution plan"></div><button type="button" class="secondary-button" id="adoptEvolution" hidden>Confirm evolutions</button></div></div>
+        </div>
+        <section class="selected-plan frame" id="selectedPlan" aria-live="polite"><div class="empty-state"><span class="calculation-spinner" aria-hidden="true"></span><h2>Calculating</h2></div></section>
+      <aside class="traits-column">
+        <section class="trait-panel frame" id="activeTraitsPanel"><div class="section-heading"><h2 class="panel-title"><span class="title-ornament"></span>Traits<span class="title-line"></span></h2><span id="traitTotal" class="trait-total">—</span></div><div id="traitList" class="trait-list"><p class="list-empty">—</p></div><section id="uncountedTraits" class="uncounted" aria-label="Unique traits" hidden><h3>Unique traits</h3><div id="uncountedList" class="trait-list"></div></section></section>
+        <section class="algorithm-panel frame" aria-labelledby="algorithmTitle">
+          <h2 class="panel-title" id="algorithmTitle"><span class="title-ornament"></span>How lineups are calculated<span class="title-line"></span></h2>
+          <div class="algorithm-body">
+            <section class="algorithm-step">
+              <h3 data-copy="copy1">Calculating unit probabilities and acquisition costs</h3>
+              <p data-copy="copy2">Let <var>p</var> denote the probability that one shop slot contains the target unit. We estimate it as follows:</p>
+              <div class="algorithm-formula"><code><var>p</var> = <var>a</var> × <var>r</var> / <var>R</var></code></div>
+              <p data-copy="copy3">Here, <var>a</var> is the probability of rolling the target cost tier at the current level, <var>r</var> is the number of remaining copies of the target unit, and <var>R</var> is the total number of remaining copies in that tier. For Lux, the model assumes that all available forms are equally likely, so this probability is also divided by the number of forms.</p>
+              <p data-copy="copy4">We then calculate the expected number of shops required to find this unit on its own:</p>
+              <div class="algorithm-formula"><code><var>q</var> = 1 − (1 − <var>p</var>)<sup>5</sup></code><code><var>d</var> = 1 / <var>q</var></code></div>
+              <p data-copy="copy5">Here, <var>q</var> is the probability that a shop contains at least one copy of the target unit, and <var>d</var> is the expected number of shops needed to find it. A unit that cannot appear in the shop has an infinite acquisition cost. Owned units have an acquisition cost of <span class="numeric">0</span>.</p>
+            </section>
+            <section class="algorithm-step">
+              <h3 data-copy="copy6">Carrying acquired units across levels, crowns, and evolutions</h3>
+              <p data-copy="copy7">Calculations advance through player levels, crown counts, and evolution counts. For the state (<var>L</var>, <var>C</var>, <var>E</var>), the predecessor states are:</p>
+              <div class="algorithm-formula"><code>(<var>L</var> − 1, <var>C</var>, <var>E</var>)</code><code>(<var>L</var>, <var>C</var> − 1, <var>E</var>)</code><code>(<var>L</var>, <var>C</var>, <var>E</var> − 1)</code></div>
+              <p data-copy="copy8">Here, <var>L</var> is the player level, <var>C</var> is the number of crowns, and <var>E</var> is the number of Kha'Zix evolutions. Only predecessor states with valid coordinates are used.</p>
+              <p data-copy="copy9">The acquired pool contains every unit used by any candidate lineup in these predecessor states. These units have an acquisition cost of <span class="numeric">0</span> in the current state, where the lineup is optimized again.</p>
+              <p data-copy="copy10">When a unit is marked as no longer owned, its historical acquisition records are cleared and its acquisition cost is recalculated. The records for other units are retained.</p>
+            </section>
+            <section class="algorithm-step">
+              <h3 data-copy="copy11">Finding the lowest acquisition cost for each trait count</h3>
+              <p data-copy="copy12">For each attainable trait count, integer programming finds a lineup with the smallest sum of acquisition costs, subject to population limits and trait activation rules. Equal-cost solutions favor owned units.</p>
+              <p data-copy="copy13">If both criteria are equal, a fixed order of unit IDs and evolution classes determines the lineup.</p>
+              <p data-copy="copy14">Kha'Zix's evolution classes are optimized together with the lineup. Confirmed evolutions are retained.</p>
+            </section>
+            <section class="algorithm-step">
+              <h3 data-copy="copy15">Comparing states with a shared loss formula and threshold</h3>
+              <p data-copy="copy16">To compare all states on the same scale, the lineup's acquisition cost is converted to loss:</p>
+              <div class="algorithm-formula"><code><var>ℓ</var> = (1 + <var>D</var>) / 100</code></div>
+              <p data-copy="copy17">Here, <var>ℓ</var> is the loss and <var>D</var> is the sum of the units' acquisition costs. A cost of <var>D</var> = <span class="numeric">10</span> gives a loss of <span class="numeric">0.11</span> in every state.</p>
+              <p data-copy="copy18">The shared threshold is calculated from a fixed reference set. Logarithmic losses are split into two groups to minimize the sum of squared distances from each group's mean. Exponentiating the midpoint of the two means gives the threshold <output id="algorithmThreshold">—</output>. Losses above this threshold appear in red.</p>
+            </section>
+          </div>
+          <p class="algorithm-assumption" data-copy="copy19">The model assumes that the pool remains unchanged while searching and that the five shop slots are independent. Several target units can appear in the same shop; <var>D</var> is the sum of the waiting times for finding each unit separately.</p>
+        </section>
+      </aside>
+        <section class="comparison frame" id="comparisonPanel">
+          <div class="section-heading"><h2 class="panel-title"><span class="title-ornament"></span>Lineups<span class="title-line"></span></h2></div>
+          <div class="comparison-controls">
+            <div class="sort-switch" role="group" aria-label="Sort lineups at this level"><button type="button" id="sortValue" data-sort="value" aria-pressed="true">Loss ↑</button><button type="button" id="sortTraits" data-sort="traits" aria-pressed="false">Traits ↓</button></div>
+            <div class="value-threshold" id="boundaryBadge" title="Every state uses the same loss threshold">Loss threshold <output id="valueThreshold">—</output></div>
+          </div>
+          <div id="sortSummary" class="sr-only" role="status"></div>
+          <div class="comparison-head"><span>Traits</span><span>Lineup</span><span>Loss</span></div>
+          <div id="planList" class="plan-list"><div class="list-empty">—</div></div>
+        </section>
+      </section>
+    </main>
+    <footer><span id="dataVersion">S18</span><button class="text-button" id="exportButton" disabled>Export ↓</button><span>5o1 · <a href="mailto:assanekowww@gmail.com">assanekowww@gmail.com</a> · with Codex</span></footer>
+  </div>
+  <dialog id="pickerDialog" class="game-dialog frame"><div class="dialog-heading"><h2 id="pickerTitle">Emblems</h2><button class="close-button" data-close="pickerDialog" aria-label="Close">×</button></div><input class="search-input" id="pickerSearch" type="search" placeholder="Name / trait" autocomplete="off" hidden><div id="pickerContent" class="picker-content"></div></dialog>
+  <dialog id="detailDialog" class="game-dialog frame"><div class="dialog-heading"><h2 id="detailTitle">Unit</h2><button class="close-button" data-close="detailDialog" aria-label="Close">×</button></div><div id="detailContent" class="picker-content unit-picker"></div></dialog>
+  <dialog id="rulesDialog" class="game-dialog frame">
+    <div class="dialog-heading"><h2>Rules</h2><button class="close-button" data-close="rulesDialog" aria-label="Close">×</button></div>
+    <div class="rule-body">
+      <p data-copy="copy20">Each emblem adds 1 to its corresponding trait count across the entire lineup.</p>
+      <p data-copy="copy21">Set Kha'Zix's evolution count to calculate a lineup and evolution classes together. “Confirm evolutions” saves those classes for this game. Clicking a confirmed trait icon undoes that evolution and reduces the evolution count by 1. “Reset” clears the game's records.</p>
+      <p data-copy="copy22">Lux contributes 2 to the trait of her selected form. Elder Dragon occupies 2 population slots and contributes 2 to Riftbeast.</p>
+      <p data-copy="copy23">Each lineup receives a loss based on the probabilities of finding its units in the current shop. Lower loss means the additional units are easier to acquire. When a lineup's loss exceeds the shared threshold, the loss appears in red and the lineup row is dimmed.</p>
+      <p data-copy="copy24">In lineups, the session pool, and the ownership picker, colored portraits represent owned units and gray portraits represent units you do not own. In the ban list, colored portraits represent allowed units and gray portraits represent excluded units.</p>
+      <p data-copy="copy25">“✓ Proven optimal” means the solver has proved the lineup optimal under the current calculation conditions. “◷ Optimality unproven” means a feasible lineup is available and its optimality has yet to be proved.</p>
+    </div>
+  </dialog>
+  <div id="toast" role="status" class="toast" hidden></div>
+  <script src="./i18n.js" defer></script>
+  <script src="./engine.js" defer></script>
+  <script src="./app.js" defer></script>
+</body>
+</html>

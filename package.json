@@ -1,0 +1,12 @@
+{
+  "name": "tft-trait-ladder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A bilingual trait-ladder optimizer for TFT and Golden Spatula that ranks lineups by acquisition cost and plans Kha'Zix evolutions.",
+  "scripts": {
+    "build": "python3 scripts/export_web_data.py",
+    "calibrate": "python3 scripts/calibrate_loss.py",
+    "dev": "node scripts/dev.cjs",
+    "test:web": "node tests/web.test.cjs && node tests/web-dom.test.mjs"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "season": "2026.S18",
+  "checked_at": "2026-10-29",
+  "description": "标准商店参考配置；依据 Riot 系统更新记录整理，未读取金铲铲客户端实时配置。可通过 --shop-data 替换。",
+  "slots_per_shop": 5,
+  "odds_by_level": {
+    "1": [1, 0, 0, 0, 0],
+    "2": [1, 0, 0, 0, 0],
+    "3": [0.75, 0.25, 0, 0, 0],
+    "4": [0.55, 0.30, 0.15, 0, 0],
+    "5": [0.45, 0.33, 0.20, 0.02, 0],
+    "6": [0.30, 0.40, 0.25, 0.05, 0],
+    "7": [0.19, 0.30, 0.40, 0.10, 0.01],
+    "8": [0.15, 0.20, 0.32, 0.30, 0.03],
+    "9": [0.10, 0.17, 0.25, 0.33, 0.15],
+    "10": [0.05, 0.10, 0.20, 0.40, 0.25]
+  },
+  "copies_per_unit": {"1": 30, "2": 25, "3": 18, "4": 10, "5": 9},
+  "lux_assumption": "未持有拉克丝时，非基础形态等概率；已持有某形态时只刷新该形态。形态分布是模型假设。所有形态共享一个英雄卡池，不重复计入同费英雄种类数。",
+  "sources": [
+    "https://teamfighttactics.leagueoflegends.com/en-us/news/game-updates/teamfight-tactics-patch-10-9-notes/",
+    "https://teamfighttactics.leagueoflegends.com/en-us/news/game-updates/teamfight-tactics-patch-10-12-notes/",
+    "https://teamfighttactics.leagueoflegends.com/en-us/news/game-updates/teamfight-tactics-patch-10-24-notes/",
+    "https://teamfighttactics.leagueoflegends.com/en-us/news/game-updates/teamfight-tactics-patch-13-23-notes/",
+    "https://teamfighttactics.leagueoflegends.com/en-us/news/game-updates/teamfight-tactics-patch-14-15-notes/",
+    "https://teamfighttactics.leagueoflegends.com/en-us/news/game-updates/teamfight-tactics-patch-16-1/",
+    "https://teamfighttactics.leagueoflegends.com/en-us/news/game-updates/teamfight-tactics-patch-17-1/"
+  ]
+}

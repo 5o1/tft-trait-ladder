@@ -1,0 +1,845 @@
+{
+  "version": "2026.S18 / CDN 16.21 / 2026-10-20 17:33:03",
+  "emblem_mode": "global_plus_one",
+  "scoring": "activated_multi_tier_traits",
+  "populations": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "conditions": {
+    "max_cost": 5,
+    "evolutions": [],
+    "lux": "auto",
+    "rivals_together": false
+  },
+  "solves": 210,
+  "rows": [
+    {
+      "emblem": null,
+      "max_traits": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.006,
+        0.005,
+        0.072,
+        0.118,
+        0.08,
+        0.069,
+        0.049,
+        0.04,
+        0.056,
+        0.052
+      ]
+    },
+    {
+      "emblem": "主宰",
+      "max_traits": [
+        1,
+        2,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        12,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.005,
+        0.006,
+        0.008,
+        0.073,
+        0.029,
+        0.085,
+        0.076,
+        0.077,
+        0.08,
+        0.074
+      ]
+    },
+    {
+      "emblem": "地狱火",
+      "max_traits": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        11,
+        12,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.005,
+        0.004,
+        0.008,
+        0.074,
+        0.087,
+        0.078,
+        0.05,
+        0.016,
+        0.065,
+        0.05
+      ]
+    },
+    {
+      "emblem": "护卫",
+      "max_traits": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        12,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.004,
+        0.005,
+        0.069,
+        0.082,
+        0.073,
+        0.059,
+        0.073,
+        0.058,
+        0.044,
+        0.054
+      ]
+    },
+    {
+      "emblem": "斗士",
+      "max_traits": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.004,
+        0.004,
+        0.007,
+        0.064,
+        0.078,
+        0.145,
+        0.048,
+        0.036,
+        0.055,
+        0.033
+      ]
+    },
+    {
+      "emblem": "月蚀骑士",
+      "max_traits": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        12,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.004,
+        0.003,
+        0.006,
+        0.07,
+        0.079,
+        0.083,
+        0.08,
+        0.069,
+        0.042,
+        0.12
+      ]
+    },
+    {
+      "emblem": "永恒之森",
+      "max_traits": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.004,
+        0.005,
+        0.008,
+        0.254,
+        0.069,
+        0.067,
+        0.081,
+        0.074,
+        0.031,
+        0.083
+      ]
+    },
+    {
+      "emblem": "法师",
+      "max_traits": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        12,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.004,
+        0.005,
+        0.005,
+        0.065,
+        0.074,
+        0.054,
+        0.067,
+        0.076,
+        0.057,
+        0.076
+      ]
+    },
+    {
+      "emblem": "灵魂莲华",
+      "max_traits": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        9,
+        10,
+        12,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.004,
+        0.005,
+        0.063,
+        0.288,
+        0.072,
+        0.07,
+        0.073,
+        0.075,
+        0.018,
+        0.082
+      ]
+    },
+    {
+      "emblem": "狂战士",
+      "max_traits": [
+        1,
+        2,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.004,
+        0.012,
+        0.009,
+        0.071,
+        0.03,
+        0.025,
+        0.07,
+        0.054,
+        0.076,
+        0.06
+      ]
+    },
+    {
+      "emblem": "猎人",
+      "max_traits": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        12,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.004,
+        0.006,
+        0.007,
+        0.024,
+        0.073,
+        0.088,
+        0.063,
+        0.04,
+        0.046,
+        0.055
+      ]
+    },
+    {
+      "emblem": "神谕",
+      "max_traits": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        8,
+        9,
+        11,
+        12,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.004,
+        0.005,
+        0.032,
+        0.061,
+        0.071,
+        0.082,
+        0.065,
+        0.015,
+        0.045,
+        0.059
+      ]
+    },
+    {
+      "emblem": "约德尔人和朋友",
+      "max_traits": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.004,
+        0.007,
+        0.018,
+        0.014,
+        0.054,
+        0.063,
+        0.069,
+        0.057,
+        0.028,
+        0.15
+      ]
+    },
+    {
+      "emblem": "绝命花妖",
+      "max_traits": [
+        2,
+        3,
+        3,
+        5,
+        6,
+        8,
+        9,
+        10,
+        11,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.003,
+        0.029,
+        0.519,
+        0.062,
+        0.067,
+        0.118,
+        0.12,
+        0.058,
+        0.058,
+        0.138
+      ]
+    },
+    {
+      "emblem": "花仙子",
+      "max_traits": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        11,
+        12,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.004,
+        0.004,
+        0.008,
+        0.069,
+        0.065,
+        0.036,
+        0.059,
+        0.013,
+        0.081,
+        0.077
+      ]
+    },
+    {
+      "emblem": "裁决使",
+      "max_traits": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        11,
+        12,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.004,
+        0.005,
+        0.012,
+        0.068,
+        0.069,
+        0.103,
+        0.044,
+        0.013,
+        0.026,
+        0.064
+      ]
+    },
+    {
+      "emblem": "迅捷射手",
+      "max_traits": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        12,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.004,
+        0.004,
+        0.007,
+        0.074,
+        0.069,
+        0.072,
+        0.071,
+        0.056,
+        0.064,
+        0.157
+      ]
+    },
+    {
+      "emblem": "重装战士",
+      "max_traits": [
+        1,
+        2,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        12,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.005,
+        0.008,
+        0.038,
+        0.064,
+        0.032,
+        0.076,
+        0.046,
+        0.069,
+        0.022,
+        0.03
+      ]
+    },
+    {
+      "emblem": "野兽之灵",
+      "max_traits": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        8,
+        9,
+        11,
+        12,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.004,
+        0.006,
+        0.06,
+        0.076,
+        0.071,
+        0.08,
+        0.079,
+        0.011,
+        0.075,
+        0.063
+      ]
+    },
+    {
+      "emblem": "魔女",
+      "max_traits": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.004,
+        0.004,
+        0.012,
+        0.159,
+        0.079,
+        0.044,
+        0.027,
+        0.043,
+        0.052,
+        0.051
+      ]
+    },
+    {
+      "emblem": "黑荆棘",
+      "max_traits": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        12,
+        13
+      ],
+      "status": [
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal",
+        "optimal"
+      ],
+      "seconds": [
+        0.004,
+        0.004,
+        0.012,
+        0.072,
+        0.079,
+        0.069,
+        0.061,
+        0.069,
+        0.042,
+        0.058
+      ]
+    }
+  ]
+}
