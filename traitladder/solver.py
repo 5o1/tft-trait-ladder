@@ -31,6 +31,7 @@ def prepare_units(data, max_cost=5, evolutions=(), lux="auto", excluded_units=()
         raise ValueError("卡兹克的进化与禁用条件冲突")
     forms = {n for u in data.units if u.group == "拉克丝" for n in u.traits
              if n != "自然之力！大元素使"}
+    has_lux_forms = any(u.group == "拉克丝" and len(u.traits) > 1 for u in data.units)
     if lux not in {"auto", "none"} | forms:
         raise ValueError("拉克丝形态无效，可选 auto、none 或 " + "、".join(sorted(forms)))
     units = []
@@ -40,6 +41,8 @@ def prepare_units(data, max_cost=5, evolutions=(), lux="auto", excluded_units=()
         if u.cost > max_cost:
             continue
         if u.group == "拉克丝":
+            if has_lux_forms and len(u.traits) == 1:
+                continue
             if lux == "none" or (lux != "auto" and lux not in u.traits):
                 continue
         if u.name == "卡兹克":
@@ -162,6 +165,8 @@ def solve(data: Dataset, population: int, emblem: str | list[str] | tuple[str, .
     result = milp(objective, integrality=np.ones(size), bounds=Bounds(0, upper_bounds),
                   constraints=LinearConstraint(matrix, lows, highs), options=options)
     held = set(owned_units)
+    if "拉克丝" in held:
+        held.update(u.name for u in units if u.group == "拉克丝")
     preference_status = "optimal"
     canonical_status = "optimal"
     if value_mode and result.status == 0:

@@ -60,7 +60,7 @@
       let p = totals[u.cost] ? data.shop.odds_by_level[o.level][u.cost - 1] * remain[u.group] / totals[u.cost] : 0;
       if (u.group === '拉克丝') p *= ownedLux ? Number(u.id === ownedLux.id) : (forms.some(f => f.id === u.id) ? 1 / forms.length : 0);
       const q = p === 1 ? 1 : -Math.expm1(data.shop.slots_per_shop * Math.log1p(-p));
-      const owned = o.owned.includes(u.name);
+      const owned = o.owned.includes(u.name) || (u.group === '拉克丝' && o.owned.includes('拉克丝'));
       const inherited = o.inherited.includes(u.name);
       const lockedForm = u.group === '拉克丝' && ownedLux && u.id !== ownedLux.id;
       values[u.id] = { slotProbability: p, shopProbability: q, difficulty: lockedForm ? Infinity : (owned || inherited ? 0 : (q ? 1 / q : Infinity)), owned, inherited };
@@ -68,7 +68,8 @@
     return values;
   }
   function prepare(data, o) {
-    return data.units.filter(u => !o.excludedUnits.includes(u.name) && !o.excludedUnits.includes(u.group) && (u.group !== '拉克丝' || (o.lux !== 'none' && (o.lux === 'auto' || u.traits[o.lux]))))
+    const hasLuxForms = data.units.some(u => u.group === '拉克丝' && Object.keys(u.traits).length > 1);
+    return data.units.filter(u => !o.excludedUnits.includes(u.name) && !o.excludedUnits.includes(u.group) && (u.group !== '拉克丝' || ((!hasLuxForms || Object.keys(u.traits).length > 1) && o.lux !== 'none' && (o.lux === 'auto' || u.traits[o.lux]))))
       .map(u => u.name === '卡兹克' ? { ...u, traits: { ...u.traits, ...Object.fromEntries(o.evolutions.map(t => [t, 1])) } } : u);
   }
   function evaluate(data, board, emblem) {
@@ -160,7 +161,7 @@
         secondaryUnits.forEach((u, i) => {
           const variable = secondaryModel.variables['x' + i];
           if (optimum > 0) variable.primaryCost = values[u.id].difficulty / optimum;
-          variable.heldCount = Number(o.owned.includes(u.name));
+          variable.heldCount = Number(values[u.id].owned);
           variable.objective = offset === 0 ? -priority * variable.heldCount : 0;
         });
         fixed.forEach((value, key) => { const name = 'fixed_' + key; secondaryModel.constraints[name] = { equal: value }; secondaryModel.variables[key][name] = 1; });
@@ -174,7 +175,7 @@
         if (!preferred.feasible || !integral) { canonicalStatus = 'limit'; break; }
         answer = preferred; units = secondaryUnits;
         if (!complete) { canonicalStatus = 'limit'; break; }
-        heldCount ??= secondaryUnits.filter((u, i) => solution['x' + i] > .5 && o.owned.includes(u.name)).length;
+        heldCount ??= secondaryUnits.filter((u, i) => solution['x' + i] > .5 && values[u.id].owned).length;
         block.forEach(key => fixed.set(key, Math.round(solution[key] || 0)));
         const slotsFixed = secondaryUnits.reduce((sum, u, i) => sum + (fixed.get('x' + i) === 1 ? u.slots : 0), 0);
         const evolutionsFixed = automatic.filter((_, i) => fixed.get('evo' + i) === 1).length;
@@ -202,7 +203,7 @@
     const difficulty = board.reduce((s, u) => s + values[u.id].difficulty, 0);
     if (!theoretical && !Number.isFinite(difficulty)) throw Error('结果包含当前无法获取的弈子。');
     const result = { population: o.population, level: o.level, status: proof && ownedPreferenceStatus === 'optimal' && canonicalStatus === 'optimal' ? 'optimal' : 'limit', lossStatus: proof ? 'optimal' : 'limit', target, elapsed, board, ...actual, count: actual.active.length, selectedEvolutions,
-      ownedPreferenceStatus, canonicalStatus, ownedUsed: board.filter(u => o.owned.includes(u.name)).length,
+      ownedPreferenceStatus, canonicalStatus, ownedUsed: board.filter(u => values[u.id].owned).length,
       difficulty: Number.isFinite(difficulty) ? difficulty : null, value: Number.isFinite(difficulty) ? 100 / (1 + difficulty) : null,
       loss: Number.isFinite(difficulty) ? (1 + difficulty) / 100 : null };
     if (target !== null && Math.abs(difficulty - primaryEvaluation) > 1e-4 * Math.max(1, difficulty)) throw Error('价值目标未通过独立校验。');

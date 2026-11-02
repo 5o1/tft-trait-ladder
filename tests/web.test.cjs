@@ -39,6 +39,24 @@ const lowLevelEvolution = E.solveOne(data, E.normalizeOptions(data, { population
 assert.equal(lowLevelEvolution.status, 'optimal');
 const owned = E.solveOne(data, E.normalizeOptions(data, { population: 3, owned: ['洛', '霞', '约里克'] }), { target: 2 });
 close(owned.value, 100, '已拥有全部示例时的价值');
+for (const lux of ['地狱火', '花仙子', 'auto', 'none']) {
+  const options = E.normalizeOptions(data, { population: 1, emblems: [], owned: ['拉克丝'], lux });
+  const values = E.unitValues(data, options);
+  const forms = E.prepare(data, options).filter(u => u.group === '拉克丝');
+  assert.equal(forms.length, lux === 'none' ? 0 : lux === 'auto' ? 9 : 1);
+  for (const form of forms) {
+    assert.notEqual(form.name, '拉克丝');
+    assert.equal(values[form.id].difficulty, 0);
+    assert.equal(values[form.id].owned, true);
+    if (lux !== 'auto') assert.ok(form.traits[lux]);
+  }
+  if (lux !== 'none') {
+    const plan = E.solveOne(data, options, { target: 1 });
+    assert.equal(plan.difficulty, 0);
+    assert.equal(plan.ownedUsed, 1);
+    assert.ok(plan.board.every(u => u.group === '拉克丝'));
+  }
+}
 for (const names of [['卡兹克', '雷恩加尔'], ['卡兹克'], ['雷恩加尔']]) {
   const result = E.solveOne(data, E.normalizeOptions(data, { population: 1, level: 8, emblems: [], evolutionCount: 0, owned: names }), { target: 1 });
   assert.equal(result.difficulty, 0);
@@ -168,7 +186,7 @@ async function verifyMatrix() {
   assert.ok([...after.inheritedUnits].every(n => restored.inheritedUnits.includes(n)));
   const removed = await E.rank(fixture, { ...raw, memory: JSON.parse(JSON.stringify(after.memory)) });
   assert.ok([...after.inheritedUnits].filter(n => n !== added).every(n => removed.inheritedUnits.includes(n)));
-  for (const name of ['拉克丝 (地狱火)', '卡兹克']) {
+  for (const name of ['拉克丝', '拉克丝 (地狱火)', '卡兹克']) {
     const request = { population: 3, level: 3, crowns: 0, evolutionCount: 0, emblems: ['主宰'], owned: [name] };
     const cache = new Map();
     const before = await E.rank(data, request, () => {}, cache);

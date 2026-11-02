@@ -75,7 +75,7 @@ def unit_values(data, level, *, owned=(), inherited=(), taken=None, shop_data=No
                           (1 / len(forms) if len(u.traits) > 1 else 0.0))
             probability *= form_share
         hit = shop_hit_probability(probability, shop["slots"])
-        is_owned = u.name in owned
+        is_owned = u.name in owned or (u.group == "拉克丝" and "拉克丝" in owned)
         locked_form = u.group == "拉克丝" and owned_lux and u.name != owned_lux
         difficulty = float("inf") if locked_form else (0.0 if is_owned or u.name in inherited else (1 / hit if hit > 0 else float("inf")))
         values[u.id] = {"name": u.name, "cost": u.cost, "owned": is_owned,

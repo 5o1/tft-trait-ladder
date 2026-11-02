@@ -23,6 +23,16 @@
   const costStyle = u => '--cost:var(--cost-' + u.cost + ')';
   const countEmblems = names => new Map(state.data.emblems.map(e => [e.name, Math.min(9, names.filter(n => n === e.name).length)]));
   const effectiveOwned = () => new Set([...state.owned, ...(state.evolutionCount ? ['卡兹克'] : [])]);
+  const ownershipName = name => state.data.units.find(u => u.name === name)?.group === '拉克丝' ? '拉克丝' : name;
+  const isOwned = (name, owned = effectiveOwned()) => owned.has(ownershipName(name));
+  function ownershipUnits(units) {
+    return [...new Map(units.map(u => {
+      if (u.group !== '拉克丝') return [u.name, u];
+      const base = state.data.units.find(unit => unit.name === '拉克丝');
+      const form = state.data.units.find(unit => unit.group === '拉克丝' && unit.traits[state.lux]);
+      return ['拉克丝', form ? { ...base, traits: form.traits } : base];
+    })).values()];
+  }
   function imageAsset(row, alt, classes, ownership = '') {
     alt = t(alt);
     return row?.image
@@ -31,7 +41,7 @@
   }
   function asset(row, alt = row?.name || '', owned = effectiveOwned()) {
     const unit = Boolean(row?.cost);
-    const ownership = unit ? ' data-unit-name="' + esc(row.name) + '" data-owned="' + owned.has(row.name) + '"' : '';
+    const ownership = unit ? ' data-unit-name="' + esc(row.name) + '" data-owned="' + isOwned(row.name, owned) + '"' : '';
     const form = row?.group === '拉克丝' ? Object.keys(row.traits).find(name => name !== '自然之力！大元素使') : null;
     if (form) {
       const portrait = state.data.units.find(u => u.name === '拉克丝');
@@ -46,11 +56,11 @@
   function syncOwnership() {
     const owned = effectiveOwned();
     document.querySelectorAll('.unit-art').forEach(el => {
-      const value = String(owned.has(el.dataset.unitName));
+      const value = String(isOwned(el.dataset.unitName, owned));
       if (el.dataset.owned !== value) el.dataset.owned = value;
     });
     document.querySelectorAll('[data-roster-owned]').forEach(card => {
-      const held = owned.has(card.dataset.rosterOwned);
+      const held = isOwned(card.dataset.rosterOwned, owned);
       if (card.getAttribute('aria-pressed') !== String(held)) card.setAttribute('aria-pressed', String(held));
     });
   }
@@ -90,7 +100,7 @@
   function renderPool() {
     const owned = effectiveOwned();
     const ids = new Set([...state.gamePool, ...state.data.units.filter(u => owned.has(u.name)).map(u => u.id)]);
-    const units = [...ids].map(hero).filter(Boolean).sort((a, b) => a.cost - b.cost || t(a.name).localeCompare(t(b.name), TraitI18n.locale));
+    const units = ownershipUnits([...ids].map(hero).filter(Boolean)).sort((a, b) => a.cost - b.cost || t(a.name).localeCompare(t(b.name), TraitI18n.locale));
     $('ownedCount').textContent = owned.size;
     setHTML($('gamePool'), [1, 2, 3, 4, 5].map(cost => {
       const cards = units.filter(u => u.cost === cost);
@@ -127,7 +137,7 @@
     setHTML($('evolutionButtons'), [0, 1, 2, 3, 4].map(n => '<label class="population-tab number-option' + (n === state.evolutionCount ? ' selected' : '') + '"><input type="radio" name="evolutionCount" value="' + n + '" ' + (n === state.evolutionCount ? 'checked' : '') + ' ' + (n < state.fixedEvolutions.size ? 'disabled' : '') + '><span>' + n + '</span></label>').join(''));
     renderEvolutionPlan();
     $('excludedCount').textContent = state.excludedUnits.size;
-    setHTML($('excludedSlots'), [...state.excludedUnits].map(name => state.data.units.find(u => u.name === name)).filter(Boolean).map(u =>
+    setHTML($('excludedSlots'), ownershipUnits([...state.excludedUnits].map(name => state.data.units.find(u => u.name === name)).filter(Boolean)).map(u =>
       '<button type="button" class="owned-chip excluded-chip" style="' + costStyle(u) + '" data-remove-excluded="' + esc(u.name) + '" title="' + esc(u.name) + '">' + asset(u) + '</button>').join(''));
     $('shopOdds').title = t(state.population + ' 级商店');
     setHTML($('shopOdds'), state.data.shop.odds_by_level[state.population].map((p, i) =>
@@ -195,7 +205,7 @@
     const label = esc(t(flexible ? slot.label : u.name)).replace('Fiddlesticks', 'Fiddle<wbr>sticks');
     const nativeTraits = orderedTraits(Object.keys(u.traits));
     const names = flexible ? [] : nativeTraits.filter(name => trait(name)?.counted).slice(0, 3);
-    return '<button type="button"' + (flexible ? ' aria-haspopup="dialog" aria-controls="detailDialog"' + (state.dirty || state.busy ? ' disabled' : '') : ' data-roster-owned="' + esc(u.name) + '" aria-pressed="' + effectiveOwned().has(u.name) + '"') + ' class="champion-card ' + (flexible ? 'flex-card' : '') + '" style="' + costStyle(u) + '" data-slot="' + index + '" data-hero="' + u.id + '" title="' + esc(u.name + ' · ' + nativeTraits.join(' / ')) + '">' +
+    return '<button type="button"' + (flexible ? ' aria-haspopup="dialog" aria-controls="detailDialog"' + (state.dirty || state.busy ? ' disabled' : '') : ' data-roster-owned="' + esc(u.name) + '" aria-pressed="' + isOwned(u.name) + '"') + ' class="champion-card ' + (flexible ? 'flex-card' : '') + '" style="' + costStyle(u) + '" data-slot="' + index + '" data-hero="' + u.id + '" title="' + esc(u.name + ' · ' + nativeTraits.join(' / ')) + '">' +
       '<span class="champion-portrait">' + asset(u) + '<span class="champion-price">' + u.cost + '</span>' +
       (flexible && slot.trait ? '<span class="flex-veil" aria-hidden="true"></span><span class="flex-trait">' + asset(trait(slot.trait), slot.trait) + '</span>' : '') +
       '<span class="champion-traits">' + names.map(name => asset(trait(name), name)).join('') + '</span></span><span class="champion-name">' +
@@ -368,17 +378,18 @@
     lockForm(false); hideCancellation(); status('已取消'); renderCurrent();
   }
   function toggleOwned(name, keepRoster = false) {
+    name = ownershipName(name);
     if (name === '卡兹克' && state.evolutionCount) { toast('进化锁定'); return; }
     if (state.owned.has(name)) state.owned.delete(name);
     else {
       const u = state.data.units.find(u => u.name === name);
-      if (u.group === '拉克丝') [...state.owned].forEach(n => { if (state.data.units.find(c => c.name === n)?.group === '拉克丝') state.owned.delete(n); });
       state.excludedUnits.delete(name);
       state.owned.add(name); state.gamePool.add(u.id);
     }
     dirty(keepRoster);
   }
   function toggleExcluded(name) {
+    name = ownershipName(name);
     if (name === '卡兹克' && state.evolutionCount) { toast('进化锁定'); return; }
     if (state.excludedUnits.has(name)) state.excludedUnits.delete(name);
     else { state.excludedUnits.add(name); state.owned.delete(name); }
@@ -425,7 +436,7 @@
     }
     const searchText = value => value.toLocaleLowerCase(TraitI18n.locale).normalize('NFKC').replace(/[’']/g, '');
     const terms = searchText($('pickerSearch').value).trim().split(/\s+/).filter(Boolean), owned = effectiveOwned();
-    const rows = state.data.units;
+    const rows = ownershipUnits(state.data.units);
     const matches = rows.filter(u => {
       const text = searchText([...TraitI18n.searchNames(u.name), aliases[u.name] || '', ...Object.keys(u.traits || {}).flatMap(TraitI18n.searchNames)].join(' '));
       return terms.every(term => text.includes(term));
@@ -455,7 +466,7 @@
   function openSlot(index) {
     const slot = selected()?.lineup[index];
     if (slot?.kind !== 'placeholder' || state.dirty || state.busy) return;
-    state.candidateDraft = { candidates: slot.candidates, owned: new Set(state.owned) };
+    state.candidateDraft = { candidates: ownershipUnits(slot.candidates.map(u => ({ ...hero(u.id), ...u }))), owned: new Set(state.owned) };
     $('detailTitle').textContent = t(slot.label);
     renderCandidates();
     dialog('detailDialog');
@@ -474,7 +485,6 @@
     if (!unit) return;
     if (draft.owned.has(name)) draft.owned.delete(name);
     else {
-      if (unit.group === '拉克丝') [...draft.owned].forEach(n => { if (state.data.units.find(u => u.name === n)?.group === '拉克丝') draft.owned.delete(n); });
       draft.owned.add(name);
     }
     renderCandidates();
@@ -597,7 +607,12 @@
           state.excludedUnits = new Set((saved.excludedUnits || []).filter(n => state.data.units.some(u => u.name === n)));
           state.gamePool = new Set((saved.gamePool || []).filter(id => Boolean(hero(id))));
           state.sortModes = new Map(Object.entries(saved.sortModes || {}).filter(([, mode]) => ['value', 'traits'].includes(mode)).map(([p, mode]) => [Number(p), mode]));
+          const legacyLux = state.data.units.find(u => state.owned.has(u.name) && u.group === '拉克丝' && u.name !== '拉克丝');
           state.lux = saved.lux || 'auto';
+          if (legacyLux && state.lux === 'auto') state.lux = Object.keys(legacyLux.traits).find(name => name !== '自然之力！大元素使');
+          state.owned = new Set([...state.owned].map(ownershipName));
+          state.excludedUnits = new Set([...state.excludedUnits].map(ownershipName));
+          state.excludedUnits.forEach(name => state.owned.delete(name));
           state.matrixMemory = saved.matrixMemory || null;
         }
       } catch (_) {}

@@ -135,6 +135,11 @@ class ValueTests(unittest.TestCase):
         self.assertEqual(values["b"]["slot_probability"], 0)
         values = unit_values(data, 10, owned=["拉克丝 (a)"], inherited=["拉克丝 (b)"])
         self.assertEqual(values["b"]["difficulty"], inf)
+        values = unit_values(data, 10, owned=["拉克丝"])
+        for identifier in ("a", "b"):
+            self.assertEqual(values[identifier]["difficulty"], 0)
+            self.assertTrue(values[identifier]["owned"])
+            self.assertEqual(values[identifier]["tier_pool"], 17)
         scope = matrix_scope(data, None, (), (), "auto", {}, 0)
         memory = {"scope": scope, "owned": [], "states": [{"state": [10, 0, 0], "cards": [u.name for u in units]}]}
         restored = restore_matrix_memory(data, memory, scope, set())

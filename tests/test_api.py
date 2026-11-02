@@ -10,9 +10,36 @@ from traitladder.value import sort_plans
 
 
 class APITests(unittest.TestCase):
+    def test_lux_ownership_uses_the_separate_form_setting(self):
+        request = {"population": 1, "emblems": [], "owned": ["拉克丝"], "minimum_traits": 0}
+        memory = None
+        for form in ("地狱火", "花仙子", "auto", "none"):
+            result = calculate({**request, "lux": form, "memory": memory})
+            row = result["results"][0]
+            self.assertEqual(row["effective_owned"], ["拉克丝"])
+            lux_plans = [p for p in row["plans"] if any(u["name"].startswith("拉克丝") for u in p["board"])]
+            if form == "none":
+                self.assertFalse(lux_plans)
+            else:
+                self.assertTrue(lux_plans)
+                for plan in lux_plans:
+                    self.assertEqual(plan["owned_used"], 1)
+                    self.assertEqual(plan["difficulty"], 0)
+                    for unit in plan["board"]:
+                        if unit["name"].startswith("拉克丝"):
+                            self.assertNotEqual(unit["name"], "拉克丝")
+                            if form != "auto":
+                                self.assertIn(form, unit["traits"])
+            memory = result["memory"]
+        owned = calculate({**request, "lux": "地狱火"})
+        withdrawn = calculate({**request, "lux": "地狱火", "owned": [], "memory": owned["memory"]})
+        self.assertFalse(any(u["name"].startswith("拉克丝") for p in withdrawn["results"][0]["plans"] for u in p["board"]))
+        banned = calculate({**request, "lux": "地狱火", "excluded_units": ["拉克丝"]})
+        self.assertEqual(banned["results"][0]["effective_owned"], [])
+
     def test_withdrawn_units_recover_shop_cost_and_preserve_other_history(self):
         data = load_data()
-        for name, population in (("拉克丝 (地狱火)", 3), ("卡兹克", 3), ("慎", 2)):
+        for name, population in (("拉克丝", 3), ("拉克丝 (地狱火)", 3), ("卡兹克", 3), ("慎", 2)):
             request = {"emblems": ["主宰"], "population": population, "evolution_count": 0}
             before = calculate({**request, "owned": [name]})
             group = next(u.group for u in data.units if u.name == name)
