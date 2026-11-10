@@ -20,7 +20,7 @@ def calculate(request, *, data=None, shop_data=None):
     if not isinstance(request, dict):
         raise ValueError("请求体应为 JSON 对象")
     fields = {"emblem", "emblems", "population", "populations", "crowns", "shop_level", "evolutions", "fixed_evolutions", "evolution_count",
-              "excluded_units", "owned", "taken", "lux", "time_limit", "trait_counts", "minimum_traits", "sort", "memory"}
+              "excluded_units", "owned", "taken", "lux", "time_limit", "trait_counts", "minimum_traits", "sort", "memory", "selections"}
     unknown = request.keys() - fields
     if unknown:
         raise ValueError("未知参数：" + "、".join(sorted(unknown)))
@@ -63,7 +63,7 @@ def calculate(request, *, data=None, shop_data=None):
             raise ValueError("阵容人口应等于人口等级加冠冕数量")
         results.append(rank_matrix(data, level, state_crowns, count, emblems, trait_counts=request.get("trait_counts"),
                                    owned=owned, taken=request.get("taken", {}),
-                                   evolutions=fixed, shop_data=shop_data, cache=cells, minimum_traits=request.get("minimum_traits", 2), memory=request.get("memory"), **options))
+                                   evolutions=fixed, shop_data=shop_data, cache=cells, minimum_traits=request.get("minimum_traits", 2), memory=request.get("memory"), selections=request.get("selections"), **options))
     return {"version": data.version, "emblems": list(emblems), "emblem": emblems[0] if len(emblems) == 1 else None, "sort": mode, "crowns": crowns,
             "excluded_units": list(request.get("excluded_units", [])),
             "fixed_evolutions": list(fixed), "results": results,

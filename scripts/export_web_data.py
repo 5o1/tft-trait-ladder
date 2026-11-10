@@ -33,7 +33,7 @@ def export():
     reference = json.loads((ROOT / 'data' / 'loss-reference.json').read_text(encoding='utf-8'))
     result = {'version': data.version, 'units': units, 'traits': traits, 'emblems': emblems,
               'shop': json.loads((ROOT / 'data' / 'shop.json').read_text(encoding='utf-8')),
-              'lossReference': {key: reference[key] for key in ('id', 'data_version', 'boundary')},
+              'difficultyReference': {key: reference[key] for key in ('id', 'data_version', 'metric', 'unit', 'calibration_scale', 'boundary')},
               'evolutions': [t.name for t in data.traits if t.name in EVOLUTIONS]}
     destination = ROOT / 'web' / 'data.json'
     destination.parent.mkdir(exist_ok=True)

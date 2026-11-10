@@ -55,7 +55,7 @@
               <p data-copy="copy7">Calculations advance through player levels, crown counts, and evolution counts. For the state (<var>L</var>, <var>C</var>, <var>E</var>), the predecessor states are:</p>
               <div class="algorithm-formula"><code>(<var>L</var> − 1, <var>C</var>, <var>E</var>)</code><code>(<var>L</var>, <var>C</var> − 1, <var>E</var>)</code><code>(<var>L</var>, <var>C</var>, <var>E</var> − 1)</code></div>
               <p data-copy="copy8">Here, <var>L</var> is the player level, <var>C</var> is the number of crowns, and <var>E</var> is the number of Kha'Zix evolutions. Only predecessor states with valid coordinates are used.</p>
-              <p data-copy="copy9">The acquired pool contains every unit used by any candidate lineup in these predecessor states. These units have an acquisition cost of <span class="numeric">0</span> in the current state, where the lineup is optimized again.</p>
+              <p data-copy="copy9">Each predecessor passes on its acquired pool and its selected lineup. Without a click, the first lineup in Loss ↑ is selected. Across trait counts, equal losses favor more traits. Within the same trait count, equal-cost lineups favor actually owned units; inherited units do not count as owned. These acquired units cost <span class="numeric">0</span> in successors. Changing the sort is not a selection. The game pool still displays all candidate units.</p>
               <p data-copy="copy10">When a unit is marked as no longer owned, its historical acquisition records are cleared and its acquisition cost is recalculated. The records for other units are retained.</p>
             </section>
             <section class="algorithm-step">
@@ -65,14 +65,14 @@
               <p data-copy="copy14">Kha'Zix's evolution classes are optimized together with the lineup. Confirmed evolutions are retained.</p>
             </section>
             <section class="algorithm-step">
-              <h3 data-copy="copy15">Comparing states with a shared loss formula and threshold</h3>
-              <p data-copy="copy16">To compare all states on the same scale, the lineup's acquisition cost is converted to loss:</p>
-              <div class="algorithm-formula"><code><var>ℓ</var> = (1 + <var>D</var>) / 100</code></div>
-              <p data-copy="copy17">Here, <var>ℓ</var> is the loss and <var>D</var> is the sum of the units' acquisition costs. A cost of <var>D</var> = <span class="numeric">10</span> gives a loss of <span class="numeric">0.11</span> in every state.</p>
-              <p data-copy="copy18">The shared threshold is calculated from a fixed reference set. Logarithmic losses are split into two groups to minimize the sum of squared distances from each group's mean. Exponentiating the midpoint of the two means gives the threshold <output id="algorithmThreshold">—</output>. Losses above this threshold appear in red.</p>
+              <h3 data-copy="copy15">Comparing states with a shared loss and threshold</h3>
+              <p data-copy="copy16">Loss is the sum of the lineup’s additional acquisition costs:</p>
+              <div class="algorithm-formula"><code><var>D</var> = ∑ <var>d</var><sub>i</sub></code></div>
+              <p data-copy="copy17">Loss <var>D</var> is the sum of the expected shop waits for each missing unit, measured in shops. It is <span class="numeric">0</span> when no units are missing.</p>
+              <p data-copy="copy18">The shared threshold uses a fixed reference set. Grouping log scores <var>V</var> = <span class="numeric">100</span>/(<span class="numeric">1</span>+<var>D</var>) minimizes the within-group squared deviations. The boundary is then converted to a loss threshold of <output id="algorithmThreshold">—</output>. Loss above it appears in red and its lineup row is dimmed.</p>
             </section>
           </div>
-          <p class="algorithm-assumption" data-copy="copy19">The model assumes that the pool remains unchanged while searching and that the five shop slots are independent. Several target units can appear in the same shop; <var>D</var> is the sum of the waiting times for finding each unit separately.</p>
+          <p class="algorithm-assumption" data-copy="copy19">The model assumes that the pool remains unchanged while searching and that the five shop slots are independent.</p>
         </section>
       </aside>
         <section class="comparison frame" id="comparisonPanel">
@@ -97,9 +97,9 @@
       <p data-copy="copy20">Each emblem adds 1 to its corresponding trait count across the entire lineup.</p>
       <p data-copy="copy21">Set Kha'Zix's evolution count to calculate a lineup and evolution classes together. “Confirm evolutions” saves those classes for this game. Clicking a confirmed trait icon undoes that evolution and reduces the evolution count by 1. “Reset” clears the game's records.</p>
       <p data-copy="copy22">Lux contributes 2 to the trait of her selected form. Elder Dragon occupies 2 population slots and contributes 2 to Riftbeast.</p>
-      <p data-copy="copy23">Each lineup receives a loss based on the probabilities of finding its units in the current shop. Lower loss means the additional units are easier to acquire. When a lineup's loss exceeds the shared threshold, the loss appears in red and the lineup row is dimmed.</p>
+      <p data-copy="copy23">The calculator uses current shop probabilities to calculate lineup loss <var>D</var>, measured in shops. Lower loss means missing units are easier to find. Loss above the shared loss threshold appears in red and its lineup row is dimmed.</p>
       <p data-copy="copy24">In lineups, the session pool, and the ownership picker, colored portraits represent owned units and gray portraits represent units you do not own. In the ban list, colored portraits represent allowed units and gray portraits represent excluded units.</p>
-      <p data-copy="copy25">“✓ Proven optimal” means the solver has proved the lineup optimal under the current calculation conditions. “◷ Optimality unproven” means a feasible lineup is available and its optimality has yet to be proved.</p>
+      <p data-copy="copy25">Each lineup solve has an 8-second limit. “✓ Proven optimal” means HiGHS has proved both the minimum cost and tie-breaking order optimal under the current conditions. “◷ Optimality unproven” means a feasible lineup is available, but the full proof is incomplete.</p>
     </div>
   </dialog>
   <div id="toast" role="status" class="toast" hidden></div>

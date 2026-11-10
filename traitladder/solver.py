@@ -220,24 +220,21 @@ def solve(data: Dataset, population: int, emblem: str | list[str] | tuple[str, .
                 break
     elapsed = round(monotonic() - start, 3)
     status = {0: "optimal", 1: "limit", 2: "infeasible"}.get(result.status, "error")
-    loss_status = status
+    difficulty_status = status
     if status == "optimal" and (preference_status == "limit" or canonical_status == "limit"):
         status = "limit"
     output = {"population": population, "status": status, "max_traits": None,
               "upper_bound": None, "active_traits": [], "uncounted_traits": [],
               "board": [], "lineup": [], "seconds": elapsed, "selected_evolutions": [], "emblems": list(emblem),
-              "owned_preference_status": preference_status, "canonical_status": canonical_status, "loss_status": loss_status}
+              "owned_preference_status": preference_status, "canonical_status": canonical_status, "difficulty_status": difficulty_status}
     if value_mode:
-        output.update(target_traits=target_traits, difficulty=None, difficulty_lower_bound=None,
-                      value_score=None, value_upper_bound=None, loss=None, loss_lower_bound=None)
+        output.update(target_traits=target_traits, difficulty=None, difficulty_lower_bound=None)
     if result.status not in (0, 1, 2):
         raise RuntimeError("优化器失败：" + result.message)
     bound = getattr(result, "mip_dual_bound", None)
     if bound is not None and isfinite(bound):
         if value_mode:
             output["difficulty_lower_bound"] = max(0.0, float(bound))
-            output["value_upper_bound"] = 100 / (1 + max(0.0, float(bound)))
-            output["loss_lower_bound"] = (1 + max(0.0, float(bound))) / 100
         else:
             output["upper_bound"] = floor(-bound + 1e-6)
     if result.x is None:
@@ -254,8 +251,7 @@ def solve(data: Dataset, population: int, emblem: str | list[str] | tuple[str, .
         difficulty = sum(unit_difficulties[u.id] for u in board)
         if abs(difficulty - result.fun) > 1e-5 * max(1, difficulty):
             raise RuntimeError("优化结果搜卡难度校验失败")
-        output.update(difficulty=difficulty, value_score=100 / (1 + difficulty),
-                      loss=(1 + difficulty) / 100,
+        output.update(difficulty=difficulty,
                       upper_bound=target_traits)
     output.update(max_traits=len(active), active_traits=active, uncounted_traits=uncounted,
                   owned_used=sum(u.name in held for u in board),

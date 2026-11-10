@@ -17,6 +17,7 @@
   function normalizeOptions(data, raw = {}) {
     const o = { emblem: '裁决使', population: 8, level: null, evolutions: [], fixedEvolutions: [], excludedUnits: [], owned: [], inherited: [], taken: {}, lux: 'auto', minimumTraits: 2, timeLimit: 8000, ...raw };
     delete o.memory;
+    o.selections = normalizeSelections(raw.selections);
     o.crowns = raw.crowns ?? 0;
     if (!Number.isInteger(o.crowns) || o.crowns < 0 || o.crowns > 3) throw Error('冠冕数量应为 0–3。');
     o.population = Number(o.population); o.level = Number(o.level || Math.min(o.population - o.crowns, 10));
@@ -95,7 +96,7 @@
     const scored = data.traits.filter(t => t.counted);
     const weighted = target !== null;
     const automatic = o.evolutionCount > o.evolutions.length ? data.evolutions.filter(t => !o.evolutions.includes(t)) : [];
-    const model = { optimize: 'objective', opType: weighted ? 'min' : 'max', constraints: { population: { equal: o.population } }, variables: {}, binaries: {}, options: { timeout: o.timeLimit, tolerance: 0 } };
+    const model = { optimize: 'objective', opType: weighted ? 'min' : 'max', constraints: { population: { equal: o.population } }, variables: {}, binaries: {}, options: { time_limit: o.timeLimit / 1000, mip_rel_gap: 0, mip_abs_gap: 0, output_flag: false } };
     const groups = new Map();
     units.forEach((u, i) => {
       const key = 'x' + i, v = { objective: weighted ? (Number.isFinite(values[u.id].difficulty) ? values[u.id].difficulty : 0) : 0, population: u.slots };
@@ -126,6 +127,32 @@
     if (weighted) model.constraints.traitCount = { equal: target };
     return model;
   }
+  function solveModel(model) {
+    const keys = Object.keys(model.variables);
+    const expression = field => keys.filter(k => model.variables[k][field]).map(k => {
+      const value = model.variables[k][field];
+      return `${value < 0 ? '-' : '+'} ${Math.abs(value)} ${k}`;
+    }).join(' ') || `0 ${keys[0]}`;
+    const rows = [];
+    for (const [name, bounds] of Object.entries(model.constraints)) {
+      for (const [bound, sign] of [['equal', '='], ['min', '>='], ['max', '<=']]) {
+        if (bounds[bound] !== undefined) rows.push(` ${name}_${bound}: ${expression(name)} ${sign} ${bounds[bound]}`);
+      }
+    }
+    const lp = [model.opType === 'min' ? 'Minimize' : 'Maximize', ` obj: ${expression(model.optimize)}`,
+      'Subject To', ...rows, 'Binary', ...Object.keys(model.binaries).map(k => ' ' + k), 'End'].join('\n');
+    return root.highs.withModel({ format: 'lp', data: lp }, native => {
+      native.options.set(model.options);
+      native.run();
+      const status = native.getModelStatus(), codes = root.highs.constants.modelStatus;
+      if (![codes.optimal, codes.infeasible, codes.timeLimit].includes(status)) throw Error('HiGHS: ' + status);
+      const feasible = native.info.get('primal_solution_status') === root.highs.constants.solutionStatus.feasible;
+      const values = feasible ? native.getSolution().colValue : null;
+      const solution = feasible ? Object.fromEntries(keys.map(key => [key, values[native.getColByName(key)]])) : {};
+      return { optimal: status === codes.optimal, infeasible: status === codes.infeasible,
+        feasible, solution, evaluation: native.getObjectiveValue() };
+    });
+  }
   function solveOne(data, o, { target = null, theoretical = false } = {}) {
     const candidatePool = prepare(data, o);
     let units = candidatePool;
@@ -136,14 +163,14 @@
       if (o.evolutionCount || (sameRole && values[kha.id].difficulty < values[rengar.id].difficulty)) units = units.filter(u => u.name !== '雷恩加尔');
     }
     const model = modelFor(data, units, o, values, target, theoretical);
-    const start = Date.now();
-    let answer = root.solver.Solve(model, 1e-8, true);
-    const proof = answer._tableau.searchComplete === true || root.solver.lastSolvedModel?.presolveResult?.infeasible === true;
+    const start = performance.now();
+    let answer = solveModel(model);
+    const proof = answer.optimal;
     const primaryEvaluation = answer.evaluation;
     let ownedPreferenceStatus = 'optimal';
     let canonicalStatus = 'optimal';
     if (target !== null && !theoretical && proof && answer.feasible) {
-      const initial = answer.solutionSet || answer.generateSolutionSet();
+      const initial = answer.solution;
       const optimum = units.reduce((sum, u, i) => sum + (initial['x' + i] > .5 ? values[u.id].difficulty : 0), 0);
       const secondaryUnits = units.filter(u => values[u.id].difficulty <= optimum).sort((a, b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
       const automatic = o.evolutionCount > o.evolutions.length ? data.evolutions.filter(t => !o.evolutions.includes(t)) : [];
@@ -152,7 +179,7 @@
       const fixed = new Map();
       let heldCount;
       for (let offset = 0; offset < keys.length; offset += 16) {
-        const remaining = o.timeLimit - (Date.now() - start);
+        const remaining = o.timeLimit - (performance.now() - start);
         if (remaining <= 0) { canonicalStatus = 'limit'; if (offset === 0) ownedPreferenceStatus = 'limit'; break; }
         const secondaryModel = modelFor(data, secondaryUnits, o, values, target, theoretical);
         if (optimum > 0) secondaryModel.constraints.primaryCost = { max: 1 };
@@ -166,11 +193,11 @@
         });
         fixed.forEach((value, key) => { const name = 'fixed_' + key; secondaryModel.constraints[name] = { equal: value }; secondaryModel.variables[key][name] = 1; });
         block.forEach((key, i) => { secondaryModel.variables[key].objective -= 2 ** (block.length - i - 1); });
-        secondaryModel.options.timeout = remaining;
-        const preferred = root.solver.Solve(secondaryModel, 1e-8, true);
-        const solution = preferred.solutionSet || preferred.generateSolutionSet();
+        secondaryModel.options.time_limit = remaining / 1000;
+        const preferred = solveModel(secondaryModel);
+        const solution = preferred.solution;
         const integral = Object.entries(solution).every(([k, v]) => !(k.startsWith('x') || k.startsWith('y') || k.startsWith('evo')) || Math.abs(v - Math.round(v)) <= 1e-5);
-        const complete = preferred._tableau.searchComplete === true;
+        const complete = preferred.optimal;
         if (offset === 0) ownedPreferenceStatus = complete ? 'optimal' : 'limit';
         if (!preferred.feasible || !integral) { canonicalStatus = 'limit'; break; }
         answer = preferred; units = secondaryUnits;
@@ -184,9 +211,9 @@
         }
       }
     }
-    const elapsed = Date.now() - start;
-    const raw = answer.solutionSet || answer.generateSolutionSet();
-    if (!answer.feasible) return { population: o.population, status: proof ? 'infeasible' : 'limit', target, elapsed, board: [], active: [], uncounted: [] };
+    const elapsed = performance.now() - start;
+    const raw = answer.solution;
+    if (!answer.feasible) return { population: o.population, status: answer.infeasible ? 'infeasible' : 'limit', target, elapsed, board: [], active: [], uncounted: [] };
     const automatic = o.evolutionCount > o.evolutions.length ? data.evolutions.filter(t => !o.evolutions.includes(t)) : [];
     const selectedEvolutions = orderTraitNames(data, data.evolutions.filter(t => o.evolutions.includes(t) || automatic.some((name, i) => name === t && raw['evo' + i] > .5)));
     const resolvedUnits = units.map(u => u.name === '卡兹克' ? { ...u, traits: { ...u.traits, ...Object.fromEntries(selectedEvolutions.map(t => [t, 1])) } } : u);
@@ -202,10 +229,9 @@
     if (selectedEvolutions.length !== o.evolutionCount) throw Error('进化次数校验失败。');
     const difficulty = board.reduce((s, u) => s + values[u.id].difficulty, 0);
     if (!theoretical && !Number.isFinite(difficulty)) throw Error('结果包含当前无法获取的弈子。');
-    const result = { population: o.population, level: o.level, status: proof && ownedPreferenceStatus === 'optimal' && canonicalStatus === 'optimal' ? 'optimal' : 'limit', lossStatus: proof ? 'optimal' : 'limit', target, elapsed, board, ...actual, count: actual.active.length, selectedEvolutions,
+    const result = { population: o.population, level: o.level, status: proof && ownedPreferenceStatus === 'optimal' && canonicalStatus === 'optimal' ? 'optimal' : 'limit', difficultyStatus: proof ? 'optimal' : 'limit', target, elapsed, board, ...actual, count: actual.active.length, selectedEvolutions,
       ownedPreferenceStatus, canonicalStatus, ownedUsed: board.filter(u => values[u.id].owned).length,
-      difficulty: Number.isFinite(difficulty) ? difficulty : null, value: Number.isFinite(difficulty) ? 100 / (1 + difficulty) : null,
-      loss: Number.isFinite(difficulty) ? (1 + difficulty) / 100 : null };
+      difficulty: Number.isFinite(difficulty) ? difficulty : null };
     if (target !== null && Math.abs(difficulty - primaryEvaluation) > 1e-4 * Math.max(1, difficulty)) throw Error('价值目标未通过独立校验。');
     if (target === null && Math.abs(actual.active.length - primaryEvaluation) > 1e-5) throw Error('最大羁绊目标未通过独立校验。');
     const names = new Set(actual.active.map(t => t.name));
@@ -226,7 +252,7 @@
     });
     return result;
   }
-  async function rankPopulation(data, raw, progress = () => {}, current = () => true) {
+  async function rankPopulation(data, raw, progress = () => {}, current = () => true, solveTargets) {
     const o = normalizeOptions(data, raw), plans = [];
     progress({ phase: 'max', text: '求解上限…' });
     const reachable = solveOne(data, o);
@@ -235,7 +261,16 @@
     const start = Math.min(o.minimumTraits, maximum);
     const targets = o.targets?.length ? o.targets : Array.from({ length: Math.max(0, Math.min(maximum, 14) - start + 1) }, (_, i) => i + start);
     if (!o.targets?.length && maximum > 14) targets.push(maximum);
-    for (let i = 0; i < targets.length; i++) {
+    if (solveTargets) {
+      if (!current()) throw Error('已取消');
+      let done = 0;
+      const results = await solveTargets(o, targets, target => {
+        if (!current()) return;
+        progress({ phase: 'plan', done: ++done, total: targets.length, target, text: target + ' 羁绊…' });
+      });
+      if (!current()) throw Error('已取消');
+      for (const p of results) if (p.board.length || p.status === 'limit') plans.push(p);
+    } else for (let i = 0; i < targets.length; i++) {
       if (!current()) throw Error('已取消');
       const target = targets[i];
       progress({ phase: 'plan', done: i, total: targets.length, target, text: target + ' 羁绊…' });
@@ -247,72 +282,59 @@
     return { population: o.population, level: o.level, status: reachable.status === 'optimal' && plans.every(p => p.status === 'optimal') ? 'optimal' : 'limit', maximum, plans, options: o };
   }
   function matrixScope(data, o) {
-    return { version: data.version, emblems: [...o.emblems].sort(), fixed_evolutions: [...o.fixedEvolutions],
+    return { inheritance: 'selected-plan-v1', version: data.version, emblems: [...o.emblems].sort(), fixed_evolutions: [...o.fixedEvolutions],
       excluded_units: [...o.excludedUnits].sort(), lux: o.lux,
       taken: Object.keys(o.taken).sort().map(n => [n, o.taken[n]]), minimum_traits: o.minimumTraits,
       shop: { levels: Object.entries(data.shop.odds_by_level).map(([l, row]) => [Number(l), [...row]]).sort((a, b) => a[0] - b[0]),
         copies: [1, 2, 3, 4, 5].map(c => data.shop.copies_per_unit[c]), slots: data.shop.slots_per_shop } };
   }
-  const scopeKey = s => JSON.stringify([s.version, s.emblems, s.fixed_evolutions, s.excluded_units, s.lux, s.taken, s.minimum_traits, s.shop?.levels, s.shop?.copies, s.shop?.slots]);
-  function remember(history, state, cards) {
-    const names = history.get(state) || new Set(); cards.forEach(n => names.add(n)); history.set(state, names);
+  function normalizeSelections(selections = {}) {
+    if (!selections || typeof selections !== 'object' || Array.isArray(selections)) throw Error('selections 应为状态到羁绊数的对象');
+    for (const [key, count] of Object.entries(selections)) {
+      const state = key.split(',').map(Number), [l, c, e] = state;
+      if (state.length !== 3 || !state.every(Number.isInteger) || state.join(',') !== key || l < 1 || l > 10 || c < 0 || c > 3 || e < 0 || e > 4) throw Error('selections 状态坐标无效');
+      if (!Number.isInteger(count)) throw Error('selections 羁绊数应为整数');
+    }
+    return { ...selections };
   }
-  function restoreMemory(data, memory, scope, owned) {
-    const history = new Map();
-    if (!memory?.scope || scopeKey(memory.scope) !== scopeKey(scope)) return history;
-    const byName = new Map(data.units.map(u => [u.name, u]));
-    const held = new Set(owned);
-    const withdrawn = new Set((memory.owned || []).filter(n => !held.has(n)).map(n => byName.get(n)?.group));
-    const obtainableByLevel = new Map(), obtainable = new Set();
-    for (let level = 1; level <= 10; level++) {
-      if (data.shop.odds_by_level[level]) {
-        const values = unitValues(data, { level, owned, inherited: [], taken: Object.fromEntries(scope.taken) });
-        data.units.forEach(u => { if (values[u.id].shopProbability > 0) obtainable.add(u.name); });
-      }
-      obtainableByLevel.set(level, new Set(obtainable));
-    }
-    for (const row of memory.states) {
-      const [l, c, e] = row.state;
-      if (row.state.length !== 3 || !row.state.every(Number.isInteger) || l < 1 || l > 10 || c < 0 || c > 3 || e < 0 || e > 4 || row.cards.some(n => !byName.has(n))) throw Error('矩阵记忆内容无效。');
-      const cards = row.cards.filter(name => {
-        const unit = byName.get(name);
-        return !withdrawn.has(unit.group) && (held.has(name) || (name === '卡兹克' && e > 0) || obtainableByLevel.get(l).has(name));
-      });
-      remember(history, row.state.join(','), cards);
-    }
-    return history;
+  const dependsOn = (state, source) => state.every((v, i) => v >= source[i]);
+  const selectionChanges = (previous, current) => unique([...Object.keys(previous), ...Object.keys(current)])
+    .filter(key => previous[key] !== current[key]).map(key => key.split(',').map(Number));
+  function selectPlan(result, requested) {
+    let chosen = result.plans.find(p => p.count === requested);
+    const selectionStatus = chosen ? 'user' : requested == null ? 'default' : 'fallback';
+    chosen ||= sortPlans(result.plans)[0];
+    Object.assign(result, { requestedCount: requested ?? null, selectedCount: chosen?.count ?? null, selectionStatus,
+      acquiredUnits: unique([...result.inheritedUnits, ...chosen?.board.map(u => u.name) || []]).sort() });
   }
   function snapshotMemory(cells) {
-    const history = new Map();
-    cells.history.forEach((cards, key) => remember(history, key, cards));
-    cells.forEach((row, key) => remember(history, key, row.acquiredUnits));
-    const states = [...history].map(([key, cards]) => ({ state: key.split(',').map(Number), cards: [...cards].sort() }))
+    const states = [...cells].map(([key, row]) => ({ state: key.split(',').map(Number), cards: [...row.acquiredUnits] }))
       .sort((a, b) => a.state[0] - b.state[0] || a.state[1] - b.state[1] || a.state[2] - b.state[2]);
-    return { scope: cells.scope, owned: [...cells.owned].sort(), states };
+    return { scope: cells.scope, owned: [...cells.owned].sort(), selections: cells.selections, states };
   }
-  async function rank(data, raw, progress = () => {}, cache = new Map(), current = () => true) {
+  async function rank(data, raw, progress = () => {}, cache = new Map(), current = () => true, solveTargets) {
     const o = normalizeOptions(data, raw), crowns = o.population - o.level;
     if (o.targets?.length) o.minimumTraits = Math.min(o.minimumTraits, ...o.targets);
     if (!Number.isInteger(crowns) || crowns < 0 || crowns > 3) throw Error('阵容人口应等于人口等级加冠冕数量。');
     const context = JSON.stringify({ ...o, population: null, level: null, crowns: null, evolutionCount: null, inherited: [], targets: null,
-      owned: [...raw.owned || []].sort(), fixedEvolutions: o.fixedEvolutions });
+      selections: null, owned: [...raw.owned || []].sort(), fixedEvolutions: o.fixedEvolutions });
     const held = [...raw.owned || []], scope = matrixScope(data, o);
-    const supplied = restoreMemory(data, raw.memory, scope, held);
+    // Legacy raw.memory is accepted but never used as a computation input.
     let cells = cache.get(context);
     if (!cells) {
-      const previous = cache.values().next().value;
-      if (previous && scopeKey(previous.scope) === scopeKey(scope)) {
-        restoreMemory(data, snapshotMemory(previous), scope, held).forEach((cards, key) => remember(supplied, key, cards));
-      }
-      cells = new Map(); cells.scope = scope; cells.owned = held; cells.history = supplied;
+      cells = new Map(); cells.scope = scope; cells.owned = held; cells.selections = o.selections;
       cache.clear(); cache.set(context, cells);
     } else {
-      const expanded = [...supplied].some(([key, cards]) => [...cards].some(n => !(cells.get(key)?.acquiredUnits || [...cells.history.get(key) || []]).includes(n)));
-      if (expanded) {
-        cells.forEach((row, key) => remember(cells.history, key, row.acquiredUnits));
-        supplied.forEach((cards, key) => remember(cells.history, key, cards));
-        cells.clear();
+      const changed = selectionChanges(cells.selections, o.selections);
+      for (const [key, row] of cells) {
+        const state = key.split(',').map(Number);
+        if (changed.some(source => key !== source.join(',') && dependsOn(state, source))) cells.delete(key);
+        else {
+          row.options.selections = { ...o.selections };
+          if (changed.some(source => key === source.join(','))) selectPlan(row, o.selections[key]);
+        }
       }
+      cells.selections = o.selections;
     }
     const key = (l, c, e) => [l, c, e].join(',');
     async function visit(l, c, e) {
@@ -330,11 +352,12 @@
       progress({ phase: 'state', text: label });
       const result = await rankPopulation(data, { ...o, owned: raw.owned || [], population: l + c, level: l, crowns: c,
         fixedEvolutions: o.fixedEvolutions.slice(0, e), evolutionCount: e, inherited: [...inherited], targets: null },
-        p => progress({ ...p, text: label + ' · ' + p.text }), current);
+        p => progress({ ...p, text: label + ' · ' + p.text }), current, solveTargets);
       if (!current()) throw Error('已取消');
-      const acquired = new Set([...cells.history.get(key(l, c, e)) || [], ...inherited, ...result.plans.flatMap(p => p.board.map(u => u.name))]);
-      Object.assign(result, { crowns: c, evolutionCount: e, inheritedUnits: [...inherited].sort(), acquiredUnits: [...acquired].sort(),
+      const candidates = unique([...previous.flatMap(row => row.candidateUnits), ...result.plans.flatMap(p => p.board.map(u => u.name))]);
+      Object.assign(result, { crowns: c, evolutionCount: e, inheritedUnits: [...inherited].sort(), candidateUnits: candidates.sort(),
         predecessors: parents, progressionStatus: result.status === 'optimal' && previous.every(r => r.progressionStatus === 'optimal') ? 'optimal' : 'limit' });
+      selectPlan(result, o.selections[key(l, c, e)]);
       cells.set(key(l, c, e), result);
       return result;
     }
@@ -345,13 +368,15 @@
   }
   function sortPlans(plans, mode = 'value') {
     if (!['value', 'traits'].includes(mode)) throw Error('无效的方案排序方式。');
-    const rounded = p => Math.round(p.value * 1e9) / 1e9;
+    // 1e-7 shops preserves the previous 1e-9 loss tie precision.
+    const rounded = p => Math.round(p.difficulty * 1e7);
     return plans.filter(p => p.board.length).sort((a, b) => mode === 'traits'
-      ? b.count - a.count || rounded(b) - rounded(a)
-      : rounded(b) - rounded(a) || b.count - a.count);
+      ? b.count - a.count || rounded(a) - rounded(b)
+      : rounded(a) - rounded(b) || b.count - a.count);
   }
+
   function fitValueBoundary(plans) {
-    const values = plans.filter(p => p.board.length && p.count >= 2 && Number.isFinite(p.value) && p.value > 0).map(p => p.value).sort((a, b) => a - b);
+    const values = plans.filter(p => p.board.length && p.count >= 2 && Number.isFinite(p.difficulty) && p.difficulty >= 0).map(p => 100 / (1 + p.difficulty)).sort((a, b) => a - b);
     if (values.length < 2) return { threshold: null, reason: 'insufficient_candidates' };
     const xs = values.map(Math.log);
     if (xs.at(-1) - xs[0] <= 1e-12) return { threshold: null, reason: 'equal_values' };
@@ -367,25 +392,19 @@
     return { threshold: Math.exp((low + high) / 2), method: 'minimum_within_class_log_variance', lowerCount: best.k,
       higherCount: n - best.k, lowerGeometricMean: Math.exp(low), higherGeometricMean: Math.exp(high), withinClassSSE: best.sse };
   }
-  function belowValueThreshold(plan, threshold) { return Number.isFinite(threshold) && Number.isFinite(plan.value) && plan.value < threshold; }
-  function fitLossBoundary(plans) {
+  function fitDifficultyBoundary(plans) {
     const b = fitValueBoundary(plans);
-    return b.threshold === null ? b : { threshold: 1 / b.threshold, method: b.method,
-      lowerCount: b.higherCount, higherCount: b.lowerCount, lowerGeometricMean: 1 / b.higherGeometricMean,
-      higherGeometricMean: 1 / b.lowerGeometricMean, withinClassSSE: b.withinClassSSE };
+    return b.threshold === null ? b : { threshold: 100 / b.threshold - 1, method: b.method,
+      lowerCount: b.higherCount, higherCount: b.lowerCount, lowerCenter: 100 / b.higherGeometricMean - 1,
+      higherCenter: 100 / b.lowerGeometricMean - 1, withinClassSSE: b.withinClassSSE };
   }
-  function lossBoundary(reference) {
+  function difficultyBoundary(reference) {
     const b = reference.boundary;
     return { threshold: b.threshold, method: 'fixed_global_reference', referenceId: reference.id,
-      lowerCount: b.lower_count, higherCount: b.higher_count, lowerGeometricMean: b.lower_geometric_mean,
-      higherGeometricMean: b.higher_geometric_mean, withinClassSSE: b.within_class_sse };
+      lowerCount: b.lower_count, higherCount: b.higher_count, lowerCenter: b.lower_center,
+      higherCenter: b.higher_center, withinClassSSE: b.within_class_sse };
   }
-  function valueBoundary(reference) {
-    const b = lossBoundary(reference);
-    return { ...b, threshold: 1 / b.threshold, lowerCount: b.higherCount, higherCount: b.lowerCount,
-      lowerGeometricMean: 1 / b.higherGeometricMean, higherGeometricMean: 1 / b.lowerGeometricMean };
-  }
-  function aboveLossThreshold(plan, threshold) { return Number.isFinite(threshold) && Number.isFinite(plan.loss) && plan.loss > threshold; }
-  root.TraitEngine = { normalizeOptions, unitValues, prepare, evaluate, modelFor, solveOne, rankPopulation, rank, sortPlans, orderTraitNames, valueBoundary, belowValueThreshold, lossBoundary, aboveLossThreshold, fitValueBoundary, fitLossBoundary };
+  function aboveDifficultyThreshold(plan, threshold) { return Number.isFinite(threshold) && Number.isFinite(plan.difficulty) && plan.difficulty > threshold; }
+  root.TraitEngine = { normalizeOptions, normalizeSelections, dependsOn, selectPlan, unitValues, prepare, evaluate, modelFor, solveOne, rankPopulation, rank, sortPlans, orderTraitNames, difficultyBoundary, aboveDifficultyThreshold, fitValueBoundary, fitDifficultyBoundary };
   if (typeof module !== 'undefined' && module.exports) module.exports = root.TraitEngine;
 })(globalThis);

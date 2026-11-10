@@ -89,7 +89,13 @@ try {
   assert.equal(ui.document.querySelector('[data-open-rules]'), null);
   assert.ok(ui.$('boundaryBadge').textContent.startsWith('损失阈值'));
   assert.ok(ui.$('rulesDialog').textContent.includes('灰色头像表示你尚未持有'));
-  assert.ok(ui.$('rulesDialog').textContent.includes('损失数值会标红'));
+  assert.ok(ui.$('rulesDialog').textContent.includes('数值标红'));
+  assert.equal(ui.$('sortValue').textContent, '损失 ↑');
+  assert.equal(ui.document.querySelector('.comparison-head').lastElementChild.textContent, '损失');
+  for (const el of ui.document.querySelectorAll('.row-value, .value-box b')) assert.match(el.textContent.split('✓')[0].split('◷')[0].trim(), /^(0|\d+\.\d)$/);
+  assert.ok(ui.document.querySelector('[data-copy="copy17"]').textContent.includes('损失 D'));
+  assert.ok(ui.document.querySelector('[data-copy="copy17"]').textContent.includes('无需补牌时为 0'));
+  assert.ok([...ui.document.querySelectorAll('[data-plan]')].every(el => /羁绊，损失[\d.]+/.test(el.getAttribute('aria-label'))));
   assert.equal(ui.$('ownedSlots'), null);
   assert.equal(ui.$('calculateButton'), null);
   assert.equal(ui.$('conditionsForm').contains(ui.$('cancelButton')), false);
@@ -178,7 +184,11 @@ try {
   const orderedRows = () => [...ui.document.querySelectorAll('[data-plan]')];
   const byValue = orderedRows().map(row => Number(row.dataset.plan));
   const calls = ui.requests.length;
+  const selectedBeforeSort = ui.document.querySelector('.plan-row.selected').dataset.plan;
+  const selectionsBeforeSort = JSON.parse(saved.get('traitladder-s18')).selections;
   ui.click('#sortTraits');
+  assert.equal(ui.document.querySelector('.plan-row.selected').dataset.plan, selectedBeforeSort);
+  assert.deepEqual(JSON.parse(saved.get('traitladder-s18')).selections, selectionsBeforeSort);
   const byTraits = orderedRows().map(row => Number(row.dataset.plan));
   assert.deepEqual(byTraits, [...byTraits].sort((a, b) => b - a));
   ui.click('#sortValue'); assert.deepEqual(orderedRows().map(row => Number(row.dataset.plan)), byValue);
@@ -190,6 +200,7 @@ try {
   ui.click('[data-population="4"]');
   assert.equal(ui.document.querySelector('.plan-heading h2').textContent, '4 人口');
   ui.click('#sortTraits'); ui.click('[data-plan="5"]');
+  assert.equal(JSON.parse(saved.get('traitladder-s18')).selections['4,0,0'], 5);
   const fixedCard = ui.document.querySelector('.champion-card:not(.flex-card)');
   assert.equal(fixedCard.tagName, 'BUTTON');
   const flex = ui.document.querySelector('.champion-card.flex-card'); assert.ok(flex);
@@ -209,6 +220,8 @@ try {
   assert.equal(ui.requests.length, beforeCandidate + 1);
   await ui.recalculate(() => ui.click('[data-population="8"]')); assert.equal(ui.$('sortValue').getAttribute('aria-pressed'), 'true');
   ui.click('[data-population="4"]'); assert.equal(ui.$('sortTraits').getAttribute('aria-pressed'), 'true');
+  assert.equal(ui.document.querySelector('.plan-row.selected').dataset.plan, '5');
+  assert.equal(ui.requests.at(-1).selections['4,0,0'], 5);
 
   await ui.recalculate(() => ui.lux('none'));
   assert.equal(ui.requests.at(-1).lux, 'none');
@@ -292,6 +305,8 @@ try {
   assert.equal(ui.requests[0].crowns, 1);
   assert.equal(ui.requests[0].population, ui.requests[0].level + 1);
   assert.deepEqual(ui.requests[0].fixedEvolutions, fixed);
+  assert.deepEqual(ui.requests[0].selections, JSON.parse(saved.get('traitladder-s18')).selections);
+  assert.equal(ui.requests[0].selections['4,0,0'], 5);
   assert.ok(ui.document.querySelectorAll('[data-pool-id]').length >= pool.size);
   const beforeUnlock = JSON.parse(saved.get('traitladder-s18'));
   await ui.recalculate(() => ui.click('[data-unlock-evolution="' + fixed[0] + '"]'));
@@ -312,6 +327,7 @@ try {
   assert.equal(reset.evolutionCount, 0);
   assert.equal(reset.crowns, 0);
   assert.equal(reset.lux, 'auto');
+  assert.deepEqual(reset.selections, {});
   assert.equal(ui.document.querySelectorAll('#evolutionMemory>.evolution-trait').length, 0);
   assert.equal(ui.document.querySelector('#populationTabs [aria-pressed="true"]').textContent, '8');
 

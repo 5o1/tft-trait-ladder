@@ -226,12 +226,12 @@
       "en": "Here, <var>L</var> is the player level, <var>C</var> is the number of crowns, and <var>E</var> is the number of Kha'Zix evolutions. Only predecessor states with valid coordinates are used."
     },
     "copy9": {
-      "zh": "汇总这些前置状态中所有候选阵容曾使用的弈子，作为已获取卡池。当前状态使用这些弈子的获取成本记为 <span class=\"numeric\">0</span>，并重新组合阵容。",
-      "en": "The acquired pool contains every unit used by any candidate lineup in these predecessor states. These units have an acquisition cost of <span class=\"numeric\">0</span> in the current state, where the lineup is optimized again."
+      "zh": "每个状态的已收集集合只由本次前置状态的已收集集合与本格选中阵容组成；有有效点选时使用点选，否则取“损失 ↑”第一项。不同羁绊数损失相同时优先更多羁绊。同一羁绊数内，同成本时优先实际持有牌，继承牌不算实际持有。后继使用这些牌的获取成本记为 <span class=\"numeric\">0</span>。切换排序不算点选；本局卡池仍展示全部候选牌。",
+      "en": "A state's acquired set contains only its predecessors' acquired sets from this calculation and its selected lineup. A valid click selects the lineup; otherwise, the first lineup in Loss ↑ is used. Across trait counts, equal losses favor more traits. Within the same trait count, equal-cost lineups favor actually owned units; inherited units do not count as owned. Acquired units cost <span class=\"numeric\">0</span> in successors. Changing the sort is not a selection. The game pool still displays all candidate units."
     },
     "copy10": {
-      "zh": "取消某个英雄的持有状态后，会撤销该英雄的历史获取记录，再重新计算它的获取成本。其它英雄的获取记录保留。",
-      "en": "When a unit is marked as no longer owned, its historical acquisition records are cleared and its acquisition cost is recalculated. The records for other units are retained."
+      "zh": "结果只取决于当前输入、持有和点选，不受以前计算或标记持有的顺序影响。取消持有后，仍在本次前置选中路径中的牌继续按零成本继承；其余按商店概率计算。本局卡池可保留以前出现的候选供查看，这些展示记录不参与继承或成本。",
+      "en": "Results depend only on current inputs, ownership and selections, regardless of past calculations or the order of ownership changes. After ownership is removed, units still on the current selected predecessor paths remain inherited at zero cost; other units use shop probabilities. The game pool may retain past candidates for display. Those display records do not affect inheritance or cost."
     },
     "copy11": {
       "zh": "为每个羁绊数量选择获取成本最低的阵容",
@@ -250,24 +250,24 @@
       "en": "Kha'Zix's evolution classes are optimized together with the lineup. Confirmed evolutions are retained."
     },
     "copy15": {
-      "zh": "使用统一的损失公式和阈值比较不同状态的方案",
-      "en": "Comparing states with a shared loss formula and threshold"
+      "zh": "使用统一的损失和阈值比较不同状态的方案",
+      "en": "Comparing states with a shared loss and threshold"
     },
     "copy16": {
-      "zh": "为使不同状态使用同一尺度，将阵容的获取成本换算为损失：",
-      "en": "To compare all states on the same scale, the lineup's acquisition cost is converted to loss:"
+      "zh": "损失直接采用阵容的新增获取成本之和：",
+      "en": "Loss is the sum of the lineup’s additional acquisition costs:"
     },
     "copy17": {
-      "zh": "其中，<var>ℓ</var> 是损失，<var>D</var> 是阵容中各弈子的获取成本之和。当 <var>D</var> = <span class=\"numeric\">10</span> 时，任何状态的损失均为 <span class=\"numeric\">0.11</span>。",
-      "en": "Here, <var>ℓ</var> is the loss and <var>D</var> is the sum of the units' acquisition costs. A cost of <var>D</var> = <span class=\"numeric\">10</span> gives a loss of <span class=\"numeric\">0.11</span> in every state."
+      "zh": "损失 <var>D</var> 是阵容中各张待补弈子平均需要等待的商店次数之和，单位是“次商店”。无需补牌时为 <span class=\"numeric\">0</span>。",
+      "en": "Loss <var>D</var> is the sum of the expected shop waits for each missing unit, measured in shops. It is <span class=\"numeric\">0</span> when no units are missing."
     },
     "copy18": {
-      "zh": "统一阈值由固定参考方案计算：先对损失取对数，再分成两组，使各数值与所在组平均值的平方差之和最小。两组平均值的中点经指数运算得到阈值 <output id=\"algorithmThreshold\">—</output>，超出时损失数值标红。",
-      "en": "The shared threshold is calculated from a fixed reference set. Logarithmic losses are split into two groups to minimize the sum of squared distances from each group's mean. Exponentiating the midpoint of the two means gives the threshold <output id=\"algorithmThreshold\">—</output>. Losses above this threshold appear in red."
+      "zh": "统一阈值由固定参考方案计算：沿用原评分 <var>V</var> = <span class=\"numeric\">100</span>/(<span class=\"numeric\">1</span>+<var>D</var>) 的对数分组，使两组内的平方差之和最小，再将分界换算为损失阈值 <output id=\"algorithmThreshold\">—</output>。超过阈值时数值标红，方案行置灰。",
+      "en": "The shared threshold uses a fixed reference set. Grouping log scores <var>V</var> = <span class=\"numeric\">100</span>/(<span class=\"numeric\">1</span>+<var>D</var>) minimizes the within-group squared deviations. The boundary is then converted to a loss threshold of <output id=\"algorithmThreshold\">—</output>. Loss above it appears in red and its lineup row is dimmed."
     },
     "copy19": {
-      "zh": "计算假设搜卡期间的卡池保持不变，并将商店五个格子的抽取视为相互独立。同一商店可同时出现多张目标弈子，<var>D</var> 表示各张弈子单独等待次数之和。",
-      "en": "The model assumes that the pool remains unchanged while searching and that the five shop slots are independent. Several target units can appear in the same shop; <var>D</var> is the sum of the waiting times for finding each unit separately."
+      "zh": "计算假设搜卡期间的卡池保持不变，并将商店五个格子的抽取视为相互独立。",
+      "en": "The model assumes that the pool remains unchanged while searching and that the five shop slots are independent."
     },
     "copy20": {
       "zh": "每获得一枚转职纹章，对应羁绊的计数便增加 1。这项加成作用于整个阵容。",
@@ -282,16 +282,16 @@
       "en": "Lux contributes 2 to the trait of her selected form. Elder Dragon occupies 2 population slots and contributes 2 to Riftbeast."
     },
     "copy23": {
-      "zh": "计算器根据当前商店中各弈子的出现概率，为每套阵容计算一个损失值。较低的损失表示需要额外获取的弈子更容易找到。当方案损失超过统一阈值时，损失数值会标红，对应的方案行也会置灰。",
-      "en": "Each lineup receives a loss based on the probabilities of finding its units in the current shop. Lower loss means the additional units are easier to acquire. When a lineup's loss exceeds the shared threshold, the loss appears in red and the lineup row is dimmed."
+      "zh": "计算器根据当前商店中各弈子的出现概率，计算阵容的损失 <var>D</var>，单位是“次商店”。损失越低，待补弈子越容易找到。超过统一损失阈值时，数值标红，方案行置灰。",
+      "en": "The calculator uses current shop probabilities to calculate lineup loss <var>D</var>, measured in shops. Lower loss means missing units are easier to find. Loss above the shared loss threshold appears in red and its lineup row is dimmed."
     },
     "copy24": {
       "zh": "在阵容、本局卡池和持有选择窗口中，彩色头像表示你已持有这张卡，灰色头像表示你尚未持有这张卡。在禁卡表中，彩色头像表示计算时允许使用该弈子，灰色头像表示计算时排除该弈子。",
       "en": "In lineups, the session pool, and the ownership picker, colored portraits represent owned units and gray portraits represent units you do not own. In the ban list, colored portraits represent allowed units and gray portraits represent excluded units."
     },
     "copy25": {
-      "zh": "当方案标注“✓ 已证明最优”时，表示求解器已经证明该方案在当前计算条件下最优；当方案标注“◷ 尚未证明最优”时，表示求解器已经给出可行方案，但尚未完成最优性验证。",
-      "en": "“✓ Proven optimal” means the solver has proved the lineup optimal under the current calculation conditions. “◷ Optimality unproven” means a feasible lineup is available and its optimality has yet to be proved."
+      "zh": "每次阵容求解限时 8 秒。“✓ 已证明最优”表示 HiGHS 已证明当前条件下的最低成本和排序均为最优；“◷ 尚未证明最优”表示已有可行方案，但尚未完成全部证明。",
+      "en": "Each lineup solve has an 8-second limit. “✓ Proven optimal” means HiGHS has proved both the minimum cost and tie-breaking order optimal under the current conditions. “◷ Optimality unproven” means a feasible lineup is available, but the full proof is incomplete."
     }
   };
 

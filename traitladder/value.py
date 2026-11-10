@@ -2,7 +2,7 @@
 from collections import Counter
 from functools import lru_cache
 import json
-from math import exp, expm1, isfinite, log, log1p
+from math import exp, expm1, floor, isfinite, log, log1p
 from pathlib import Path
 
 from .data import normalize_emblems
@@ -92,15 +92,15 @@ def sort_plans(plans, mode="value"):
         raise ValueError("排序方式应为 value 或 traits")
     ready = [p for p in plans if p["board"]]
     if mode == "value":
-        return sorted(ready, key=lambda p: (-round(p["value_score"], 9), -p["target_traits"]))
-    return sorted(ready, key=lambda p: (-p["target_traits"], -round(p["value_score"], 9)))
+        return sorted(ready, key=lambda p: (floor(p["difficulty"] * 1e7 + 0.5), -p["target_traits"]))
+    return sorted(ready, key=lambda p: (-p["target_traits"], floor(p["difficulty"] * 1e7 + 0.5)))
 
 
 def fit_value_boundary(plans):
     """为给定基准样本计算最小类内对数方差分界。"""
-    values = sorted(p["value_score"] for p in plans
+    values = sorted(100 / (1 + p["difficulty"]) for p in plans
                     if p["board"] and p["target_traits"] >= 2
-                    and p.get("value_score") is not None and p["value_score"] > 0)
+                    and p.get("difficulty") is not None and isfinite(p["difficulty"]) and p["difficulty"] >= 0)
     if len(values) < 2:
         return {"threshold": None, "reason": "insufficient_candidates"}
     xs = [log(v) for v in values]
@@ -132,38 +132,30 @@ def fit_value_boundary(plans):
             "higher_geometric_mean": exp(high_mean), "within_class_sse": sse}
 
 
-def fit_loss_boundary(plans):
-    """将对数方差分界转换为损失坐标。"""
+def fit_difficulty_boundary(plans):
+    """在 log(V) 上标定后，将分界和组中心转换为 D 坐标。"""
     result = fit_value_boundary(plans)
     if result["threshold"] is None:
         return result
-    return {"threshold": 1 / result["threshold"], "method": "minimum_within_class_log_variance",
+    return {"threshold": 100 / result["threshold"] - 1, "method": "minimum_within_class_log_variance",
             "lower_count": result["higher_count"], "higher_count": result["lower_count"],
-            "lower_geometric_mean": 1 / result["higher_geometric_mean"],
-            "higher_geometric_mean": 1 / result["lower_geometric_mean"], "within_class_sse": result["within_class_sse"]}
+            "lower_center": 100 / result["higher_geometric_mean"] - 1,
+            "higher_center": 100 / result["lower_geometric_mean"] - 1, "within_class_sse": result["within_class_sse"]}
 
 
 @lru_cache(maxsize=1)
-def load_loss_reference():
+def load_difficulty_reference():
     return json.loads((DEFAULT_SHOP_DATA.parent / "loss-reference.json").read_text(encoding="utf-8"))
 
 
-def loss_boundary(plans=()):
-    reference = load_loss_reference()
+def difficulty_boundary(plans=()):
+    reference = load_difficulty_reference()
     return {**reference["boundary"], "method": "fixed_global_reference", "reference_id": reference["id"]}
-
-
-def value_boundary(plans=()):
-    result = loss_boundary()
-    return {**result, "threshold": 1 / result["threshold"],
-            "lower_count": result["higher_count"], "higher_count": result["lower_count"],
-            "lower_geometric_mean": 1 / result["higher_geometric_mean"],
-            "higher_geometric_mean": 1 / result["lower_geometric_mean"]}
 
 
 def matrix_scope(data, emblem, fixed, excluded, lux, taken, minimum_traits, shop_data=None):
     shop = shop_data or load_shop_data()
-    return {"version": data.version, "emblems": sorted(normalize_emblems(emblem, data)),
+    return {"inheritance": "selected-plan-v1", "version": data.version, "emblems": sorted(normalize_emblems(emblem, data)),
             "fixed_evolutions": list(fixed), "excluded_units": sorted(excluded), "lux": lux,
             "taken": [[n, k] for n, k in sorted((taken or {}).items())],
             "minimum_traits": minimum_traits,
@@ -171,41 +163,45 @@ def matrix_scope(data, emblem, fixed, excluded, lux, taken, minimum_traits, shop
                      "copies": [shop["copies"][c] for c in range(1, 6)], "slots": shop["slots"]}}
 
 
-def restore_matrix_memory(data, memory, scope, owned):
-    if memory is None:
+def normalize_selections(selections):
+    if selections is None:
         return {}
-    if not isinstance(memory, dict):
-        raise ValueError("memory 应为矩阵记忆对象")
-    previous_scope = memory.get("scope") or {}
-    if any(previous_scope.get(k) != v for k, v in scope.items()):
-        return {}
-    by_name = {u.name: u for u in data.units}
-    withdrawn = {by_name[n].group for n in set(memory.get("owned", [])) - set(owned) if n in by_name}
-    shop = {"odds": dict(scope["shop"]["levels"]), "copies": {i + 1: n for i, n in enumerate(scope["shop"]["copies"])}, "slots": scope["shop"]["slots"]}
-    obtainable_by_level, obtainable = {}, set()
-    for level in range(1, 11):
-        if level in shop["odds"]:
-            values = unit_values(data, level, owned=owned, taken=dict(scope["taken"]), shop_data=shop)
-            obtainable.update(v["name"] for v in values.values() if v["shop_hit_probability"] > 0)
-        obtainable_by_level[level] = set(obtainable)
-    history = {}
-    for record in memory.get("states", []):
-        state, cards = record["state"], record["cards"]
-        if len(state) != 3 or any(type(v) is not int for v in state) or not (1 <= state[0] <= 10 and 0 <= state[1] <= 3 and 0 <= state[2] <= 4):
-            raise ValueError("矩阵记忆坐标无效")
-        if not isinstance(cards, list) or any(n not in by_name for n in cards):
-            raise ValueError("矩阵记忆包含未知弈子")
-        history[tuple(state)] = {n for n in cards if by_name[n].group not in withdrawn and
-                                 (n in owned or (n == "卡兹克" and state[2] > 0) or n in obtainable_by_level[state[0]])}
-    return history
+    if not isinstance(selections, dict):
+        raise ValueError("selections 应为状态到羁绊数的对象")
+    for key, count in selections.items():
+        try:
+            state = tuple(map(int, key.split(",")))
+        except (AttributeError, ValueError):
+            raise ValueError("selections 状态坐标无效") from None
+        if (len(state) != 3 or key != ",".join(map(str, state)) or
+                not (1 <= state[0] <= 10 and 0 <= state[1] <= 3 and 0 <= state[2] <= 4)):
+            raise ValueError("selections 状态坐标无效")
+        if type(count) is not int:
+            raise ValueError("selections 羁绊数应为整数")
+    return dict(selections)
 
 
-def snapshot_matrix_memory(scope, owned, history, cells):
-    observed = {key: set(cards) for key, cards in history.items()}
-    for key, row in cells.items():
-        observed.setdefault(key, set()).update(row["acquired_units"])
-    return {"scope": scope, "owned": sorted(owned),
-            "states": [{"state": list(key), "cards": sorted(cards)} for key, cards in sorted(observed.items())]}
+def depends_on(state, source):
+    return all(a >= b for a, b in zip(state, source))
+
+
+def select_plan(result, requested):
+    chosen = next((p for p in result["plans"] if p["target_traits"] == requested), None)
+    status = "user" if chosen else "default" if requested is None else "fallback"
+    if chosen is None:
+        chosen = next(iter(sort_plans(result["plans"])), None)
+    result.update(requested_trait_count=requested, selected_trait_count=chosen["target_traits"] if chosen else None,
+                  selection_status=status,
+                  acquired_units=sorted(set(result["inherited_units"]) |
+                                        {u["name"] for u in chosen["board"]} if chosen else
+                                        set(result["inherited_units"])))
+
+
+def snapshot_matrix_memory(scope, owned, cells, selections):
+    """Export current cells for inspection; incoming memory never drives computation."""
+    return {"scope": scope, "owned": sorted(owned), "selections": selections,
+            "states": [{"state": list(key), "cards": row["acquired_units"]}
+                       for key, row in sorted(cells.items())]}
 
 
 def rank_population(data, population, emblem, *, shop_level=None, trait_counts=None,
@@ -264,14 +260,13 @@ def rank_population(data, population, emblem, *, shop_level=None, trait_counts=N
             "reachable_max_traits": reachable["max_traits"], "reachable_status": reachable["status"],
             "orderings": {mode: [p["target_traits"] for p in sort_plans(plans, mode)]
                           for mode in ("value", "traits")},
-            "value_boundary": value_boundary(plans),
-            "loss_boundary": loss_boundary(plans),
+            "difficulty_boundary": difficulty_boundary(plans),
             "plans": plans, "unavailable_counts": unavailable, "unresolved_counts": unresolved}
 
 
 def rank_matrix(data, level, crowns, evolution_count, emblem, *, owned=(), evolutions=(),
-                trait_counts=None, taken=None, shop_data=None, cache=None, minimum_traits=2, memory=None, **options):
-    """递推人口等级、冠冕和进化次数，继承相邻前置状态累计出现的弈子。"""
+                trait_counts=None, taken=None, shop_data=None, cache=None, minimum_traits=2, memory=None, selections=None, **options):
+    """递推人口等级、冠冕和进化次数，继承相邻前置状态选中方案的已收集弈子。"""
     from .solver import resolve_evolutions
 
     fixed, evolution_count = resolve_evolutions(evolutions, evolution_count)
@@ -288,7 +283,16 @@ def rank_matrix(data, level, crowns, evolution_count, emblem, *, owned=(), evolu
     cells = cache if cache is not None else {}
     owned = set(owned)
     scope = matrix_scope(data, emblem, fixed, options.get("excluded_units", ()), options.get("lux", "auto"), taken, minimum_traits, shop_data)
-    history = restore_matrix_memory(data, memory, scope, owned)
+    selections = normalize_selections(selections)
+    # Accept legacy memory as an ignored compatibility input.
+    changed = [key for key, row in cells.items()
+               if row.get("requested_trait_count") != selections.get(",".join(map(str, key)))]
+    for key in list(cells):
+        if any(key != source and depends_on(key, source) for source in changed):
+            del cells[key]
+    for key in changed:
+        if key in cells:
+            select_plan(cells[key], selections.get(",".join(map(str, key))))
 
     def visit(l, c, e):
         key = (l, c, e)
@@ -304,10 +308,12 @@ def rank_matrix(data, level, crowns, evolution_count, emblem, *, owned=(), evolu
         result = rank_population(data, l + c, emblem, shop_level=l, owned=owned,
                                  inherited=inherited, taken=taken, shop_data=shop_data,
                                  evolutions=fixed[:e], evolution_count=e, minimum_traits=minimum_traits, **options)
-        acquired = history.get(key, set()) | inherited | {u["name"] for plan in result["plans"] for u in plan["board"]}
-        result.update(crowns=c, inherited_units=sorted(inherited), acquired_units=sorted(acquired),
+        candidates = set().union(*(set(row["candidate_units"]) for row in previous))
+        candidates.update(u["name"] for plan in result["plans"] for u in plan["board"])
+        result.update(crowns=c, inherited_units=sorted(inherited), candidate_units=sorted(candidates),
                       predecessors=[list(parent) for parent in parents],
                       progression_status="optimal" if result["status"] == "optimal" and all(row["progression_status"] == "optimal" for row in previous) else "limit")
+        select_plan(result, selections.get(",".join(map(str, key))))
         cells[key] = result
         return result
 
@@ -321,8 +327,7 @@ def rank_matrix(data, level, crowns, evolution_count, emblem, *, owned=(), evolu
         selected["unavailable_counts"] = sorted(counts - {p["target_traits"] for p in target["plans"]} - set(target["unresolved_counts"]))
         selected["unresolved_counts"] = sorted(counts & set(target["unresolved_counts"]))
         selected["orderings"] = {mode: [p["target_traits"] for p in sort_plans(selected["plans"], mode)] for mode in ("value", "traits")}
-        selected["value_boundary"] = value_boundary(selected["plans"])
-        selected["loss_boundary"] = loss_boundary(selected["plans"])
+        selected["difficulty_boundary"] = difficulty_boundary(selected["plans"])
     selected["progression"] = [cells[(l, crowns, evolution_count)] for l in range(1, level + 1)]
-    selected["memory"] = snapshot_matrix_memory(scope, owned, history, cells)
+    selected["memory"] = snapshot_matrix_memory(scope, owned, cells, selections)
     return selected

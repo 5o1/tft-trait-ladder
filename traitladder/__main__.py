@@ -128,7 +128,7 @@ def main(argv=None):
 
 
 def print_result(r):
-    if "value_score" in r:
+    if "difficulty" in r:
         print(f"\n  {r['target_traits']} 羁绊", end="：")
     else:
         print(f"\n{r['population']} 人口", end="：")
@@ -138,9 +138,10 @@ def print_result(r):
     if r["max_traits"] is None:
         print("达到时间限制，尚未找到可行阵容")
         return
-    if "value_score" in r:
+    if "difficulty" in r:
         label = "已证明此羁绊数下损失最小" if r["status"] == "optimal" else "未证明损失最小"
-        print(f"损失 {r['loss']:.3f}，新增获取成本 {r['difficulty']:.2f}（{label}）")
+        shops = "0" if r["difficulty"] == 0 else f"{r['difficulty']:.1f}"
+        print(f"损失 {shops} 次商店（{label}）")
     elif r["status"] == "optimal":
         print(f"最多 {r['max_traits']} 个有效羁绊（已证明最优，{r['seconds']} 秒）")
     else:
@@ -155,7 +156,7 @@ def print_result(r):
             print(f"  {u['label']}可选：" + "、".join(c["name"] for c in u["candidates"]))
     if any(u["kind"] == "placeholder" for u in r["lineup"]):
         print("  占位符各选一名，与其他位置不重复；拉克丝合计最多一名。")
-        if "value_score" in r:
+        if "difficulty" in r:
             print("  评分采用：" + "、".join(u["example"] for u in r["lineup"] if u["kind"] == "placeholder"))
             print("  更换备选后按实际选卡重算价值。")
     print("  计分羁绊：" + ("、".join(f"{t['count']}{t['name']}" for t in r["active_traits"]) or "无"))

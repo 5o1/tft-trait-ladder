@@ -3,9 +3,10 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
-const ctx = { console, setTimeout, clearTimeout };
+(async () => {
+const highs = await require(path.join(root, 'web/vendor/highs.js'))();
+const ctx = { console, setTimeout, clearTimeout, performance, highs };
 vm.createContext(ctx);
-vm.runInContext(fs.readFileSync(path.join(root, 'web/vendor/solver.js'), 'utf8'), ctx);
 vm.runInContext(fs.readFileSync(path.join(root, 'web/engine.js'), 'utf8'), ctx);
 const E = ctx.TraitEngine;
 const taxonomy = { traits: [{ name: 'j1', category: 'job' }, { name: 'r2', category: 'race' }, { name: 'j0', category: 'job' }, { name: 'r1', category: 'race' }] };
@@ -14,18 +15,32 @@ const data = JSON.parse(fs.readFileSync(path.join(root, 'web/data.json'), 'utf8'
 const reference = JSON.parse(fs.readFileSync(path.join(root, 'docs/value_verification.json'), 'utf8'));
 let checked = 0;
 function close(a, b, label) { assert.ok(Math.abs(a - b) < 1e-5, `${label}: ${a} != ${b}`); }
-for (const row of reference.rows.filter(r => [3, 8].includes(r.population))) {
-  const options = E.normalizeOptions(data, { emblem: row.emblem, population: row.population, timeLimit: 15000 });
-  const maximum = E.solveOne(data, options);
-  assert.equal(maximum.status, 'optimal', '未证明羁绊上限');
-  assert.equal(maximum.count, row.reachable_max, row.emblem + ' 羁绊上限与 Python 不一致');
-  const expected = row.plans.at(-1);
-  const result = E.solveOne(data, options, { target: expected.traits });
-  assert.equal(result.status, 'optimal', row.emblem + ' 价值未完成证明');
-  assert.equal(result.count, expected.traits);
-  close(result.difficulty, expected.difficulty, row.emblem + ' 难度');
-  close(result.value, expected.value, row.emblem + ' 价值');
-  checked++;
+async function verifyReference() {
+  const caches = new Map();
+  for (const row of reference.rows) {
+    if (!caches.has(row.emblem)) caches.set(row.emblem, new Map());
+    const result = await E.rank(data, { emblems: row.emblem ? [row.emblem] : [], population: row.population, timeLimit: 15000 }, () => {}, caches.get(row.emblem));
+    assert.equal(result.status, 'optimal', row.emblem + ' ' + row.population + ' 级未证明羁绊上限');
+    assert.equal(result.maximum, row.reachable_max, row.emblem + ' 羁绊上限与 Python 不一致');
+    assert.equal(result.plans.length, row.plans.length);
+    for (const expected of row.plans) {
+      const plan = result.plans.find(p => p.count === expected.traits);
+      assert.ok(plan, row.emblem + ' 缺少候选 ' + expected.traits);
+      assert.equal(plan.status, 'optimal', row.emblem + ' 价值未完成证明');
+      close(plan.difficulty, expected.difficulty, row.emblem + ' 难度');
+      assert.equal('loss' in plan, false); assert.equal('value' in plan, false);
+      assert.equal(E.aboveDifficultyThreshold(plan, data.difficultyReference.boundary.threshold), expected.above_threshold);
+      assert.equal(plan.board.map(u => u.id).sort().join(), expected.board.join(), row.emblem + ' 确定性阵容');
+      assert.equal(plan.ownedUsed, expected.owned_used);
+    }
+    assert.equal(result.inheritedUnits.join(), row.inherited_units.join(), row.emblem + ' 继承');
+    assert.equal(result.acquiredUnits.join(), row.acquired_units.join(), row.emblem + ' 已收集');
+    assert.equal(result.candidateUnits.join(), row.candidate_units.join(), row.emblem + ' 候选展示');
+    assert.equal(result.selectedCount, row.selected_trait_count);
+    for (const mode of ['value', 'traits']) assert.equal(E.sortPlans(result.plans, mode).map(p => p.count).join(), row.orderings[mode].join());
+    checked++;
+  }
+  console.log(`网页引擎与 Python 三维递推对照通过：${checked} 个状态，全部候选、阵容、继承、默认选择与双排序一致。`);
 }
 const options = E.normalizeOptions(data, { population: 10, evolutions: ['狂战士', '迅捷射手'], timeLimit: 15000 });
 const fourteen = E.solveOne(data, options, { target: 14 });
@@ -38,7 +53,7 @@ assert.equal(impossible.status, 'infeasible');
 const lowLevelEvolution = E.solveOne(data, E.normalizeOptions(data, { population: 3, evolutions: ['裁决使'] }), { target: 3 });
 assert.equal(lowLevelEvolution.status, 'optimal');
 const owned = E.solveOne(data, E.normalizeOptions(data, { population: 3, owned: ['洛', '霞', '约里克'] }), { target: 2 });
-close(owned.value, 100, '已拥有全部示例时的价值');
+close(owned.difficulty, 0, '已拥有全部示例时的商店数');
 for (const lux of ['地狱火', '花仙子', 'auto', 'none']) {
   const options = E.normalizeOptions(data, { population: 1, emblems: [], owned: ['拉克丝'], lux });
   const values = E.unitValues(data, options);
@@ -98,16 +113,24 @@ assert.ok(E.prepare(data, excludedOptions).every(u => u.name !== '卡兹克'));
 close(E.unitValues(data, excludedOptions)['100330'].slotProbability, E.unitValues(data, E.normalizeOptions(data))['100330'].slotProbability, '禁用保留商店分母');
 assert.throws(() => E.normalizeOptions(data, { evolutionCount: 1, excludedUnits: ['卡兹克'] }));
 
-const plans = [11, 9, 10].map((count, i) => ({ count, value: [.2, 1.2, 1.1][i], board: [1] }));
+const plans = [11, 9, 10].map((count, i) => ({ count, difficulty: 100 / [.2, 1.2, 1.1][i] - 1, board: [1] }));
 assert.equal(E.sortPlans(plans).map(p => p.count).join(), '9,10,11');
 assert.equal(E.sortPlans(plans, 'traits').map(p => p.count).join(), '11,10,9');
 assert.equal(plans.map(p => p.count).join(), '11,9,10');
+const lowD = { count: 2, difficulty: 0, board: [1] };
+const nearD = { count: 3, difficulty: .49e-7, board: [1] };
+assert.equal(E.sortPlans([lowD, nearD])[0], nearD);
+assert.equal(E.sortPlans([{ ...nearD, difficulty: .5e-7 }, lowD])[0], lowD);
+const thresholdD = E.difficultyBoundary(data.difficultyReference).threshold;
+assert.equal(E.aboveDifficultyThreshold({ difficulty: thresholdD }, thresholdD), false);
+assert.equal(E.aboveDifficultyThreshold({ difficulty: thresholdD + 1e-8 }, thresholdD), true);
+assert.equal(E.aboveDifficultyThreshold({ difficulty: thresholdD - 1e-8 }, thresholdD), false);
 const boundary = E.fitValueBoundary(plans);
 assert.equal(boundary.lowerCount, 1); assert.ok(boundary.threshold > .2 && boundary.threshold < 1.1);
-close(E.fitValueBoundary(plans.map(p => ({ ...p, value: p.value * 7 }))).threshold, boundary.threshold * 7, '对数分界的缩放不变性');
+close(E.fitValueBoundary(plans.map(p => ({ ...p, difficulty: (1 + p.difficulty) / 7 - 1 }))).threshold, boundary.threshold * 7, '对数分界的缩放不变性');
 assert.equal(E.fitValueBoundary(plans.slice(0, 1)).threshold, null);
-assert.equal(E.fitValueBoundary(plans.map(p => ({ ...p, value: 1 }))).threshold, null);
-close(E.lossBoundary(data.lossReference).threshold, data.lossReference.boundary.threshold, '统一分界');
+assert.equal(E.fitValueBoundary(plans.map(p => ({ ...p, difficulty: 99 }))).threshold, null);
+close(E.difficultyBoundary(data.difficultyReference).threshold, data.difficultyReference.boundary.threshold, '统一分界');
 
 const slots = { ...data, traits: [{ name: 'a', levels: [2, 4], counted: true }, { name: 'b', levels: [2, 4], counted: true }, { name: 'unused', levels: [3, 5], counted: true }], units: [
   { id: 'core', name: 'core', group: 'core', cost: 1, slots: 1, traits: { a: 1, b: 1 } },
@@ -128,7 +151,7 @@ for (const emblems of [[], ['a'], ['a', 'b'], ['a', 'a', 'b']]) {
   const expected = { a: 1 + emblems.filter(n => n === 'a').length, b: 1 + emblems.filter(n => n === 'b').length };
   const count = Object.values(expected).filter(n => n >= 2).length;
   const result = E.solveOne(multiple, E.normalizeOptions(multiple, { population: 1, level: 8, emblems, owned: ['core'] }), { target: count });
-  assert.equal(result.status, 'optimal'); assert.equal(result.count, count); assert.equal(result.value, 100);
+  assert.equal(result.status, 'optimal'); assert.equal(result.count, count); assert.equal(result.difficulty, 0);
   assert.equal(result.counts.a, expected.a); assert.equal(result.counts.b, expected.b);
 }
 for (let crowns = 0; crowns <= 3; crowns++) {
@@ -136,7 +159,7 @@ for (let crowns = 0; crowns <= 3; crowns++) {
   assert.equal(o.level, 8);
   close(E.unitValues(data, o)['100330'].slotProbability, E.unitValues(data, E.normalizeOptions(data, { population: 8 }))['100330'].slotProbability, '冠冕保持商店概率');
 }
-console.log(`网页引擎回归通过：${checked} 组 Python 对照、转职组合计数、冠冕商店概率、进化联合优化、双排序、分界和方案外替换。`);
+console.log(`网页引擎回归通过：转职组合计数、冠冕商店概率、进化联合优化、双排序、分界和方案外替换。`);
 
 const orderedFixture = { ...data, emblems: [], traits: [{ name: 'a', levels: [2, 4], counted: true }],
   units: Array.from({ length: 20 }, (_, i) => ({ id: 'u' + String(i).padStart(2, '0'), name: 'unit' + String(i).padStart(2, '0'), group: String(i), cost: 1, slots: 1, traits: {} })) };
@@ -145,6 +168,77 @@ for (const owned of [[], ['unit03', 'unit17']]) for (const units of [orderedFixt
   const result = E.solveOne(fixture, E.normalizeOptions(fixture, { population: 2, level: 3, emblems: [], owned, inherited: units.map(u => u.name) }), { target: 0 });
   assert.equal(result.status, 'optimal');
   assert.equal(result.board.map(u => u.id).sort().join(), owned.length ? 'u03,u17' : 'u00,u01');
+}
+
+// 相同 K、相同获取成本：真实持有优先，继承不能充当持有；编号 a 排在 z 之前。
+const sameCountFixture = { ...data, emblems: [], traits: [{ name: 't', levels: [1], counted: true }], units: [
+  { id: 'a', name: 'inherited', group: 'inherited', cost: 1, slots: 1, traits: { t: 1 } },
+  { id: 'z', name: 'held', group: 'held', cost: 1, slots: 1, traits: { t: 1 } }
+] };
+const sameCountOptions = E.normalizeOptions(sameCountFixture, { population: 1, level: 3, emblems: [], owned: ['held'], inherited: ['inherited'] });
+const sameCountValues = E.unitValues(sameCountFixture, sameCountOptions);
+assert.equal(sameCountValues.a.difficulty, sameCountValues.z.difficulty);
+assert.equal(sameCountValues.a.owned, false); assert.equal(sameCountValues.a.inherited, true);
+const sameCountPlan = E.solveOne(sameCountFixture, sameCountOptions, { target: 1 });
+assert.equal(sameCountPlan.status, 'optimal'); assert.equal(sameCountPlan.canonicalStatus, 'optimal');
+assert.equal(sameCountPlan.difficulty, 0); assert.equal(sameCountPlan.ownedUsed, 1);
+assert.equal(sameCountPlan.board.map(u => u.name).join(), 'held');
+
+const heldPlan = { count: 1, difficulty: 0, board: ['held'], ownedUsed: 1 };
+const inheritedPlan = { count: 2, difficulty: 0, board: ['inherited'], ownedUsed: 0 };
+assert.equal(E.sortPlans([inheritedPlan, heldPlan])[0], inheritedPlan);
+assert.equal(E.sortPlans([inheritedPlan, heldPlan], 'traits')[0], inheritedPlan);
+assert.equal(E.sortPlans([{ ...heldPlan, difficulty: .00000005 }, inheritedPlan])[0], inheritedPlan);
+assert.equal(E.sortPlans([{ ...heldPlan, board: ['h1', 'h2', 'i1', 'i2'], ownedUsed: 2 }, inheritedPlan])[0], inheritedPlan);
+
+async function verifySelections() {
+  const fixture = { ...data, emblems: [], traits: [{ name: 't', levels: [2], counted: true }, { name: 's', levels: [1], counted: true }],
+    units: [
+      { id: 'a', name: 'a', group: 'a', cost: 1, slots: 1, traits: {} },
+      { id: 'b', name: 'b', group: 'b', cost: 1, slots: 1, traits: { t: 1 } },
+      { id: 'c', name: 'c', group: 'c', cost: 1, slots: 1, traits: { t: 1, s: 1 } },
+      { id: 'd', name: 'd', group: 'd', cost: 1, slots: 1, traits: {} }
+    ] };
+  const raw = { population: 3, level: 3, emblems: [], minimumTraits: 0 }, cache = new Map();
+  const before = await E.rank(fixture, raw, () => {}, cache);
+  const parent = before.progression[1];
+  assert.equal(parent.selectedCount, E.sortPlans(parent.plans)[0].count);
+  assert.equal(parent.selectedCount, 2);
+  assert.ok(parent.candidateUnits.includes('a'));
+  assert.ok(!parent.acquiredUnits.includes('a'));
+  assert.ok(!before.inheritedUnits.includes('a'));
+  const value = E.unitValues(fixture, before.options).a;
+  assert.equal(value.inherited, false); assert.ok(value.difficulty > 0);
+  const root = before.progression[0], plans = parent.plans, visits = [];
+  const changed = await E.rank(fixture, { ...raw, selections: { '2,0,0': 1 }, memory: before.memory },
+    p => { if (p.phase === 'state') visits.push(p.text); }, cache);
+  assert.equal(changed.progression[0], root);
+  assert.equal(changed.progression[1].plans, plans);
+  assert.equal(visits.length, 1); // 仅严格后继重求解。
+  assert.ok(changed.inheritedUnits.includes('a'));
+  assert.ok(!changed.inheritedUnits.includes('b'));
+  assert.equal(changed.progression[1].selectionStatus, 'user');
+  assert.equal(E.unitValues(fixture, changed.options).a.difficulty, 0);
+  const cold = await E.rank(fixture, { ...raw, selections: { '2,0,0': 1 }, memory: before.memory });
+  assert.equal(cold.inheritedUnits.join(), changed.inheritedUnits.join());
+  const fallback = await E.rank(fixture, { ...raw, selections: { '2,0,0': 999 }, memory: changed.memory }, () => {}, cache);
+  assert.equal(fallback.progression[1].selectionStatus, 'fallback');
+  assert.equal(fallback.progression[1].requestedCount, 999);
+  assert.equal(fallback.progression[1].selectedCount, 2);
+  assert.equal(fallback.inheritedUnits.join(), before.inheritedUnits.join());
+  const legacy = JSON.parse(JSON.stringify(before.memory)); delete legacy.scope.inheritance;
+  legacy.states[1].cards.push('a');
+  const clean = await E.rank(fixture, { ...raw, memory: legacy });
+  assert.ok(!clean.inheritedUnits.includes('a'));
+  const tied = await E.rank(fixture, { ...raw, owned: ['a', 'c', 'd'], selections: { '2,0,0': 2 } });
+  assert.equal(E.sortPlans(tied.plans).map(p => p.count).join(), '2,1,0');
+  assert.equal(tied.selectedCount, 2);
+  const one = tied.plans.find(p => p.count === 1), two = tied.plans.find(p => p.count === 2);
+  assert.equal(one.difficulty, two.difficulty); assert.equal(one.difficulty, 0);
+  assert.equal(one.ownedUsed, one.board.length);
+  assert.equal(two.ownedUsed, two.board.length - 1);
+  assert.ok(tied.inheritedUnits.includes('b'));
+  console.log('选中方案递推、点选变更、无效点选回退、旧记忆清理与严格后继缓存验证通过。');
 }
 
 async function verifyMatrix() {
@@ -164,12 +258,13 @@ async function verifyMatrix() {
   for (const cell of cells.values()) {
     const inherited = new Set(cell.predecessors.flatMap(p => [...cells.get(p.join(',')).acquiredUnits]));
     assert.equal([...inherited].sort().join(), [...cell.inheritedUnits].sort().join());
-    const acquired = new Set([...inherited, ...cell.plans.flatMap(p => p.board.map(u => u.name))]);
+    const chosen = cell.plans.find(p => p.count === cell.selectedCount);
+    const acquired = new Set([...inherited, ...(chosen?.board || []).map(u => u.name)]);
     assert.equal([...acquired].sort().join(), [...cell.acquiredUnits].sort().join());
     for (const plan of cell.plans) {
       const values = E.unitValues(fixture, cell.options);
       const expected = plan.board.reduce((sum, u) => sum + values[u.id].difficulty, 0);
-      close(plan.difficulty, expected, '继承状态成本重算'); close(plan.loss, 1 / plan.value, '损失倒数');
+      close(plan.difficulty, expected, '继承状态成本重算'); assert.equal('loss' in plan, false);
       assert.ok(plan.board.filter(u => inherited.has(u.name)).every(u => values[u.id].difficulty === 0));
     }
     if (!cell.evolutionCount) assert.ok(!inherited.has('卡兹克'));
@@ -179,13 +274,15 @@ async function verifyMatrix() {
   assert.equal(visits, 0);
   const plan = E.sortPlans(before.plans)[0], added = plan.board.find(u => !['a', '卡兹克'].includes(u.name)).name;
   const after = await E.rank(fixture, { ...raw, owned: ['a', added], memory: before.memory }, () => {}, cache);
-  assert.ok([...before.inheritedUnits].every(n => after.inheritedUnits.includes(n)));
+  const fresh = await E.rank(fixture, { ...raw, owned: ['a', added] });
+  assert.deepEqual([...after.inheritedUnits], [...fresh.inheritedUnits]);
+  assert.deepEqual([...after.acquiredUnits], [...fresh.acquiredUnits]);
   const same = after.plans.find(p => p.count === plan.count);
   assert.ok(same.ownedUsed >= plan.ownedUsed + 1);
   const restored = await E.rank(fixture, { ...raw, owned: ['a', added], memory: JSON.parse(JSON.stringify(after.memory)) });
-  assert.ok([...after.inheritedUnits].every(n => restored.inheritedUnits.includes(n)));
+  assert.deepEqual([...after.inheritedUnits], [...restored.inheritedUnits]);
   const removed = await E.rank(fixture, { ...raw, memory: JSON.parse(JSON.stringify(after.memory)) });
-  assert.ok([...after.inheritedUnits].filter(n => n !== added).every(n => removed.inheritedUnits.includes(n)));
+  assert.deepEqual([...removed.inheritedUnits], [...before.inheritedUnits]);
   for (const name of ['拉克丝', '拉克丝 (地狱火)', '卡兹克']) {
     const request = { population: 3, level: 3, crowns: 0, evolutionCount: 0, emblems: ['主宰'], owned: [name] };
     const cache = new Map();
@@ -197,7 +294,8 @@ async function verifyMatrix() {
     const cold = await E.rank(data, { ...request, owned: [], memory: legacy });
     for (const row of [warm, cold]) {
       assert.ok(!row.inheritedUnits.some(n => sameHero.includes(n)));
-      assert.ok(before.inheritedUnits.filter(n => !sameHero.includes(n)).every(n => row.inheritedUnits.includes(n)));
+      const fresh = await E.rank(data, { ...request, owned: [] });
+      assert.deepEqual([...row.inheritedUnits], [...fresh.inheritedUnits]);
       assert.ok(row.plans.every(p => p.board.every(u => !sameHero.includes(u.name))));
       assert.equal(E.unitValues(data, row.options)[data.units.find(u => u.name === name).id].difficulty, Infinity);
     }
@@ -208,11 +306,32 @@ async function verifyMatrix() {
   legacyMemory.states.push({ state: [10, 0, 0], cards: ['拉克丝', '洛'] });
   const cleaned = await E.rank(data, { ...rootRequest, memory: legacyMemory });
   const futureRecord = cleaned.memory.states.find(row => row.state.join() === '10,0,0');
-  assert.equal(futureRecord.cards.join(), '洛');
+  assert.equal(futureRecord, undefined); // 旧快照中未访问的状态不再保留。
   const rejected = await E.rank(fixture, { ...raw, excludedUnits: [added], memory: after.memory });
   assert.ok(!rejected.inheritedUnits.includes(added));
-  const b = E.fitLossBoundary(plans);
-  close(b.threshold, 1 / E.fitValueBoundary(plans).threshold, '损失分界转换');
+  const b = E.fitDifficultyBoundary(plans);
+  close(b.threshold, 100 / E.fitValueBoundary(plans).threshold - 1, '商店数分界转换');
   console.log('三维矩阵验证通过：12 个状态、前置卡池并集、零成本继承、因果方向和缓存复用。');
 }
-verifyMatrix().catch(error => { console.error(error); process.exitCode = 1; });
+async function verifyPathIndependence() {
+  const owned = ['洛', '霞', '卡蜜尔', '约里克', '维迦'];
+  const raw = { population: 6, level: 6, crowns: 0, evolutionCount: 0, emblems: ['裁决使'], owned, selections: { '5,0,0': 6 } };
+  // Elapsed is a diagnostic; snapshot coverage depends on which states were visited.
+  const comparable = r => JSON.parse(JSON.stringify(r, (k, v) => ['elapsed', 'memory'].includes(k) ? undefined : v));
+  const direct = await E.rank(data, raw);
+  const paths = [
+    [{ level: 5, population: 5, owned: owned.slice(0, 4), selections: {} }],
+    [{ level: 5, population: 5, selections: { '5,0,0': 5 } },
+     { selections: { '5,0,0': 6, '6,0,0': 8 } }]
+  ];
+  for (const path of paths) {
+    let memory = null; const cache = new Map();
+    for (const changes of path) memory = (await E.rank(data, { ...raw, ...changes, memory }, () => {}, cache)).memory;
+    const final = { ...raw, memory };
+    assert.deepEqual(comparable(await E.rank(data, final, () => {}, cache)), comparable(direct));
+    assert.deepEqual(comparable(await E.rank(data, final)), comparable(direct));
+  }
+  console.log('路径无关规则通过：直接、补标持有、点选后取消；完整计算字段，冷/热缓存。');
+}
+verifyReference().then(verifySelections).then(verifyMatrix).then(verifyPathIndependence).catch(error => { console.error(error); process.exitCode = 1; });
+})().catch(error => { console.error(error); process.exitCode = 1; });

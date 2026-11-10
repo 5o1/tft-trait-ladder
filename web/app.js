@@ -10,7 +10,7 @@
   const state = {
     data: null, emblems: ['裁决使'], population: 8, crowns: 0, lux: 'auto',
     evolutionCount: 0, fixedEvolutions: new Set(), owned: new Set(), excludedUnits: new Set(), gamePool: new Set(),
-    results: new Map(), sortModes: new Map(), selectedCount: null, candidateDraft: null, matrixMemory: null,
+    results: new Map(), sortModes: new Map(), selections: {}, candidateDraft: null, matrixMemory: null,
     worker: null, pending: null, job: 0, generation: 0, busy: false, dirty: true, failure: null, keepRoster: false, baseKey: null, picker: 'emblem', pickerEmblems: null
   };
   let toastTimer;
@@ -77,7 +77,7 @@
         emblems: state.emblems, population: state.population, crowns: state.crowns,
         fixedEvolutions: [...state.fixedEvolutions], evolutionCount: state.evolutionCount,
         owned: [...state.owned], excludedUnits: [...state.excludedUnits], gamePool: [...state.gamePool],
-        sortModes: Object.fromEntries(state.sortModes), lux: state.lux, matrixMemory: state.matrixMemory
+        sortModes: Object.fromEntries(state.sortModes), selections: state.selections, lux: state.lux, matrixMemory: state.matrixMemory
       }));
     } catch (_) {}
   }
@@ -86,7 +86,7 @@
       emblems: [...state.emblems], population: population + state.crowns, level: population, crowns: state.crowns,
       evolutionCount: state.evolutionCount, fixedEvolutions: [...state.fixedEvolutions],
       owned: [...state.owned], excludedUnits: [...state.excludedUnits],
-      lux: state.lux, timeLimit: 8000, memory: state.matrixMemory
+      lux: state.lux, timeLimit: 8000, selections: { ...state.selections }, memory: state.matrixMemory
     };
   }
   function lockForm(locked) {
@@ -161,7 +161,6 @@
     state.keepRoster = false;
     if (calculate && (state.busy || calculationTimer)) cancel();
     state.population = Math.max(1, Math.min(10, Number(value) || 1));
-    state.selectedCount = null;
     renderConditions(); renderPopulationTabs(); persist();
     if (!state.dirty && state.results.has(state.population)) {
       state.failure = null; renderCurrent(); renderResultStatus();
@@ -176,8 +175,28 @@
   }
   const sortMode = () => state.sortModes.get(state.population) || 'value';
   const ordered = () => TraitEngine.sortPlans(state.results.get(state.population)?.plans || [], sortMode());
-  const boundary = () => TraitEngine.lossBoundary(state.data.lossReference);
-  function selected() { return ordered().find(p => p.count === state.selectedCount) || ordered()[0]; }
+  const formatShops = difficulty => difficulty === 0 ? '0' : difficulty.toFixed(1);
+  const boundary = () => TraitEngine.difficultyBoundary(state.data.difficultyReference);
+  const stateKey = () => [state.population, state.crowns, state.evolutionCount].join(',');
+  function selected() {
+    const plans = state.results.get(state.population)?.plans || [];
+    return plans.find(p => p.count === state.selections[stateKey()]) || TraitEngine.sortPlans(plans)[0];
+  }
+  function selectCount(count) {
+    const key = stateKey(), row = state.results.get(state.population);
+    if (!row || state.selections[key] === count) return;
+    state.selections[key] = count;
+    // 当前候选的成本不依赖本格点选；仅后继需要重新优化。
+    TraitEngine.selectPlan(row, count);
+    for (const level of state.results.keys()) if (level > state.population) state.results.delete(level);
+    if (state.matrixMemory) {
+      const source = key.split(',').map(Number);
+      state.matrixMemory = { ...state.matrixMemory, selections: { ...state.selections },
+        states: [...state.matrixMemory.states.filter(record => !TraitEngine.dependsOn(record.state, source)),
+          { state: source, cards: [...row.acquiredUnits] }] };
+    }
+    renderCurrent(); persist();
+  }
   function renderEvolutionPlan() {
     const plan = selected();
     const ready = !state.dirty && !state.busy && plan?.selectedEvolutions?.length === state.evolutionCount;
@@ -196,7 +215,7 @@
     $('sortValue').setAttribute('aria-pressed', String(sortMode() === 'value'));
     $('sortTraits').setAttribute('aria-pressed', String(sortMode() === 'traits'));
     const cut = boundary();
-    $('valueThreshold').textContent = cut.threshold === null ? '—' : cut.threshold.toFixed(3);
+    $('valueThreshold').textContent = cut.threshold === null ? '—' : formatShops(cut.threshold);
     $('algorithmThreshold').textContent = $('valueThreshold').textContent;
     $('sortSummary').textContent = t(state.population + ' 级 · ' + (sortMode() === 'value' ? '损失 ↑' : '羁绊 ↓'));
   }
@@ -285,14 +304,14 @@
       setHTML(grid, plan.lineup.map(heroCard).join(''));
       rosterView.cardsKey = cardsKey;
     }
-    const heading = t(result.population + ' 人口'), loss = plan.loss.toFixed(3);
+    const heading = t(result.population + ' 人口'), shops = formatShops(plan.difficulty);
     const note = t((result.status === 'optimal' ? '当前设置下最高可能激活 ' + result.maximum + ' 羁绊' : '当前设置下已找到可激活 ' + result.maximum + ' 羁绊的方案') +
       (plan.count >= 14 ? '；✓ 已达到 14 羁绊。' : ''));
     const countElement = panel.querySelector('.plan-medal b'), headingElement = panel.querySelector('.plan-heading h2');
-    const lossElement = panel.querySelector('.value-box b'), noteElement = panel.querySelector('.plan-note>span');
+    const difficultyElement = panel.querySelector('.value-box b'), noteElement = panel.querySelector('.plan-note>span');
     if (countElement.textContent !== String(plan.count)) countElement.textContent = plan.count;
     if (headingElement.textContent !== heading) setHTML(headingElement, numberText(heading));
-    if (lossElement.textContent !== loss) lossElement.textContent = loss;
+    if (difficultyElement.textContent !== shops) difficultyElement.textContent = shops;
     if (noteElement.textContent !== note) setHTML(noteElement, numberText(note));
     grid.querySelectorAll('.flex-card').forEach(card => { if (card.disabled) card.disabled = false; });
     syncOwnership();
@@ -304,25 +323,24 @@
     clearPending();
     $('selectedPlan').dataset.state = 'ready';
     $('selectedPlan').setAttribute('aria-busy', 'false');
-    $('selectedPlan').classList.toggle('below-value-threshold', Boolean(plan && TraitEngine.aboveLossThreshold(plan, boundary().threshold)));
+    $('selectedPlan').classList.toggle('below-value-threshold', Boolean(plan && TraitEngine.aboveDifficultyThreshold(plan, boundary().threshold)));
     if (!plan) {
       rosterView = null;
       setHTML($('selectedPlan'), '<div class="empty-state"><img src="./assets/crest.svg" alt=""><h2>' + (r.status === 'limit' ? '◷ 计算尚未完成' : '暂无方案') + '</h2><span>' + numberText(r.maximum === null ? '—' : '已找到 ' + r.maximum + ' 羁绊') + '</span></div>');
       setHTML($('planList'), '<div class="list-empty">—</div>'); setHTML($('traitList'), ''); setHTML($('uncountedList'), '');
       $('uncountedTraits').hidden = true; $('traitTotal').textContent = '—'; return;
     }
-    state.selectedCount = plan.count;
-    const low = TraitEngine.aboveLossThreshold(plan, boundary().threshold);
+    const low = TraitEngine.aboveDifficultyThreshold(plan, boundary().threshold);
     $('selectedPlan').classList.toggle('below-value-threshold', low);
     renderRoster(plan, r);
     const cut = boundary().threshold;
     setHTML($('planList'), ordered().map(p => {
-      const faded = TraitEngine.aboveLossThreshold(p, cut);
-      return '<button type="button" class="plan-row ' + (p.count === state.selectedCount ? 'selected ' : '') + (faded ? 'below-value-threshold' : '') +
-        '" data-plan="' + p.count + '" aria-label="' + p.count + '羁绊，损失' + p.loss.toFixed(3) + (faded ? '，较难获取组' : '') +
+      const faded = TraitEngine.aboveDifficultyThreshold(p, cut);
+      return '<button type="button" class="plan-row ' + (p.count === plan.count ? 'selected ' : '') + (faded ? 'below-value-threshold' : '') +
+        '" data-plan="' + p.count + '" aria-label="' + p.count + '羁绊，损失' + formatShops(p.difficulty) + (faded ? '，较难获取组' : '') +
         '"><span class="row-trait-count">' + p.count + '</span><span class="row-avatars">' + p.board.map(u =>
           '<span class="mini-portrait" style="' + costStyle(u) + '" title="' + esc(u.name) + '">' + asset(u) + '</span>').join('') +
-        '</span><span class="row-value">' + p.loss.toFixed(3) + '<small>' + (p.status === 'optimal' ? '✓ 已证明最优' : '◷ 尚未证明最优') + '</small></span></button>';
+        '</span><span class="row-value">' + formatShops(p.difficulty) + '<small>' + (p.status === 'optimal' ? '✓ 已证明最优' : '◷ 尚未证明最优') + '</small></span></button>';
     }).join(''));
     $('traitTotal').textContent = plan.count; setHTML($('traitList'), renderTraitRows(plan.active));
     $('uncountedTraits').hidden = !plan.uncounted.length; setHTML($('uncountedList'), renderTraitRows(plan.uncounted, true));
@@ -351,8 +369,8 @@
     const generation = ++state.generation;
     try {
       const base = options(); TraitEngine.normalizeOptions(state.data, base);
-      const key = JSON.stringify({ ...base, population: null, level: null, memory: null });
-      if (key !== state.baseKey) { state.results.clear(); state.baseKey = key; state.selectedCount = null; }
+      const key = JSON.stringify({ ...base, population: null, level: null, memory: null, selections: null });
+      if (key !== state.baseKey) { state.results.clear(); state.baseKey = key; }
       state.busy = true; state.dirty = false; state.failure = null; lockForm(true); hideCancellation();
       cancelButtonTimer = setTimeout(() => { cancelButtonTimer = null; if (state.busy) $('cancelButton').hidden = false; }, 500);
       renderCurrent();
@@ -361,7 +379,7 @@
       if (generation !== state.generation) return;
       state.matrixMemory = result.memory;
       (result.progression || [result]).forEach(row => state.results.set(row.level, row));
-      result.acquiredUnits.forEach(name => state.data.units.filter(u => u.name === name).forEach(u => state.gamePool.add(u.id)));
+      result.candidateUnits.forEach(name => state.data.units.filter(u => u.name === name).forEach(u => state.gamePool.add(u.id)));
       renderPopulationTabs(); renderPool(); renderCurrent();
       renderResultStatus();
       persist();
@@ -493,7 +511,7 @@
     cancel(true);
     rosterView = null;
     state.emblems = ['裁决使']; state.fixedEvolutions.clear(); state.evolutionCount = 0; state.owned.clear(); state.excludedUnits.clear();
-    state.gamePool.clear(); state.results.clear(); state.sortModes.clear(); state.candidateDraft = null; state.matrixMemory = null; state.baseKey = null; state.crowns = 0;
+    state.gamePool.clear(); state.results.clear(); state.sortModes.clear(); state.selections = {}; state.candidateDraft = null; state.matrixMemory = null; state.baseKey = null; state.crowns = 0;
     state.lux = 'auto';
     setPopulation(8); dirty();
   }
@@ -518,8 +536,8 @@
     $('rulesButton').onclick = () => dialog('rulesDialog');
     $('exportButton').onclick = () => {
       const report = { version: state.data.version, emblems: state.emblems, populationLevel: state.population, crowns: state.crowns, evolutionCount: state.evolutionCount, fixedEvolutions: [...state.fixedEvolutions],
-        excludedUnits: [...state.excludedUnits], gamePool: [...state.gamePool], sortModes: Object.fromEntries(state.sortModes),
-        boundaries: Object.fromEntries([...state.results].map(([p]) => [p, TraitEngine.lossBoundary(state.data.lossReference)])), results: [...state.results.values()], memory: state.matrixMemory };
+        excludedUnits: [...state.excludedUnits], gamePool: [...state.gamePool], sortModes: Object.fromEntries(state.sortModes), selections: state.selections,
+        boundaries: Object.fromEntries([...state.results].map(([p]) => [p, TraitEngine.difficultyBoundary(state.data.difficultyReference)])), results: [...state.results.values()], memory: state.matrixMemory };
       const url = URL.createObjectURL(new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' }));
       const a = document.createElement('a'); a.href = url; a.download = 'tft-trait-ladder.json'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
     };
@@ -529,11 +547,11 @@
       if (b.dataset.close) $(b.dataset.close).close();
       if (b.id === 'adoptEvolution') adopt();
       if (b.dataset.unlockEvolution) unlockEvolution(b.dataset.unlockEvolution);
-      if (b.dataset.sort) { state.sortModes.set(state.population, b.dataset.sort); state.selectedCount = null; renderCurrent(); persist(); }
+      if (b.dataset.sort) { state.sortModes.set(state.population, b.dataset.sort); renderCurrent(); persist(); }
       if (b.dataset.removeExcluded) toggleExcluded(b.dataset.removeExcluded);
       if (b.dataset.poolId) toggleOwned(hero(b.dataset.poolId).name);
       if (b.dataset.population) setPopulation(b.dataset.population, true);
-      if (b.dataset.plan) { state.selectedCount = Number(b.dataset.plan); renderCurrent(); }
+      if (b.dataset.plan) selectCount(Number(b.dataset.plan));
       if (b.dataset.rosterOwned) toggleOwned(b.dataset.rosterOwned, true);
       else if (b.dataset.slot !== undefined) openSlot(Number(b.dataset.slot));
       if (b.dataset.emblemDelta !== undefined) {
@@ -613,6 +631,7 @@
           state.owned = new Set([...state.owned].map(ownershipName));
           state.excludedUnits = new Set([...state.excludedUnits].map(ownershipName));
           state.excludedUnits.forEach(name => state.owned.delete(name));
+          state.selections = TraitEngine.normalizeSelections(saved.selections);
           state.matrixMemory = saved.matrixMemory || null;
         }
       } catch (_) {}

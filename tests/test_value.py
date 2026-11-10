@@ -6,7 +6,7 @@ import unittest
 
 from traitladder.data import Dataset, Trait, Unit, load_data
 from traitladder.solver import solve, prepare_units
-from traitladder.value import load_shop_data, load_loss_reference, rank_population, rank_matrix, shop_hit_probability, unit_values, sort_plans, value_boundary, loss_boundary, fit_value_boundary, fit_loss_boundary, matrix_scope, restore_matrix_memory
+from traitladder.value import load_shop_data, load_difficulty_reference, rank_population, rank_matrix, shop_hit_probability, unit_values, sort_plans, difficulty_boundary, fit_value_boundary, fit_difficulty_boundary
 
 
 def brute_by_trait_count(data, population, weights):
@@ -64,7 +64,8 @@ class ValueTests(unittest.TestCase):
         for (level, crowns, e), row in cells.items():
             inherited = set().union(*(set(cells[tuple(p)]["acquired_units"]) for p in row["predecessors"]))
             self.assertEqual(set(row["inherited_units"]), inherited)
-            self.assertEqual(set(row["acquired_units"]), inherited | {u["name"] for p in row["plans"] for u in p["board"]})
+            chosen = next((p for p in row["plans"] if p["target_traits"] == row["selected_trait_count"]), {"board": []})
+            self.assertEqual(set(row["acquired_units"]), inherited | {u["name"] for u in chosen["board"]})
             owned = ["a", *(["卡兹克"] if e else [])]
             values = unit_values(data, level, owned=owned, inherited=inherited)
             pool = prepare_units(data, evolutions=["法师"] if e else [])
@@ -88,13 +89,42 @@ class ValueTests(unittest.TestCase):
                 self.assertEqual(plan["status"], "optimal")
                 self.assertAlmostEqual(plan["difficulty"], best[plan["target_traits"]])
                 self.assertEqual(plan["owned_used"], best_held[plan["target_traits"]])
-                self.assertAlmostEqual(plan["loss"], 1 / plan["value_score"])
+                self.assertNotIn("loss", plan)
+                self.assertNotIn("value_score", plan)
                 self.assertTrue(all(v["difficulty"] == 0 for v in plan["unit_values"] if v["inherited"] or v["owned"]))
             if not e:
                 self.assertNotIn("卡兹克", inherited)
         count = len(cells)
         rank_matrix(data, 2, 0, 1, [], owned=["a"], evolutions=["法师"], cache=cells)
         self.assertEqual(len(cells), count)
+
+    def test_equal_difficulty_prefers_more_traits_regardless_of_ownership(self):
+        held = {"target_traits": 1, "difficulty": 0, "board": ["held"], "owned_used": 1}
+        inherited = {"target_traits": 2, "difficulty": 0, "board": ["inherited"], "owned_used": 0}
+        self.assertEqual(sort_plans([inherited, held]), [inherited, held])
+        self.assertEqual(sort_plans([inherited, held], "traits"), [inherited, held])
+        half_step = {**held, "difficulty": .00000005}
+        self.assertEqual(sort_plans([half_step, inherited]), [inherited, half_step])
+        # 跨羁绊数不比较实际持有数量。
+        more_cards = {**held, "board": ["h1", "h2", "i1", "i2"], "owned_used": 2}
+        self.assertEqual(sort_plans([more_cards, inherited])[0], inherited)
+
+    def test_same_trait_count_prefers_owned_over_inherited_at_equal_cost(self):
+        data = Dataset((Unit("a", "inherited", 1, 1, "inherited", {"t": 1}),
+                        Unit("z", "held", 1, 1, "held", {"t": 1})),
+                       (Trait("t", (1,), True),), ())
+        values = unit_values(data, 3, owned=["held"], inherited=["inherited"])
+        self.assertEqual(values["a"]["difficulty"], values["z"]["difficulty"])
+        self.assertFalse(values["a"]["owned"])
+        self.assertTrue(values["a"]["inherited"])
+        result = rank_population(data, 1, [], shop_level=3, trait_counts=[1],
+                                 owned=["held"], inherited=["inherited"])
+        plan = result["plans"][0]
+        self.assertEqual(plan["status"], "optimal")
+        self.assertEqual(plan["canonical_status"], "optimal")
+        self.assertEqual(plan["difficulty"], 0)
+        self.assertEqual(plan["owned_used"], 1)
+        self.assertEqual([u["name"] for u in plan["board"]], ["held"])
 
     def test_fresh_pool_probabilities_and_denominator(self):
         values = unit_values(self.data, 3)
@@ -140,10 +170,6 @@ class ValueTests(unittest.TestCase):
             self.assertEqual(values[identifier]["difficulty"], 0)
             self.assertTrue(values[identifier]["owned"])
             self.assertEqual(values[identifier]["tier_pool"], 17)
-        scope = matrix_scope(data, None, (), (), "auto", {}, 0)
-        memory = {"scope": scope, "owned": [], "states": [{"state": [10, 0, 0], "cards": [u.name for u in units]}]}
-        restored = restore_matrix_memory(data, memory, scope, set())
-        self.assertEqual(restored[(10, 0, 0)], {"拉克丝 (a)", "拉克丝 (b)", "other"})
 
     def test_best_score_per_exact_trait_count_matches_exhaustive_search(self):
         rng = random.Random(1801)
@@ -166,7 +192,7 @@ class ValueTests(unittest.TestCase):
                             self.assertEqual(r["max_traits"], k)
                             self.assertAlmostEqual(r["difficulty"], expected[k])
                             self.assertAlmostEqual(r["difficulty_lower_bound"], expected[k])
-                            self.assertAlmostEqual(r["value_score"], 100 / (1 + expected[k]))
+                            self.assertNotIn("value_score", r)
 
     def test_complete_lineup_order_matches_exhaustive_search(self):
         traits = tuple(Trait(t, (2, 4), True) for t in ("a", "b"))
@@ -238,7 +264,7 @@ class ValueTests(unittest.TestCase):
     def test_all_owned_example_has_full_value(self):
         r = rank_population(self.data, 3, "裁决使", owned=["洛", "霞", "约里克"], trait_counts=[2])
         self.assertEqual(r["plans"][0]["difficulty"], 0)
-        self.assertEqual(r["plans"][0]["value_score"], 100)
+        self.assertEqual(r["plans"][0]["difficulty_lower_bound"], 0)
 
     def test_evolved_khazix_is_automatically_owned(self):
         options = dict(evolutions=("裁决使",), trait_counts=[2, 3])
@@ -307,18 +333,25 @@ class ValueTests(unittest.TestCase):
         self.assertIn("法师", locked["selected_evolutions"])
         self.assertEqual(len(locked["selected_evolutions"]), 2)
 
+    def test_difficulty_rounding_half_step(self):
+        low = {"board": [1], "target_traits": 2, "difficulty": 0}
+        near = {"board": [1], "target_traits": 3, "difficulty": 0.49e-7}
+        half = {**near, "difficulty": 0.5e-7}
+        self.assertEqual(sort_plans([low, near])[0], near)
+        self.assertEqual(sort_plans([half, low])[0], low)
+
     def test_sort_modes_keep_the_same_candidates(self):
-        plans = [{"board": [1], "target_traits": k, "value_score": v} for k, v in ((11, .638), (9, 1.305), (10, 1.116))]
+        plans = [{"board": [1], "target_traits": k, "difficulty": 100 / v - 1} for k, v in ((11, .638), (9, 1.305), (10, 1.116))]
         self.assertEqual([p["target_traits"] for p in sort_plans(plans)], [9, 10, 11])
         self.assertEqual([p["target_traits"] for p in sort_plans(plans, "traits")], [11, 10, 9])
         self.assertEqual([p["target_traits"] for p in plans], [11, 9, 10])
 
     def test_boundary_minimizes_log_variance_and_scales_with_values(self):
         numbers = [.2, .21, 1.1, 1.2, 1.3]
-        plans = [{"board": [1], "target_traits": i + 2, "value_score": value} for i, value in enumerate(numbers)]
+        plans = [{"board": [1], "target_traits": i + 2, "difficulty": 100 / value - 1} for i, value in enumerate(numbers)]
         result = fit_value_boundary(plans)
-        losses = fit_loss_boundary(plans)
-        self.assertAlmostEqual(losses["threshold"], 1 / result["threshold"])
+        losses = fit_difficulty_boundary(plans)
+        self.assertAlmostEqual(losses["threshold"], 100 / result["threshold"] - 1)
         self.assertEqual(losses["higher_count"], result["lower_count"])
         xs = list(map(log, numbers))
         losses = []
@@ -327,29 +360,28 @@ class ValueTests(unittest.TestCase):
             losses.append(sum(sum((x - sum(group) / len(group)) ** 2 for x in group) for group in parts))
         self.assertAlmostEqual(result["within_class_sse"], min(losses))
         self.assertEqual(sum(v < result["threshold"] for v in numbers), result["lower_count"])
-        scaled = fit_value_boundary([{**p, "value_score": p["value_score"] * 7} for p in reversed(plans)])
+        scaled = fit_value_boundary([{**p, "difficulty": (1 + p["difficulty"]) / 7 - 1} for p in reversed(plans)])
         self.assertAlmostEqual(scaled["threshold"], result["threshold"] * 7)
         self.assertIsNone(fit_value_boundary(plans[:1])["threshold"])
-        self.assertIsNone(fit_value_boundary([{**p, "value_score": 1} for p in plans])["threshold"])
+        self.assertIsNone(fit_value_boundary([{**p, "difficulty": 99} for p in plans])["threshold"])
 
-    def test_global_loss_boundary_is_independent_of_current_candidates(self):
-        cutoff = loss_boundary()["threshold"]
+    def test_global_difficulty_boundary_is_independent_of_current_candidates(self):
+        cutoff = difficulty_boundary()["threshold"]
         for values in ([], [100], [100, 100, 100], [1, 2, 3], [.001, 10, 99]):
-            plans = [{"board": [1], "target_traits": k + 2, "value_score": v} for k, v in enumerate(values)]
-            self.assertEqual(loss_boundary(plans)["threshold"], cutoff)
-            self.assertAlmostEqual(value_boundary(plans)["threshold"], 1 / cutoff)
+            plans = [{"board": [1], "target_traits": k + 2, "difficulty": 100 / v - 1} for k, v in enumerate(values)]
+            self.assertEqual(difficulty_boundary(plans)["threshold"], cutoff)
         self.assertGreater(cutoff, .01)
 
-    def test_published_loss_boundary_matches_reference_samples(self):
-        reference = load_loss_reference()
+    def test_published_difficulty_boundary_matches_reference_samples(self):
+        reference = load_difficulty_reference()
         self.assertEqual(reference["data_version"], self.data.version)
         self.assertEqual(len(reference["samples"]), reference["sample_count"])
         plans = []
         for row in reference["samples"]:
             self.assertGreater(row["difficulty"], 0)
-            self.assertAlmostEqual(row["loss"], (1 + row["difficulty"]) / 100)
-            plans.append({"board": [1], "target_traits": row["traits"], "value_score": 1 / row["loss"]})
-        fitted = fit_loss_boundary(plans)
+            self.assertEqual(reference["unit"], "shops")
+            plans.append({"board": [1], "target_traits": row["traits"], "difficulty": row["difficulty"]})
+        fitted = fit_difficulty_boundary(plans)
         for key, expected in reference["boundary"].items():
             if isinstance(expected, float):
                 self.assertAlmostEqual(fitted[key], expected)

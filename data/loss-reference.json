@@ -1,7 +1,12 @@
 {
-  "id": "s18-standard-matrix-v2",
+  "id": "s18-standard-matrix-v5",
   "data_version": "2026.S18 / CDN 16.21 / 2026-10-20 17:33:03",
+  "metric": "difficulty",
+  "unit": "shops",
+  "calibration_scale": "log(100/(1+D))",
   "ordering": "difficulty_owned_unit_id_trait_catalog",
+  "inheritance": "selected-plan-v1",
+  "selection_ordering": "rounded_difficulty_traits_desc",
   "levels": [
     1,
     10
@@ -23,17 +28,17 @@
   ],
   "sample": "positive_additional_difficulty",
   "state_count": 200,
-  "sample_count": 83,
+  "sample_count": 1062,
   "all_optimal": true,
   "scipy_version": "1.15.3",
   "boundary": {
-    "threshold": 0.2234507659979482,
+    "threshold": 16.562403122788517,
     "method": "minimum_within_class_log_variance",
-    "lower_count": 63,
-    "higher_count": 20,
-    "lower_geometric_mean": 0.08566728225456569,
-    "higher_geometric_mean": 0.5828391366110922,
-    "within_class_sse": 29.623025413502198
+    "lower_count": 642,
+    "higher_count": 420,
+    "lower_center": 8.843063085456995,
+    "higher_center": 30.335571129585187,
+    "within_class_sse": 163.79621533621503
   },
   "samples": [
     {
@@ -43,8 +48,7 @@
         0
       ],
       "traits": 2,
-      "difficulty": 3.2295728723180663,
-      "loss": 0.04229572872318066
+      "difficulty": 3.2295728723180663
     },
     {
       "state": [
@@ -53,8 +57,7 @@
         0
       ],
       "traits": 2,
-      "difficulty": 3.2295728723180663,
-      "loss": 0.04229572872318066
+      "difficulty": 3.2295728723180663
     },
     {
       "state": [
@@ -63,8 +66,7 @@
         0
       ],
       "traits": 3,
-      "difficulty": 3.2295728723180663,
-      "loss": 0.04229572872318066
+      "difficulty": 3.2295728723180663
     },
     {
       "state": [
@@ -73,8 +75,25 @@
         3
       ],
       "traits": 5,
-      "difficulty": 3.2295728723180663,
-      "loss": 0.04229572872318066
+      "difficulty": 3.2295728723180663
+    },
+    {
+      "state": [
+        1,
+        3,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 3.2295728723180663
+    },
+    {
+      "state": [
+        1,
+        3,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 3.2295728723180663
     },
     {
       "state": [
@@ -83,8 +102,7 @@
         0
       ],
       "traits": 2,
-      "difficulty": 3.2295728723180663,
-      "loss": 0.04229572872318066
+      "difficulty": 3.2295728723180663
     },
     {
       "state": [
@@ -93,8 +111,7 @@
         0
       ],
       "traits": 2,
-      "difficulty": 3.2295728723180663,
-      "loss": 0.04229572872318066
+      "difficulty": 3.2295728723180663
     },
     {
       "state": [
@@ -103,8 +120,7 @@
         0
       ],
       "traits": 3,
-      "difficulty": 3.2295728723180663,
-      "loss": 0.04229572872318066
+      "difficulty": 3.2295728723180663
     },
     {
       "state": [
@@ -113,8 +129,25 @@
         3
       ],
       "traits": 5,
-      "difficulty": 3.2295728723180663,
-      "loss": 0.04229572872318066
+      "difficulty": 3.2295728723180663
+    },
+    {
+      "state": [
+        2,
+        2,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 3.2295728723180663
+    },
+    {
+      "state": [
+        2,
+        2,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 3.2295728723180663
     },
     {
       "state": [
@@ -123,8 +156,16 @@
         0
       ],
       "traits": 2,
-      "difficulty": 3.2295728723180663,
-      "loss": 0.04229572872318066
+      "difficulty": 6.459145744636133
+    },
+    {
+      "state": [
+        2,
+        3,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 3.2295728723180663
     },
     {
       "state": [
@@ -133,8 +174,34 @@
         0
       ],
       "traits": 4,
-      "difficulty": 3.2295728723180663,
-      "loss": 0.04229572872318066
+      "difficulty": 3.2295728723180663
+    },
+    {
+      "state": [
+        2,
+        3,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 3.2295728723180663
+    },
+    {
+      "state": [
+        2,
+        3,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 3.2295728723180663
+    },
+    {
+      "state": [
+        2,
+        3,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 3.2295728723180663
     },
     {
       "state": [
@@ -143,8 +210,34 @@
         3
       ],
       "traits": 6,
-      "difficulty": 3.2295728723180663,
-      "loss": 0.04229572872318066
+      "difficulty": 6.459145744636133
+    },
+    {
+      "state": [
+        2,
+        3,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 3.2295728723180663
+    },
+    {
+      "state": [
+        2,
+        3,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 3.2295728723180663
+    },
+    {
+      "state": [
+        2,
+        3,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 6.459145744636133
     },
     {
       "state": [
@@ -153,8 +246,7 @@
         0
       ],
       "traits": 2,
-      "difficulty": 4.155328363931861,
-      "loss": 0.0515532836393186
+      "difficulty": 4.155328363931861
     },
     {
       "state": [
@@ -163,8 +255,7 @@
         0
       ],
       "traits": 2,
-      "difficulty": 4.155328363931861,
-      "loss": 0.0515532836393186
+      "difficulty": 4.155328363931861
     },
     {
       "state": [
@@ -173,8 +264,7 @@
         0
       ],
       "traits": 3,
-      "difficulty": 4.155328363931861,
-      "loss": 0.0515532836393186
+      "difficulty": 4.155328363931861
     },
     {
       "state": [
@@ -183,8 +273,34 @@
         2
       ],
       "traits": 5,
-      "difficulty": 10.807765965511994,
-      "loss": 0.11807765965511993
+      "difficulty": 10.807765965511994
+    },
+    {
+      "state": [
+        3,
+        1,
+        3
+      ],
+      "traits": 5,
+      "difficulty": 4.155328363931861
+    },
+    {
+      "state": [
+        3,
+        1,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 4.155328363931861
+    },
+    {
+      "state": [
+        3,
+        1,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 4.155328363931861
     },
     {
       "state": [
@@ -193,8 +309,16 @@
         0
       ],
       "traits": 2,
-      "difficulty": 4.155328363931861,
-      "loss": 0.0515532836393186
+      "difficulty": 8.310656727863721
+    },
+    {
+      "state": [
+        3,
+        2,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 4.155328363931861
     },
     {
       "state": [
@@ -203,8 +327,25 @@
         0
       ],
       "traits": 4,
-      "difficulty": 4.155328363931861,
-      "loss": 0.0515532836393186
+      "difficulty": 4.155328363931861
+    },
+    {
+      "state": [
+        3,
+        2,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 4.155328363931861
+    },
+    {
+      "state": [
+        3,
+        2,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 4.155328363931861
     },
     {
       "state": [
@@ -213,8 +354,79 @@
         2
       ],
       "traits": 6,
-      "difficulty": 14.963094329443855,
-      "loss": 0.15963094329443855
+      "difficulty": 14.963094329443855
+    },
+    {
+      "state": [
+        3,
+        2,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 4.155328363931861
+    },
+    {
+      "state": [
+        3,
+        2,
+        3
+      ],
+      "traits": 6,
+      "difficulty": 8.310656727863721
+    },
+    {
+      "state": [
+        3,
+        2,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 4.155328363931861
+    },
+    {
+      "state": [
+        3,
+        2,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 4.155328363931861
+    },
+    {
+      "state": [
+        3,
+        2,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 8.310656727863721
+    },
+    {
+      "state": [
+        3,
+        3,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 8.310656727863721
+    },
+    {
+      "state": [
+        3,
+        3,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 8.310656727863721
+    },
+    {
+      "state": [
+        3,
+        3,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 4.155328363931861
     },
     {
       "state": [
@@ -223,8 +435,106 @@
         0
       ],
       "traits": 5,
-      "difficulty": 4.155328363931861,
-      "loss": 0.0515532836393186
+      "difficulty": 4.155328363931861
+    },
+    {
+      "state": [
+        3,
+        3,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 4.155328363931861
+    },
+    {
+      "state": [
+        3,
+        3,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 4.155328363931861
+    },
+    {
+      "state": [
+        3,
+        3,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 4.155328363931861
+    },
+    {
+      "state": [
+        3,
+        3,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 4.155328363931861
+    },
+    {
+      "state": [
+        3,
+        3,
+        2
+      ],
+      "traits": 7,
+      "difficulty": 25.77086029495585
+    },
+    {
+      "state": [
+        3,
+        3,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 4.155328363931861
+    },
+    {
+      "state": [
+        3,
+        3,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 4.155328363931861
+    },
+    {
+      "state": [
+        3,
+        3,
+        3
+      ],
+      "traits": 7,
+      "difficulty": 12.46598509179558
+    },
+    {
+      "state": [
+        3,
+        3,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 8.310656727863721
+    },
+    {
+      "state": [
+        3,
+        3,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 4.155328363931861
+    },
+    {
+      "state": [
+        3,
+        3,
+        4
+      ],
+      "traits": 7,
+      "difficulty": 12.46598509179558
     },
     {
       "state": [
@@ -233,8 +543,7 @@
         0
       ],
       "traits": 2,
-      "difficulty": 5.506929232467843,
-      "loss": 0.06506929232467842
+      "difficulty": 5.506929232467843
     },
     {
       "state": [
@@ -243,8 +552,7 @@
         0
       ],
       "traits": 3,
-      "difficulty": 5.506929232467843,
-      "loss": 0.06506929232467842
+      "difficulty": 5.506929232467843
     },
     {
       "state": [
@@ -253,8 +561,106 @@
         0
       ],
       "traits": 4,
-      "difficulty": 28.146978695844506,
-      "loss": 0.29146978695844505
+      "difficulty": 28.146978695844506
+    },
+    {
+      "state": [
+        4,
+        0,
+        1
+      ],
+      "traits": 5,
+      "difficulty": 28.07292187901095
+    },
+    {
+      "state": [
+        4,
+        0,
+        2
+      ],
+      "traits": 5,
+      "difficulty": 9.076003407032136
+    },
+    {
+      "state": [
+        4,
+        0,
+        2
+      ],
+      "traits": 6,
+      "difficulty": 28.07292187901095
+    },
+    {
+      "state": [
+        4,
+        0,
+        3
+      ],
+      "traits": 5,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        0,
+        3
+      ],
+      "traits": 6,
+      "difficulty": 18.996918471978812
+    },
+    {
+      "state": [
+        4,
+        0,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        0,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        0,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 18.996918471978812
+    },
+    {
+      "state": [
+        4,
+        1,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 11.013858464935685
+    },
+    {
+      "state": [
+        4,
+        1,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        1,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 5.506929232467843
     },
     {
       "state": [
@@ -263,8 +669,7 @@
         0
       ],
       "traits": 5,
-      "difficulty": 5.506929232467843,
-      "loss": 0.06506929232467842
+      "difficulty": 24.577904521280214
     },
     {
       "state": [
@@ -273,8 +678,115 @@
         0
       ],
       "traits": 6,
-      "difficulty": 14.58293263949998,
-      "loss": 0.1558293263949998
+      "difficulty": 42.72991133534448
+    },
+    {
+      "state": [
+        4,
+        1,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        1,
+        1
+      ],
+      "traits": 6,
+      "difficulty": 28.07292187901095
+    },
+    {
+      "state": [
+        4,
+        1,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        1,
+        2
+      ],
+      "traits": 6,
+      "difficulty": 14.58293263949998
+    },
+    {
+      "state": [
+        4,
+        1,
+        2
+      ],
+      "traits": 7,
+      "difficulty": 37.14892528604308
+    },
+    {
+      "state": [
+        4,
+        1,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        1,
+        3
+      ],
+      "traits": 6,
+      "difficulty": 11.013858464935685
+    },
+    {
+      "state": [
+        4,
+        1,
+        3
+      ],
+      "traits": 7,
+      "difficulty": 24.503847704446656
+    },
+    {
+      "state": [
+        4,
+        1,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        1,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        1,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 11.013858464935685
+    },
+    {
+      "state": [
+        4,
+        1,
+        4
+      ],
+      "traits": 7,
+      "difficulty": 24.503847704446656
     },
     {
       "state": [
@@ -283,8 +795,52 @@
         4
       ],
       "traits": 8,
-      "difficulty": 37.993836943957625,
-      "loss": 0.38993836943957627
+      "difficulty": 66.06675882296858
+    },
+    {
+      "state": [
+        4,
+        2,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 11.013858464935685
+    },
+    {
+      "state": [
+        4,
+        2,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 11.013858464935685
+    },
+    {
+      "state": [
+        4,
+        2,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        2,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        2,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 24.577904521280214
     },
     {
       "state": [
@@ -293,8 +849,205 @@
         0
       ],
       "traits": 7,
-      "difficulty": 9.076003407032136,
-      "loss": 0.10076003407032136
+      "difficulty": 51.80591474237662
+    },
+    {
+      "state": [
+        4,
+        2,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        2,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        2,
+        1
+      ],
+      "traits": 7,
+      "difficulty": 28.07292187901095
+    },
+    {
+      "state": [
+        4,
+        2,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        2,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        2,
+        2
+      ],
+      "traits": 7,
+      "difficulty": 18.996918471978812
+    },
+    {
+      "state": [
+        4,
+        2,
+        2
+      ],
+      "traits": 8,
+      "difficulty": 42.65585451851093
+    },
+    {
+      "state": [
+        4,
+        2,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        2,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        2,
+        3
+      ],
+      "traits": 7,
+      "difficulty": 14.58293263949998
+    },
+    {
+      "state": [
+        4,
+        2,
+        3
+      ],
+      "traits": 8,
+      "difficulty": 24.503847704446656
+    },
+    {
+      "state": [
+        4,
+        2,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 11.013858464935685
+    },
+    {
+      "state": [
+        4,
+        2,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        2,
+        4
+      ],
+      "traits": 7,
+      "difficulty": 14.58293263949998
+    },
+    {
+      "state": [
+        4,
+        2,
+        4
+      ],
+      "traits": 8,
+      "difficulty": 24.503847704446656
+    },
+    {
+      "state": [
+        4,
+        2,
+        4
+      ],
+      "traits": 9,
+      "difficulty": 56.1458437580219
+    },
+    {
+      "state": [
+        4,
+        3,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 16.520787697403527
+    },
+    {
+      "state": [
+        4,
+        3,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 11.013858464935685
+    },
+    {
+      "state": [
+        4,
+        3,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 11.013858464935685
+    },
+    {
+      "state": [
+        4,
+        3,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        3,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 9.076003407032136
+    },
+    {
+      "state": [
+        4,
+        3,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 27.228010221096408
     },
     {
       "state": [
@@ -303,8 +1056,43 @@
         0
       ],
       "traits": 8,
-      "difficulty": 19.07097528881237,
-      "loss": 0.2007097528881237
+      "difficulty": 52.72488321712472
+    },
+    {
+      "state": [
+        4,
+        3,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        3,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        3,
+        1
+      ],
+      "traits": 7,
+      "difficulty": 9.076003407032136
+    },
+    {
+      "state": [
+        4,
+        3,
+        1
+      ],
+      "traits": 8,
+      "difficulty": 28.07292187901095
     },
     {
       "state": [
@@ -313,8 +1101,187 @@
         1
       ],
       "traits": 9,
-      "difficulty": 37.993836943957625,
-      "loss": 0.38993836943957627
+      "difficulty": 71.57368805543642
+    },
+    {
+      "state": [
+        4,
+        3,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        3,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        3,
+        2
+      ],
+      "traits": 7,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        3,
+        2
+      ],
+      "traits": 8,
+      "difficulty": 18.996918471978812
+    },
+    {
+      "state": [
+        4,
+        3,
+        2
+      ],
+      "traits": 9,
+      "difficulty": 43.50076617642547
+    },
+    {
+      "state": [
+        4,
+        3,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        3,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        3,
+        3
+      ],
+      "traits": 7,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        3,
+        3
+      ],
+      "traits": 8,
+      "difficulty": 18.996918471978812
+    },
+    {
+      "state": [
+        4,
+        3,
+        3
+      ],
+      "traits": 9,
+      "difficulty": 28.07292187901095
+    },
+    {
+      "state": [
+        4,
+        3,
+        3
+      ],
+      "traits": 10,
+      "difficulty": 71.57368805543642
+    },
+    {
+      "state": [
+        4,
+        3,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 11.013858464935685
+    },
+    {
+      "state": [
+        4,
+        3,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        3,
+        4
+      ],
+      "traits": 7,
+      "difficulty": 5.506929232467843
+    },
+    {
+      "state": [
+        4,
+        3,
+        4
+      ],
+      "traits": 8,
+      "difficulty": 14.58293263949998
+    },
+    {
+      "state": [
+        4,
+        3,
+        4
+      ],
+      "traits": 9,
+      "difficulty": 24.503847704446656
+    },
+    {
+      "state": [
+        4,
+        3,
+        4
+      ],
+      "traits": 10,
+      "difficulty": 43.50076617642547
+    },
+    {
+      "state": [
+        5,
+        0,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 13.270568988954897
+    },
+    {
+      "state": [
+        5,
+        0,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        0,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 6.635284494477449
     },
     {
       "state": [
@@ -323,8 +1290,7 @@
         0
       ],
       "traits": 5,
-      "difficulty": 6.635284494477449,
-      "loss": 0.07635284494477448
+      "difficulty": 21.04103947316491
     },
     {
       "state": [
@@ -333,8 +1299,43 @@
         0
       ],
       "traits": 6,
-      "difficulty": 14.924354373166555,
-      "loss": 0.15924354373166555
+      "difficulty": 37.619179230543125
+    },
+    {
+      "state": [
+        5,
+        0,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        0,
+        1
+      ],
+      "traits": 6,
+      "difficulty": 22.639292392269446
+    },
+    {
+      "state": [
+        5,
+        0,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        0,
+        2
+      ],
+      "traits": 6,
+      "difficulty": 14.350222513580341
     },
     {
       "state": [
@@ -343,8 +1344,70 @@
         2
       ],
       "traits": 7,
-      "difficulty": 8.289069878689105,
-      "loss": 0.09289069878689105
+      "difficulty": 30.92836227095855
+    },
+    {
+      "state": [
+        5,
+        0,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        0,
+        3
+      ],
+      "traits": 6,
+      "difficulty": 13.270568988954897
+    },
+    {
+      "state": [
+        5,
+        0,
+        3
+      ],
+      "traits": 7,
+      "difficulty": 20.98550700805779
+    },
+    {
+      "state": [
+        5,
+        0,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        0,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        0,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 13.270568988954897
+    },
+    {
+      "state": [
+        5,
+        0,
+        4
+      ],
+      "traits": 7,
+      "difficulty": 20.98550700805779
     },
     {
       "state": [
@@ -353,8 +1416,52 @@
         4
       ],
       "traits": 8,
-      "difficulty": 28.700445027160683,
-      "loss": 0.2970044502716068
+      "difficulty": 51.33973741943013
+    },
+    {
+      "state": [
+        5,
+        1,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 13.270568988954897
+    },
+    {
+      "state": [
+        5,
+        1,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 13.270568988954897
+    },
+    {
+      "state": [
+        5,
+        1,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        1,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        1,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 21.04103947316491
     },
     {
       "state": [
@@ -363,8 +1470,106 @@
         0
       ],
       "traits": 7,
-      "difficulty": 8.289069878689105,
-      "loss": 0.09289069878689105
+      "difficulty": 45.90824910923223
+    },
+    {
+      "state": [
+        5,
+        1,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        1,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        1,
+        1
+      ],
+      "traits": 7,
+      "difficulty": 22.639292392269446
+    },
+    {
+      "state": [
+        5,
+        1,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        1,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        1,
+        2
+      ],
+      "traits": 7,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        5,
+        1,
+        2
+      ],
+      "traits": 8,
+      "difficulty": 35.33572952163813
+    },
+    {
+      "state": [
+        5,
+        1,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        1,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        1,
+        3
+      ],
+      "traits": 7,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        5,
+        1,
+        3
+      ],
+      "traits": 8,
+      "difficulty": 20.98550700805779
     },
     {
       "state": [
@@ -373,8 +1578,106 @@
         3
       ],
       "traits": 9,
-      "difficulty": 301.7866506812926,
-      "loss": 3.027866506812926
+      "difficulty": 309.50158870039553
+    },
+    {
+      "state": [
+        5,
+        1,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 13.270568988954897
+    },
+    {
+      "state": [
+        5,
+        1,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        1,
+        4
+      ],
+      "traits": 7,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        5,
+        1,
+        4
+      ],
+      "traits": 8,
+      "difficulty": 20.98550700805779
+    },
+    {
+      "state": [
+        5,
+        1,
+        4
+      ],
+      "traits": 9,
+      "difficulty": 45.27858478453889
+    },
+    {
+      "state": [
+        5,
+        2,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 19.905853483432345
+    },
+    {
+      "state": [
+        5,
+        2,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 13.270568988954897
+    },
+    {
+      "state": [
+        5,
+        2,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 13.270568988954897
+    },
+    {
+      "state": [
+        5,
+        2,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        2,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 8.289069878689105
+    },
+    {
+      "state": [
+        5,
+        2,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 22.694824857376567
     },
     {
       "state": [
@@ -383,8 +1686,43 @@
         0
       ],
       "traits": 8,
-      "difficulty": 14.405754978687463,
-      "loss": 0.15405754978687464
+      "difficulty": 43.73586433054148
+    },
+    {
+      "state": [
+        5,
+        2,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        2,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        2,
+        1
+      ],
+      "traits": 7,
+      "difficulty": 8.289069878689105
+    },
+    {
+      "state": [
+        5,
+        2,
+        1
+      ],
+      "traits": 8,
+      "difficulty": 22.639292392269446
     },
     {
       "state": [
@@ -393,8 +1731,223 @@
         1
       ],
       "traits": 9,
-      "difficulty": 28.700445027160683,
-      "loss": 0.2970044502716068
+      "difficulty": 57.975021913907575
+    },
+    {
+      "state": [
+        5,
+        2,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        2,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        2,
+        2
+      ],
+      "traits": 7,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        2,
+        2
+      ],
+      "traits": 8,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        5,
+        2,
+        2
+      ],
+      "traits": 9,
+      "difficulty": 35.33572952163813
+    },
+    {
+      "state": [
+        5,
+        2,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        2,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        2,
+        3
+      ],
+      "traits": 7,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        2,
+        3
+      ],
+      "traits": 8,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        5,
+        2,
+        3
+      ],
+      "traits": 9,
+      "difficulty": 22.639292392269446
+    },
+    {
+      "state": [
+        5,
+        2,
+        3
+      ],
+      "traits": 10,
+      "difficulty": 57.975021913907575
+    },
+    {
+      "state": [
+        5,
+        2,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 13.270568988954897
+    },
+    {
+      "state": [
+        5,
+        2,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        2,
+        4
+      ],
+      "traits": 7,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        2,
+        4
+      ],
+      "traits": 8,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        5,
+        2,
+        4
+      ],
+      "traits": 9,
+      "difficulty": 20.98550700805779
+    },
+    {
+      "state": [
+        5,
+        2,
+        4
+      ],
+      "traits": 10,
+      "difficulty": 35.33572952163813
+    },
+    {
+      "state": [
+        5,
+        3,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 19.905853483432345
+    },
+    {
+      "state": [
+        5,
+        3,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 13.270568988954897
+    },
+    {
+      "state": [
+        5,
+        3,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 13.270568988954897
+    },
+    {
+      "state": [
+        5,
+        3,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        3,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        3,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 14.924354373166555
+    },
+    {
+      "state": [
+        5,
+        3,
+        0
+      ],
+      "traits": 8,
+      "difficulty": 29.33010935185402
     },
     {
       "state": [
@@ -403,8 +1956,7 @@
         0
       ],
       "traits": 9,
-      "difficulty": 14.405754978687463,
-      "loss": 0.15405754978687464
+      "difficulty": 43.73586433054148
     },
     {
       "state": [
@@ -413,8 +1965,115 @@
         0
       ],
       "traits": 10,
-      "difficulty": 309.61265363060977,
-      "loss": 3.106126536306098
+      "difficulty": 317.90172350929885
+    },
+    {
+      "state": [
+        5,
+        3,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 13.270568988954897
+    },
+    {
+      "state": [
+        5,
+        3,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        3,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        3,
+        1
+      ],
+      "traits": 8,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        5,
+        3,
+        1
+      ],
+      "traits": 9,
+      "difficulty": 22.639292392269446
+    },
+    {
+      "state": [
+        5,
+        3,
+        1
+      ],
+      "traits": 10,
+      "difficulty": 49.68595203521847
+    },
+    {
+      "state": [
+        5,
+        3,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 13.270568988954897
+    },
+    {
+      "state": [
+        5,
+        3,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        3,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        3,
+        2
+      ],
+      "traits": 8,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        3,
+        2
+      ],
+      "traits": 9,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        5,
+        3,
+        2
+      ],
+      "traits": 10,
+      "difficulty": 35.33572952163813
     },
     {
       "state": [
@@ -423,8 +2082,187 @@
         2
       ],
       "traits": 11,
-      "difficulty": 140.40057183661742,
-      "loss": 1.414005718366174
+      "difficulty": 190.08652387183588
+    },
+    {
+      "state": [
+        5,
+        3,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 13.270568988954897
+    },
+    {
+      "state": [
+        5,
+        3,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        3,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        3,
+        3
+      ],
+      "traits": 8,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        3,
+        3
+      ],
+      "traits": 9,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        5,
+        3,
+        3
+      ],
+      "traits": 10,
+      "difficulty": 20.98550700805779
+    },
+    {
+      "state": [
+        5,
+        3,
+        3
+      ],
+      "traits": 11,
+      "difficulty": 49.68595203521847
+    },
+    {
+      "state": [
+        5,
+        3,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 19.905853483432345
+    },
+    {
+      "state": [
+        5,
+        3,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 13.270568988954897
+    },
+    {
+      "state": [
+        5,
+        3,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        3,
+        4
+      ],
+      "traits": 8,
+      "difficulty": 6.635284494477449
+    },
+    {
+      "state": [
+        5,
+        3,
+        4
+      ],
+      "traits": 9,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        5,
+        3,
+        4
+      ],
+      "traits": 10,
+      "difficulty": 20.98550700805779
+    },
+    {
+      "state": [
+        5,
+        3,
+        4
+      ],
+      "traits": 11,
+      "difficulty": 36.98951490584979
+    },
+    {
+      "state": [
+        5,
+        3,
+        4
+      ],
+      "traits": 12,
+      "difficulty": 323.85181121397585
+    },
+    {
+      "state": [
+        6,
+        0,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 13.824991458950638
+    },
+    {
+      "state": [
+        6,
+        0,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 13.824991458950638
+    },
+    {
+      "state": [
+        6,
+        0,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        0,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        0,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 18.5197021178716
     },
     {
       "state": [
@@ -433,8 +2271,106 @@
         0
       ],
       "traits": 7,
-      "difficulty": 6.912495729475319,
-      "loss": 0.07912495729475319
+      "difficulty": 42.08668974759774
+    },
+    {
+      "state": [
+        6,
+        0,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        0,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        0,
+        1
+      ],
+      "traits": 7,
+      "difficulty": 18.475286637210615
+    },
+    {
+      "state": [
+        6,
+        0,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        0,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        0,
+        2
+      ],
+      "traits": 7,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        6,
+        0,
+        2
+      ],
+      "traits": 8,
+      "difficulty": 32.867577986246104
+    },
+    {
+      "state": [
+        6,
+        0,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        0,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        0,
+        3
+      ],
+      "traits": 7,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        6,
+        0,
+        3
+      ],
+      "traits": 8,
+      "difficulty": 18.475286637210615
     },
     {
       "state": [
@@ -443,8 +2379,97 @@
         3
       ],
       "traits": 9,
-      "difficulty": 134.10764931971227,
-      "loss": 1.3510764931971226
+      "difficulty": 135.92844405667205
+    },
+    {
+      "state": [
+        6,
+        0,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 13.824991458950638
+    },
+    {
+      "state": [
+        6,
+        0,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        0,
+        4
+      ],
+      "traits": 7,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        6,
+        0,
+        4
+      ],
+      "traits": 8,
+      "difficulty": 18.475286637210615
+    },
+    {
+      "state": [
+        6,
+        0,
+        4
+      ],
+      "traits": 9,
+      "difficulty": 36.95057327442123
+    },
+    {
+      "state": [
+        6,
+        1,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 13.824991458950638
+    },
+    {
+      "state": [
+        6,
+        1,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        1,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        1,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        1,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 18.5197021178716
     },
     {
       "state": [
@@ -453,8 +2478,34 @@
         0
       ],
       "traits": 8,
-      "difficulty": 11.60720638839628,
-      "loss": 0.1260720638839628
+      "difficulty": 37.0394042357432
+    },
+    {
+      "state": [
+        6,
+        1,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        1,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        1,
+        1
+      ],
+      "traits": 8,
+      "difficulty": 18.475286637210615
     },
     {
       "state": [
@@ -463,8 +2514,196 @@
         1
       ],
       "traits": 9,
-      "difficulty": 23.125581815470593,
-      "loss": 0.24125581815470593
+      "difficulty": 51.34286462345672
+    },
+    {
+      "state": [
+        6,
+        1,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        1,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        1,
+        2
+      ],
+      "traits": 8,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        6,
+        1,
+        2
+      ],
+      "traits": 9,
+      "difficulty": 30.038077544945914
+    },
+    {
+      "state": [
+        6,
+        1,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        1,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        1,
+        3
+      ],
+      "traits": 8,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        6,
+        1,
+        3
+      ],
+      "traits": 9,
+      "difficulty": 18.475286637210615
+    },
+    {
+      "state": [
+        6,
+        1,
+        3
+      ],
+      "traits": 10,
+      "difficulty": 48.51336418215653
+    },
+    {
+      "state": [
+        6,
+        1,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 13.824991458950638
+    },
+    {
+      "state": [
+        6,
+        1,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        1,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        1,
+        4
+      ],
+      "traits": 8,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        6,
+        1,
+        4
+      ],
+      "traits": 9,
+      "difficulty": 18.475286637210615
+    },
+    {
+      "state": [
+        6,
+        1,
+        4
+      ],
+      "traits": 10,
+      "difficulty": 30.038077544945914
+    },
+    {
+      "state": [
+        6,
+        2,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 13.824991458950638
+    },
+    {
+      "state": [
+        6,
+        2,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        2,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        2,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        2,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        2,
+        0
+      ],
+      "traits": 8,
+      "difficulty": 18.5197021178716
     },
     {
       "state": [
@@ -473,8 +2712,7 @@
         0
       ],
       "traits": 9,
-      "difficulty": 11.60720638839628,
-      "loss": 0.1260720638839628
+      "difficulty": 37.0394042357432
     },
     {
       "state": [
@@ -483,8 +2721,97 @@
         0
       ],
       "traits": 10,
-      "difficulty": 145.7592711887695,
-      "loss": 1.467592711887695
+      "difficulty": 142.92977074746932
+    },
+    {
+      "state": [
+        6,
+        2,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        2,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        2,
+        1
+      ],
+      "traits": 8,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        2,
+        1
+      ],
+      "traits": 9,
+      "difficulty": 18.475286637210615
+    },
+    {
+      "state": [
+        6,
+        2,
+        1
+      ],
+      "traits": 10,
+      "difficulty": 44.4303688939814
+    },
+    {
+      "state": [
+        6,
+        2,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        2,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        2,
+        2
+      ],
+      "traits": 8,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        2,
+        2
+      ],
+      "traits": 9,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        6,
+        2,
+        2
+      ],
+      "traits": 10,
+      "difficulty": 30.038077544945914
     },
     {
       "state": [
@@ -493,8 +2820,403 @@
         2
       ],
       "traits": 11,
-      "difficulty": 56.40143112060072,
-      "loss": 0.5740143112060072
+      "difficulty": 98.00229957328193
+    },
+    {
+      "state": [
+        6,
+        2,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        2,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        2,
+        3
+      ],
+      "traits": 8,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        2,
+        3
+      ],
+      "traits": 9,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        6,
+        2,
+        3
+      ],
+      "traits": 10,
+      "difficulty": 18.475286637210615
+    },
+    {
+      "state": [
+        6,
+        2,
+        3
+      ],
+      "traits": 11,
+      "difficulty": 41.60086845268121
+    },
+    {
+      "state": [
+        6,
+        2,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 13.824991458950638
+    },
+    {
+      "state": [
+        6,
+        2,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        2,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        2,
+        4
+      ],
+      "traits": 8,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        2,
+        4
+      ],
+      "traits": 9,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        6,
+        2,
+        4
+      ],
+      "traits": 10,
+      "difficulty": 18.475286637210615
+    },
+    {
+      "state": [
+        6,
+        2,
+        4
+      ],
+      "traits": 11,
+      "difficulty": 30.038077544945914
+    },
+    {
+      "state": [
+        6,
+        2,
+        4
+      ],
+      "traits": 12,
+      "difficulty": 147.49123496440734
+    },
+    {
+      "state": [
+        6,
+        3,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 13.824991458950638
+    },
+    {
+      "state": [
+        6,
+        3,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 13.824991458950638
+    },
+    {
+      "state": [
+        6,
+        3,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        3,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        3,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        3,
+        0
+      ],
+      "traits": 8,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        3,
+        0
+      ],
+      "traits": 9,
+      "difficulty": 23.21441277679256
+    },
+    {
+      "state": [
+        6,
+        3,
+        0
+      ],
+      "traits": 10,
+      "difficulty": 37.0394042357432
+    },
+    {
+      "state": [
+        6,
+        3,
+        0
+      ],
+      "traits": 11,
+      "difficulty": 106.0123319684196
+    },
+    {
+      "state": [
+        6,
+        3,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 13.824991458950638
+    },
+    {
+      "state": [
+        6,
+        3,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        3,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        3,
+        1
+      ],
+      "traits": 9,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        6,
+        3,
+        1
+      ],
+      "traits": 10,
+      "difficulty": 18.475286637210615
+    },
+    {
+      "state": [
+        6,
+        3,
+        1
+      ],
+      "traits": 11,
+      "difficulty": 39.78007371572142
+    },
+    {
+      "state": [
+        6,
+        3,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 13.824991458950638
+    },
+    {
+      "state": [
+        6,
+        3,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        3,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        3,
+        2
+      ],
+      "traits": 9,
+      "difficulty": 9.741996170775508
+    },
+    {
+      "state": [
+        6,
+        3,
+        2
+      ],
+      "traits": 10,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        6,
+        3,
+        2
+      ],
+      "traits": 11,
+      "difficulty": 30.038077544945914
+    },
+    {
+      "state": [
+        6,
+        3,
+        2
+      ],
+      "traits": 12,
+      "difficulty": 54.17236506475691
+    },
+    {
+      "state": [
+        6,
+        3,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 13.824991458950638
+    },
+    {
+      "state": [
+        6,
+        3,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        3,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        3,
+        3
+      ],
+      "traits": 9,
+      "difficulty": 9.741996170775508
+    },
+    {
+      "state": [
+        6,
+        3,
+        3
+      ],
+      "traits": 10,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        6,
+        3,
+        3
+      ],
+      "traits": 11,
+      "difficulty": 21.304787078510806
+    },
+    {
+      "state": [
+        6,
+        3,
+        3
+      ],
+      "traits": 12,
+      "difficulty": 36.95057327442123
+    },
+    {
+      "state": [
+        6,
+        3,
+        3
+      ],
+      "traits": 13,
+      "difficulty": 154.40373069388266
     },
     {
       "state": [
@@ -503,8 +3225,133 @@
         4
       ],
       "traits": 2,
-      "difficulty": 6.912495729475319,
-      "loss": 0.07912495729475319
+      "difficulty": 20.73748718842596
+    },
+    {
+      "state": [
+        6,
+        3,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 13.824991458950638
+    },
+    {
+      "state": [
+        6,
+        3,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        3,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 6.912495729475319
+    },
+    {
+      "state": [
+        6,
+        3,
+        4
+      ],
+      "traits": 9,
+      "difficulty": 9.741996170775508
+    },
+    {
+      "state": [
+        6,
+        3,
+        4
+      ],
+      "traits": 10,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        6,
+        3,
+        4
+      ],
+      "traits": 11,
+      "difficulty": 21.304787078510806
+    },
+    {
+      "state": [
+        6,
+        3,
+        4
+      ],
+      "traits": 12,
+      "difficulty": 30.038077544945914
+    },
+    {
+      "state": [
+        6,
+        3,
+        4
+      ],
+      "traits": 13,
+      "difficulty": 51.34286462345672
+    },
+    {
+      "state": [
+        7,
+        0,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 22.234772384653475
+    },
+    {
+      "state": [
+        7,
+        0,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 14.823181589768984
+    },
+    {
+      "state": [
+        7,
+        0,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 14.823181589768984
+    },
+    {
+      "state": [
+        7,
+        0,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        7,
+        0,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        7,
+        0,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 22.234772384653475
     },
     {
       "state": [
@@ -513,8 +3360,7 @@
         0
       ],
       "traits": 8,
-      "difficulty": 7.411590794884492,
-      "loss": 0.08411590794884492
+      "difficulty": 32.97518840383326
     },
     {
       "state": [
@@ -523,8 +3369,151 @@
         0
       ],
       "traits": 9,
-      "difficulty": 243.6264491216716,
-      "loss": 2.446264491216716
+      "difficulty": 260.11404332358825
+    },
+    {
+      "state": [
+        7,
+        0,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        0,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        0,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        0,
+        1
+      ],
+      "traits": 7,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        0,
+        1
+      ],
+      "traits": 8,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        0,
+        1
+      ],
+      "traits": 9,
+      "difficulty": 46.36989033446107
+    },
+    {
+      "state": [
+        7,
+        0,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        0,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        0,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        0,
+        2
+      ],
+      "traits": 8,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        0,
+        2
+      ],
+      "traits": 9,
+      "difficulty": 23.843723086679436
+    },
+    {
+      "state": [
+        7,
+        0,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        0,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        0,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        0,
+        3
+      ],
+      "traits": 8,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        0,
+        3
+      ],
+      "traits": 9,
+      "difficulty": 16.459863246855786
     },
     {
       "state": [
@@ -533,8 +3522,232 @@
         3
       ],
       "traits": 10,
-      "difficulty": 7.383859839823651,
-      "loss": 0.0838385983982365
+      "difficulty": 40.30358633353522
+    },
+    {
+      "state": [
+        7,
+        0,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 22.151579519470953
+    },
+    {
+      "state": [
+        7,
+        0,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        0,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        0,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        0,
+        4
+      ],
+      "traits": 8,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        0,
+        4
+      ],
+      "traits": 9,
+      "difficulty": 16.459863246855786
+    },
+    {
+      "state": [
+        7,
+        0,
+        4
+      ],
+      "traits": 10,
+      "difficulty": 37.293886927428936
+    },
+    {
+      "state": [
+        7,
+        1,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 14.823181589768984
+    },
+    {
+      "state": [
+        7,
+        1,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 14.823181589768984
+    },
+    {
+      "state": [
+        7,
+        1,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        7,
+        1,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        7,
+        1,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        7,
+        1,
+        0
+      ],
+      "traits": 8,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        7,
+        1,
+        0
+      ],
+      "traits": 9,
+      "difficulty": 31.310775791685614
+    },
+    {
+      "state": [
+        7,
+        1,
+        0
+      ],
+      "traits": 10,
+      "difficulty": 80.7049196606867
+    },
+    {
+      "state": [
+        7,
+        1,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        1,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        1,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        1,
+        1
+      ],
+      "traits": 9,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        1,
+        1
+      ],
+      "traits": 10,
+      "difficulty": 37.293886927428936
+    },
+    {
+      "state": [
+        7,
+        1,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        1,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        1,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        1,
+        2
+      ],
+      "traits": 9,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        1,
+        2
+      ],
+      "traits": 10,
+      "difficulty": 23.843723086679436
     },
     {
       "state": [
@@ -543,8 +3756,124 @@
         2
       ],
       "traits": 11,
-      "difficulty": 28.40286733194279,
-      "loss": 0.2940286733194279
+      "difficulty": 59.630450258445876
+    },
+    {
+      "state": [
+        7,
+        1,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        1,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        1,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        1,
+        3
+      ],
+      "traits": 9,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        1,
+        3
+      ],
+      "traits": 10,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        1,
+        3
+      ],
+      "traits": 11,
+      "difficulty": 31.227582926503086
+    },
+    {
+      "state": [
+        7,
+        1,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 22.151579519470953
+    },
+    {
+      "state": [
+        7,
+        1,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        1,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        1,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        1,
+        4
+      ],
+      "traits": 9,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        1,
+        4
+      ],
+      "traits": 10,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        1,
+        4
+      ],
+      "traits": 11,
+      "difficulty": 23.843723086679436
     },
     {
       "state": [
@@ -553,8 +3882,133 @@
         4
       ],
       "traits": 12,
-      "difficulty": 15.142307407957981,
-      "loss": 0.1614230740795798
+      "difficulty": 78.95731418335653
+    },
+    {
+      "state": [
+        7,
+        2,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 14.823181589768984
+    },
+    {
+      "state": [
+        7,
+        2,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 14.823181589768984
+    },
+    {
+      "state": [
+        7,
+        2,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        7,
+        2,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        7,
+        2,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        7,
+        2,
+        0
+      ],
+      "traits": 8,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        7,
+        2,
+        0
+      ],
+      "traits": 9,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        7,
+        2,
+        0
+      ],
+      "traits": 10,
+      "difficulty": 31.310775791685614
+    },
+    {
+      "state": [
+        7,
+        2,
+        0
+      ],
+      "traits": 11,
+      "difficulty": 82.58666714465987
+    },
+    {
+      "state": [
+        7,
+        2,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        2,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        2,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        2,
+        1
+      ],
+      "traits": 10,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        2,
+        1
+      ],
+      "traits": 11,
+      "difficulty": 31.227582926503086
     },
     {
       "state": [
@@ -563,8 +4017,349 @@
         1
       ],
       "traits": 12,
-      "difficulty": 28.40286733194279,
-      "loss": 0.2940286733194279
+      "difficulty": 260.0308504584057
+    },
+    {
+      "state": [
+        7,
+        2,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        2,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        2,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        2,
+        2
+      ],
+      "traits": 10,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        2,
+        2
+      ],
+      "traits": 11,
+      "difficulty": 22.151579519470953
+    },
+    {
+      "state": [
+        7,
+        2,
+        2
+      ],
+      "traits": 12,
+      "difficulty": 52.061606607076236
+    },
+    {
+      "state": [
+        7,
+        2,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        2,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        2,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        2,
+        3
+      ],
+      "traits": 10,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        2,
+        3
+      ],
+      "traits": 11,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        2,
+        3
+      ],
+      "traits": 12,
+      "difficulty": 31.227582926503086
+    },
+    {
+      "state": [
+        7,
+        2,
+        3
+      ],
+      "traits": 13,
+      "difficulty": 88.03331759038866
+    },
+    {
+      "state": [
+        7,
+        2,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 23.843723086679436
+    },
+    {
+      "state": [
+        7,
+        2,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        2,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        2,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        2,
+        4
+      ],
+      "traits": 10,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        2,
+        4
+      ],
+      "traits": 11,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        2,
+        4
+      ],
+      "traits": 12,
+      "difficulty": 23.843723086679436
+    },
+    {
+      "state": [
+        7,
+        2,
+        4
+      ],
+      "traits": 13,
+      "difficulty": 46.36989033446107
+    },
+    {
+      "state": [
+        7,
+        3,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 22.234772384653475
+    },
+    {
+      "state": [
+        7,
+        3,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 14.823181589768984
+    },
+    {
+      "state": [
+        7,
+        3,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 14.823181589768984
+    },
+    {
+      "state": [
+        7,
+        3,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        7,
+        3,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        7,
+        3,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        7,
+        3,
+        0
+      ],
+      "traits": 9,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        7,
+        3,
+        0
+      ],
+      "traits": 10,
+      "difficulty": 14.823181589768984
+    },
+    {
+      "state": [
+        7,
+        3,
+        0
+      ],
+      "traits": 11,
+      "difficulty": 23.89918499680112
+    },
+    {
+      "state": [
+        7,
+        3,
+        0
+      ],
+      "traits": 12,
+      "difficulty": 53.86467399452808
+    },
+    {
+      "state": [
+        7,
+        3,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        3,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        3,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        3,
+        1
+      ],
+      "traits": 5,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        3,
+        1
+      ],
+      "traits": 10,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        3,
+        1
+      ],
+      "traits": 11,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        3,
+        1
+      ],
+      "traits": 12,
+      "difficulty": 37.293886927428936
     },
     {
       "state": [
@@ -573,8 +4368,151 @@
         1
       ],
       "traits": 13,
-      "difficulty": 35.786727171766444,
-      "loss": 0.3678672717176644
+      "difficulty": 88.03331759038866
+    },
+    {
+      "state": [
+        7,
+        3,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 22.151579519470953
+    },
+    {
+      "state": [
+        7,
+        3,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        3,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        3,
+        2
+      ],
+      "traits": 5,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        3,
+        2
+      ],
+      "traits": 10,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        3,
+        2
+      ],
+      "traits": 11,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        3,
+        2
+      ],
+      "traits": 12,
+      "difficulty": 22.151579519470953
+    },
+    {
+      "state": [
+        7,
+        3,
+        2
+      ],
+      "traits": 13,
+      "difficulty": 40.30358633353522
+    },
+    {
+      "state": [
+        7,
+        3,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 23.843723086679436
+    },
+    {
+      "state": [
+        7,
+        3,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        3,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        3,
+        3
+      ],
+      "traits": 5,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        3,
+        3
+      ],
+      "traits": 10,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        3,
+        3
+      ],
+      "traits": 11,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        3,
+        3
+      ],
+      "traits": 12,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        3,
+        3
+      ],
+      "traits": 13,
+      "difficulty": 31.227582926503086
     },
     {
       "state": [
@@ -583,8 +4521,304 @@
         3
       ],
       "traits": 14,
-      "difficulty": 14.767719679647302,
-      "loss": 0.15767719679647302
+      "difficulty": 80.46447393901903
+    },
+    {
+      "state": [
+        7,
+        3,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 32.91972649371157
+    },
+    {
+      "state": [
+        7,
+        3,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 22.151579519470953
+    },
+    {
+      "state": [
+        7,
+        3,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 14.767719679647302
+    },
+    {
+      "state": [
+        7,
+        3,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        3,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        3,
+        4
+      ],
+      "traits": 10,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        3,
+        4
+      ],
+      "traits": 11,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        3,
+        4
+      ],
+      "traits": 12,
+      "difficulty": 7.383859839823651
+    },
+    {
+      "state": [
+        7,
+        3,
+        4
+      ],
+      "traits": 13,
+      "difficulty": 23.843723086679436
+    },
+    {
+      "state": [
+        7,
+        3,
+        4
+      ],
+      "traits": 14,
+      "difficulty": 46.36989033446107
+    },
+    {
+      "state": [
+        8,
+        0,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 27.477740474550867
+    },
+    {
+      "state": [
+        8,
+        0,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 27.477740474550867
+    },
+    {
+      "state": [
+        8,
+        0,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 18.318493649700578
+    },
+    {
+      "state": [
+        8,
+        0,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 18.318493649700578
+    },
+    {
+      "state": [
+        8,
+        0,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 9.159246824850289
+    },
+    {
+      "state": [
+        8,
+        0,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 9.159246824850289
+    },
+    {
+      "state": [
+        8,
+        0,
+        0
+      ],
+      "traits": 8,
+      "difficulty": 9.159246824850289
+    },
+    {
+      "state": [
+        8,
+        0,
+        0
+      ],
+      "traits": 9,
+      "difficulty": 28.643239166401305
+    },
+    {
+      "state": [
+        8,
+        0,
+        0
+      ],
+      "traits": 10,
+      "difficulty": 70.27966230877607
+    },
+    {
+      "state": [
+        8,
+        0,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        0,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        0,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        0,
+        1
+      ],
+      "traits": 5,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        0,
+        1
+      ],
+      "traits": 6,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        0,
+        1
+      ],
+      "traits": 9,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        0,
+        1
+      ],
+      "traits": 10,
+      "difficulty": 28.608554197704187
+    },
+    {
+      "state": [
+        8,
+        0,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        0,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        0,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        0,
+        2
+      ],
+      "traits": 5,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        0,
+        2
+      ],
+      "traits": 6,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        0,
+        2
+      ],
+      "traits": 9,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        0,
+        2
+      ],
+      "traits": 10,
+      "difficulty": 18.86655802692868
     },
     {
       "state": [
@@ -593,8 +4827,151 @@
         2
       ],
       "traits": 11,
-      "difficulty": 9.741996170775508,
-      "loss": 0.10741996170775509
+      "difficulty": 38.350550368479695
+    },
+    {
+      "state": [
+        8,
+        0,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        0,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        0,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        0,
+        3
+      ],
+      "traits": 5,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        0,
+        3
+      ],
+      "traits": 6,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        0,
+        3
+      ],
+      "traits": 9,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        0,
+        3
+      ],
+      "traits": 10,
+      "difficulty": 18.86655802692868
+    },
+    {
+      "state": [
+        8,
+        0,
+        3
+      ],
+      "traits": 11,
+      "difficulty": 28.608554197704187
+    },
+    {
+      "state": [
+        8,
+        0,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 36.498247424612686
+    },
+    {
+      "state": [
+        8,
+        0,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        0,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        0,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        0,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        0,
+        4
+      ],
+      "traits": 9,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        0,
+        4
+      ],
+      "traits": 10,
+      "difficulty": 18.86655802692868
+    },
+    {
+      "state": [
+        8,
+        0,
+        4
+      ],
+      "traits": 11,
+      "difficulty": 28.608554197704187
     },
     {
       "state": [
@@ -603,8 +4980,79 @@
         4
       ],
       "traits": 12,
-      "difficulty": 19.070975288812367,
-      "loss": 0.20070975288812368
+      "difficulty": 56.80409134266972
+    },
+    {
+      "state": [
+        8,
+        1,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 27.477740474550867
+    },
+    {
+      "state": [
+        8,
+        1,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 27.477740474550867
+    },
+    {
+      "state": [
+        8,
+        1,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 18.318493649700578
+    },
+    {
+      "state": [
+        8,
+        1,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 18.318493649700578
+    },
+    {
+      "state": [
+        8,
+        1,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 9.159246824850289
+    },
+    {
+      "state": [
+        8,
+        1,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 9.159246824850289
+    },
+    {
+      "state": [
+        8,
+        1,
+        0
+      ],
+      "traits": 8,
+      "difficulty": 9.159246824850289
+    },
+    {
+      "state": [
+        8,
+        1,
+        0
+      ],
+      "traits": 10,
+      "difficulty": 28.060489820476086
     },
     {
       "state": [
@@ -613,8 +5061,70 @@
         0
       ],
       "traits": 11,
-      "difficulty": 9.741996170775508,
-      "loss": 0.10741996170775509
+      "difficulty": 47.5444821620271
+    },
+    {
+      "state": [
+        8,
+        1,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        1,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        1,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        1,
+        1
+      ],
+      "traits": 5,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        1,
+        1
+      ],
+      "traits": 6,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        1,
+        1
+      ],
+      "traits": 10,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        1,
+        1
+      ],
+      "traits": 11,
+      "difficulty": 27.99111988308185
     },
     {
       "state": [
@@ -623,8 +5133,160 @@
         1
       ],
       "traits": 12,
-      "difficulty": 38.14195057762473,
-      "loss": 0.39141950577624735
+      "difficulty": 108.46518937736765
+    },
+    {
+      "state": [
+        8,
+        1,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        1,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        1,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        1,
+        2
+      ],
+      "traits": 5,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        1,
+        2
+      ],
+      "traits": 6,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        1,
+        2
+      ],
+      "traits": 10,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        1,
+        2
+      ],
+      "traits": 11,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        1,
+        2
+      ],
+      "traits": 12,
+      "difficulty": 37.73311605385736
+    },
+    {
+      "state": [
+        8,
+        1,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        1,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        1,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        1,
+        3
+      ],
+      "traits": 5,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        1,
+        3
+      ],
+      "traits": 6,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        1,
+        3
+      ],
+      "traits": 10,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        1,
+        3
+      ],
+      "traits": 11,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        1,
+        3
+      ],
+      "traits": 12,
+      "difficulty": 27.99111988308185
+    },
+    {
+      "state": [
+        8,
+        1,
+        3
+      ],
+      "traits": 13,
+      "difficulty": 51.13931708256948
     },
     {
       "state": [
@@ -633,8 +5295,232 @@
         4
       ],
       "traits": 2,
-      "difficulty": 9.124561856153171,
-      "loss": 0.10124561856153172
+      "difficulty": 37.11568173923502
+    },
+    {
+      "state": [
+        8,
+        1,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        1,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        1,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        1,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        1,
+        4
+      ],
+      "traits": 10,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        1,
+        4
+      ],
+      "traits": 11,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        1,
+        4
+      ],
+      "traits": 12,
+      "difficulty": 18.86655802692868
+    },
+    {
+      "state": [
+        8,
+        1,
+        4
+      ],
+      "traits": 13,
+      "difficulty": 47.475112224632866
+    },
+    {
+      "state": [
+        8,
+        2,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 28.060489820476086
+    },
+    {
+      "state": [
+        8,
+        2,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 27.477740474550867
+    },
+    {
+      "state": [
+        8,
+        2,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 18.901242995625797
+    },
+    {
+      "state": [
+        8,
+        2,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 18.318493649700578
+    },
+    {
+      "state": [
+        8,
+        2,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 9.741996170775508
+    },
+    {
+      "state": [
+        8,
+        2,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 9.159246824850289
+    },
+    {
+      "state": [
+        8,
+        2,
+        0
+      ],
+      "traits": 8,
+      "difficulty": 9.159246824850289
+    },
+    {
+      "state": [
+        8,
+        2,
+        0
+      ],
+      "traits": 10,
+      "difficulty": 9.159246824850289
+    },
+    {
+      "state": [
+        8,
+        2,
+        0
+      ],
+      "traits": 11,
+      "difficulty": 18.901242995625797
+    },
+    {
+      "state": [
+        8,
+        2,
+        0
+      ],
+      "traits": 12,
+      "difficulty": 46.961732816101886
+    },
+    {
+      "state": [
+        8,
+        2,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        2,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        2,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        2,
+        1
+      ],
+      "traits": 5,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        2,
+        1
+      ],
+      "traits": 6,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        2,
+        1
+      ],
+      "traits": 11,
+      "difficulty": 9.741996170775508
+    },
+    {
+      "state": [
+        8,
+        2,
+        1
+      ],
+      "traits": 12,
+      "difficulty": 32.27275905564079
     },
     {
       "state": [
@@ -643,8 +5529,151 @@
         1
       ],
       "traits": 13,
-      "difficulty": 18.86655802692868,
-      "loss": 0.1986655802692868
+      "difficulty": 47.475112224632866
+    },
+    {
+      "state": [
+        8,
+        2,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        2,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        2,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        2,
+        2
+      ],
+      "traits": 5,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        2,
+        2
+      ],
+      "traits": 6,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        2,
+        2
+      ],
+      "traits": 11,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        2,
+        2
+      ],
+      "traits": 12,
+      "difficulty": 22.530762884865286
+    },
+    {
+      "state": [
+        8,
+        2,
+        2
+      ],
+      "traits": 13,
+      "difficulty": 37.73311605385736
+    },
+    {
+      "state": [
+        8,
+        2,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 27.99111988308185
+    },
+    {
+      "state": [
+        8,
+        2,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        2,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        2,
+        3
+      ],
+      "traits": 5,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        2,
+        3
+      ],
+      "traits": 6,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        2,
+        3
+      ],
+      "traits": 11,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        2,
+        3
+      ],
+      "traits": 12,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        2,
+        3
+      ],
+      "traits": 13,
+      "difficulty": 27.99111988308185
     },
     {
       "state": [
@@ -653,8 +5682,7 @@
         3
       ],
       "traits": 14,
-      "difficulty": 18.249123712306343,
-      "loss": 0.19249123712306343
+      "difficulty": 65.31121888420056
     },
     {
       "state": [
@@ -663,8 +5691,358 @@
         4
       ],
       "traits": 2,
-      "difficulty": 9.124561856153171,
-      "loss": 0.10124561856153172
+      "difficulty": 37.73311605385736
+    },
+    {
+      "state": [
+        8,
+        2,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 27.99111988308185
+    },
+    {
+      "state": [
+        8,
+        2,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 18.86655802692868
+    },
+    {
+      "state": [
+        8,
+        2,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        2,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        2,
+        4
+      ],
+      "traits": 11,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        2,
+        4
+      ],
+      "traits": 12,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        2,
+        4
+      ],
+      "traits": 13,
+      "difficulty": 27.99111988308185
+    },
+    {
+      "state": [
+        8,
+        2,
+        4
+      ],
+      "traits": 14,
+      "difficulty": 37.73311605385736
+    },
+    {
+      "state": [
+        8,
+        3,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 36.636987299401156
+    },
+    {
+      "state": [
+        8,
+        3,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 27.477740474550867
+    },
+    {
+      "state": [
+        8,
+        3,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 27.477740474550867
+    },
+    {
+      "state": [
+        8,
+        3,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 18.318493649700578
+    },
+    {
+      "state": [
+        8,
+        3,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 18.318493649700578
+    },
+    {
+      "state": [
+        8,
+        3,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 9.159246824850289
+    },
+    {
+      "state": [
+        8,
+        3,
+        0
+      ],
+      "traits": 8,
+      "difficulty": 9.159246824850289
+    },
+    {
+      "state": [
+        8,
+        3,
+        0
+      ],
+      "traits": 9,
+      "difficulty": 9.159246824850289
+    },
+    {
+      "state": [
+        8,
+        3,
+        0
+      ],
+      "traits": 11,
+      "difficulty": 9.159246824850289
+    },
+    {
+      "state": [
+        8,
+        3,
+        0
+      ],
+      "traits": 12,
+      "difficulty": 28.060489820476086
+    },
+    {
+      "state": [
+        8,
+        3,
+        0
+      ],
+      "traits": 13,
+      "difficulty": 46.961732816101886
+    },
+    {
+      "state": [
+        8,
+        3,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 27.99111988308185
+    },
+    {
+      "state": [
+        8,
+        3,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        3,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        3,
+        1
+      ],
+      "traits": 5,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        3,
+        1
+      ],
+      "traits": 6,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        3,
+        1
+      ],
+      "traits": 7,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        3,
+        1
+      ],
+      "traits": 11,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        3,
+        1
+      ],
+      "traits": 12,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        3,
+        1
+      ],
+      "traits": 13,
+      "difficulty": 28.608554197704187
+    },
+    {
+      "state": [
+        8,
+        3,
+        1
+      ],
+      "traits": 14,
+      "difficulty": 47.475112224632866
+    },
+    {
+      "state": [
+        8,
+        3,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 37.11568173923502
+    },
+    {
+      "state": [
+        8,
+        3,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        3,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        3,
+        2
+      ],
+      "traits": 5,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        3,
+        2
+      ],
+      "traits": 6,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        3,
+        2
+      ],
+      "traits": 7,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        3,
+        2
+      ],
+      "traits": 11,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        3,
+        2
+      ],
+      "traits": 12,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        3,
+        2
+      ],
+      "traits": 13,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        3,
+        2
+      ],
+      "traits": 14,
+      "difficulty": 37.73311605385736
     },
     {
       "state": [
@@ -673,8 +6051,259 @@
         3
       ],
       "traits": 2,
-      "difficulty": 9.124561856153171,
-      "loss": 0.10124561856153172
+      "difficulty": 37.73311605385736
+    },
+    {
+      "state": [
+        8,
+        3,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        3,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        3,
+        3
+      ],
+      "traits": 5,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        3,
+        3
+      ],
+      "traits": 6,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        3,
+        3
+      ],
+      "traits": 7,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        3,
+        3
+      ],
+      "traits": 11,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        3,
+        3
+      ],
+      "traits": 12,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        3,
+        3
+      ],
+      "traits": 13,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        3,
+        3
+      ],
+      "traits": 14,
+      "difficulty": 27.99111988308185
+    },
+    {
+      "state": [
+        8,
+        3,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 47.475112224632866
+    },
+    {
+      "state": [
+        8,
+        3,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 37.11568173923502
+    },
+    {
+      "state": [
+        8,
+        3,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 27.373685568459514
+    },
+    {
+      "state": [
+        8,
+        3,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        3,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 18.249123712306343
+    },
+    {
+      "state": [
+        8,
+        3,
+        4
+      ],
+      "traits": 7,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        3,
+        4
+      ],
+      "traits": 11,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        3,
+        4
+      ],
+      "traits": 12,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        3,
+        4
+      ],
+      "traits": 13,
+      "difficulty": 9.124561856153171
+    },
+    {
+      "state": [
+        8,
+        3,
+        4
+      ],
+      "traits": 14,
+      "difficulty": 18.86655802692868
+    },
+    {
+      "state": [
+        9,
+        0,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        0,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        0,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        0,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        0,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        0,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 17.78877520919487
+    },
+    {
+      "state": [
+        9,
+        0,
+        0
+      ],
+      "traits": 8,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        0,
+        0
+      ],
+      "traits": 9,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        0,
+        0
+      ],
+      "traits": 10,
+      "difficulty": 26.683162813792308
     },
     {
       "state": [
@@ -683,8 +6312,61 @@
         0
       ],
       "traits": 11,
-      "difficulty": 8.894387604597435,
-      "loss": 0.09894387604597435
+      "difficulty": 45.84817857153222
+    },
+    {
+      "state": [
+        9,
+        0,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        0,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        0,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        0,
+        1
+      ],
+      "traits": 5,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        0,
+        1
+      ],
+      "traits": 6,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        0,
+        1
+      ],
+      "traits": 11,
+      "difficulty": 29.351566116930165
     },
     {
       "state": [
@@ -693,8 +6375,142 @@
         1
       ],
       "traits": 12,
-      "difficulty": 68.36852557162088,
-      "loss": 0.6936852557162088
+      "difficulty": 80.96720986085461
+    },
+    {
+      "state": [
+        9,
+        0,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        0,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        0,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        0,
+        2
+      ],
+      "traits": 5,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        0,
+        2
+      ],
+      "traits": 6,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        0,
+        2
+      ],
+      "traits": 11,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        0,
+        2
+      ],
+      "traits": 12,
+      "difficulty": 32.01996942006803
+    },
+    {
+      "state": [
+        9,
+        0,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        0,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        0,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        0,
+        3
+      ],
+      "traits": 5,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        0,
+        3
+      ],
+      "traits": 6,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        0,
+        3
+      ],
+      "traits": 11,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        0,
+        3
+      ],
+      "traits": 12,
+      "difficulty": 20.45717851233273
+    },
+    {
+      "state": [
+        9,
+        0,
+        3
+      ],
+      "traits": 13,
+      "difficulty": 76.12221927530983
     },
     {
       "state": [
@@ -703,8 +6519,79 @@
         4
       ],
       "traits": 2,
-      "difficulty": 8.894387604597435,
-      "loss": 0.09894387604597435
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        0,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        0,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        0,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        0,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        0,
+        4
+      ],
+      "traits": 7,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        0,
+        4
+      ],
+      "traits": 11,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        0,
+        4
+      ],
+      "traits": 12,
+      "difficulty": 20.45717851233273
+    },
+    {
+      "state": [
+        9,
+        0,
+        4
+      ],
+      "traits": 13,
+      "difficulty": 63.418734466666045
     },
     {
       "state": [
@@ -713,8 +6600,7 @@
         0
       ],
       "traits": 2,
-      "difficulty": 8.894387604597435,
-      "loss": 0.09894387604597435
+      "difficulty": 31.528153399337093
     },
     {
       "state": [
@@ -723,8 +6609,142 @@
         0
       ],
       "traits": 3,
-      "difficulty": 8.894387604597435,
-      "loss": 0.09894387604597435
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        1,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        1,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        1,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        1,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        1,
+        0
+      ],
+      "traits": 8,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        1,
+        0
+      ],
+      "traits": 9,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        1,
+        0
+      ],
+      "traits": 11,
+      "difficulty": 11.60720638839628
+    },
+    {
+      "state": [
+        9,
+        1,
+        0
+      ],
+      "traits": 12,
+      "difficulty": 41.00318798598743
+    },
+    {
+      "state": [
+        9,
+        1,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        1,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        1,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        1,
+        1
+      ],
+      "traits": 5,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        1,
+        1
+      ],
+      "traits": 6,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        1,
+        1
+      ],
+      "traits": 7,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        1,
+        1
+      ],
+      "traits": 12,
+      "difficulty": 27.262173431034306
     },
     {
       "state": [
@@ -733,8 +6753,151 @@
         1
       ],
       "traits": 13,
-      "difficulty": 20.45717851233273,
-      "loss": 0.2145717851233273
+      "difficulty": 40.91435702466546
+    },
+    {
+      "state": [
+        9,
+        1,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        1,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        1,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        1,
+        2
+      ],
+      "traits": 5,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        1,
+        2
+      ],
+      "traits": 6,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        1,
+        2
+      ],
+      "traits": 7,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        1,
+        2
+      ],
+      "traits": 12,
+      "difficulty": 20.45717851233273
+    },
+    {
+      "state": [
+        9,
+        1,
+        2
+      ],
+      "traits": 13,
+      "difficulty": 32.01996942006803
+    },
+    {
+      "state": [
+        9,
+        1,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        1,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        1,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        1,
+        3
+      ],
+      "traits": 5,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        1,
+        3
+      ],
+      "traits": 6,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        1,
+        3
+      ],
+      "traits": 7,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        1,
+        3
+      ],
+      "traits": 12,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        9,
+        1,
+        3
+      ],
+      "traits": 13,
+      "difficulty": 27.262173431034306
     },
     {
       "state": [
@@ -743,8 +6906,970 @@
         3
       ],
       "traits": 14,
-      "difficulty": 13.739378190142224,
-      "loss": 0.14739378190142224
+      "difficulty": 54.65373521480769
+    },
+    {
+      "state": [
+        9,
+        1,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        1,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        1,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        1,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        1,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        1,
+        4
+      ],
+      "traits": 7,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        1,
+        4
+      ],
+      "traits": 8,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        1,
+        4
+      ],
+      "traits": 12,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        9,
+        1,
+        4
+      ],
+      "traits": 13,
+      "difficulty": 20.45717851233273
+    },
+    {
+      "state": [
+        9,
+        1,
+        4
+      ],
+      "traits": 14,
+      "difficulty": 32.01996942006803
+    },
+    {
+      "state": [
+        9,
+        2,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        2,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        2,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        2,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        2,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        2,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        2,
+        0
+      ],
+      "traits": 8,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        2,
+        0
+      ],
+      "traits": 9,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        2,
+        0
+      ],
+      "traits": 11,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        2,
+        0
+      ],
+      "traits": 12,
+      "difficulty": 20.501593992993715
+    },
+    {
+      "state": [
+        9,
+        2,
+        0
+      ],
+      "traits": 13,
+      "difficulty": 41.00318798598743
+    },
+    {
+      "state": [
+        9,
+        2,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        2,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        2,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        2,
+        1
+      ],
+      "traits": 5,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        2,
+        1
+      ],
+      "traits": 6,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        2,
+        1
+      ],
+      "traits": 7,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        2,
+        1
+      ],
+      "traits": 12,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        2,
+        1
+      ],
+      "traits": 13,
+      "difficulty": 20.45717851233273
+    },
+    {
+      "state": [
+        9,
+        2,
+        1
+      ],
+      "traits": 14,
+      "difficulty": 40.91435702466546
+    },
+    {
+      "state": [
+        9,
+        2,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        2,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        2,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        2,
+        2
+      ],
+      "traits": 5,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        2,
+        2
+      ],
+      "traits": 6,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        2,
+        2
+      ],
+      "traits": 7,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        2,
+        2
+      ],
+      "traits": 12,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        2,
+        2
+      ],
+      "traits": 13,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        9,
+        2,
+        2
+      ],
+      "traits": 14,
+      "difficulty": 40.91435702466546
+    },
+    {
+      "state": [
+        9,
+        2,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        2,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        2,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        2,
+        3
+      ],
+      "traits": 5,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        2,
+        3
+      ],
+      "traits": 6,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        2,
+        3
+      ],
+      "traits": 7,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        2,
+        3
+      ],
+      "traits": 12,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        2,
+        3
+      ],
+      "traits": 13,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        9,
+        2,
+        3
+      ],
+      "traits": 14,
+      "difficulty": 32.01996942006803
+    },
+    {
+      "state": [
+        9,
+        2,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        2,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        2,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        2,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        2,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        2,
+        4
+      ],
+      "traits": 7,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        2,
+        4
+      ],
+      "traits": 8,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        2,
+        4
+      ],
+      "traits": 12,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        2,
+        4
+      ],
+      "traits": 13,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        9,
+        2,
+        4
+      ],
+      "traits": 14,
+      "difficulty": 29.351566116930165
+    },
+    {
+      "state": [
+        9,
+        3,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        3,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        3,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        3,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        3,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        3,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        3,
+        0
+      ],
+      "traits": 8,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        3,
+        0
+      ],
+      "traits": 9,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        3,
+        0
+      ],
+      "traits": 10,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        3,
+        0
+      ],
+      "traits": 12,
+      "difficulty": 11.60720638839628
+    },
+    {
+      "state": [
+        9,
+        3,
+        0
+      ],
+      "traits": 13,
+      "difficulty": 25.346584578538504
+    },
+    {
+      "state": [
+        9,
+        3,
+        0
+      ],
+      "traits": 14,
+      "difficulty": 45.09536412089016
+    },
+    {
+      "state": [
+        9,
+        3,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        3,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        3,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        3,
+        1
+      ],
+      "traits": 5,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        3,
+        1
+      ],
+      "traits": 6,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        3,
+        1
+      ],
+      "traits": 7,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        3,
+        1
+      ],
+      "traits": 8,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        3,
+        1
+      ],
+      "traits": 13,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        9,
+        3,
+        1
+      ],
+      "traits": 14,
+      "difficulty": 32.01996942006803
+    },
+    {
+      "state": [
+        9,
+        3,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        3,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        3,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        3,
+        2
+      ],
+      "traits": 5,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        3,
+        2
+      ],
+      "traits": 6,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        3,
+        2
+      ],
+      "traits": 7,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        3,
+        2
+      ],
+      "traits": 8,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        3,
+        2
+      ],
+      "traits": 13,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        9,
+        3,
+        2
+      ],
+      "traits": 14,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        9,
+        3,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 40.42254100393453
+    },
+    {
+      "state": [
+        9,
+        3,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        3,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        3,
+        3
+      ],
+      "traits": 5,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        3,
+        3
+      ],
+      "traits": 6,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        3,
+        3
+      ],
+      "traits": 7,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        3,
+        3
+      ],
+      "traits": 8,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        3,
+        3
+      ],
+      "traits": 13,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        9,
+        3,
+        3
+      ],
+      "traits": 14,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        9,
+        3,
+        4
+      ],
+      "traits": 2,
+      "difficulty": 45.26753158947932
+    },
+    {
+      "state": [
+        9,
+        3,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        3,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 31.528153399337093
+    },
+    {
+      "state": [
+        9,
+        3,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 22.63376579473966
+    },
+    {
+      "state": [
+        9,
+        3,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        3,
+        4
+      ],
+      "traits": 7,
+      "difficulty": 13.739378190142224
+    },
+    {
+      "state": [
+        9,
+        3,
+        4
+      ],
+      "traits": 8,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        3,
+        4
+      ],
+      "traits": 9,
+      "difficulty": 8.894387604597435
+    },
+    {
+      "state": [
+        9,
+        3,
+        4
+      ],
+      "traits": 13,
+      "difficulty": 11.562790907735296
+    },
+    {
+      "state": [
+        9,
+        3,
+        4
+      ],
+      "traits": 14,
+      "difficulty": 11.562790907735296
     },
     {
       "state": [
@@ -753,8 +7878,7 @@
         0
       ],
       "traits": 2,
-      "difficulty": 7.411590794884492,
-      "loss": 0.08411590794884492
+      "difficulty": 23.23330590109766
     },
     {
       "state": [
@@ -763,8 +7887,151 @@
         0
       ],
       "traits": 3,
-      "difficulty": 7.411590794884492,
-      "loss": 0.08411590794884492
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        0,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        0,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        0,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        0,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        0,
+        0
+      ],
+      "traits": 8,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        0,
+        0
+      ],
+      "traits": 9,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        0,
+        0
+      ],
+      "traits": 10,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        0,
+        0
+      ],
+      "traits": 11,
+      "difficulty": 21.817345773571954
+    },
+    {
+      "state": [
+        10,
+        0,
+        0
+      ],
+      "traits": 12,
+      "difficulty": 43.63469154714391
+    },
+    {
+      "state": [
+        10,
+        0,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        0,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        0,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        0,
+        1
+      ],
+      "traits": 5,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        0,
+        1
+      ],
+      "traits": 6,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        0,
+        1
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        0,
+        1
+      ],
+      "traits": 12,
+      "difficulty": 21.761813308464834
     },
     {
       "state": [
@@ -773,8 +8040,151 @@
         1
       ],
       "traits": 13,
-      "difficulty": 21.761813308464834,
-      "loss": 0.22761813308464834
+      "difficulty": 43.52362661692966
+    },
+    {
+      "state": [
+        10,
+        0,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        0,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        0,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        0,
+        2
+      ],
+      "traits": 5,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        0,
+        2
+      ],
+      "traits": 6,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        0,
+        2
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        0,
+        2
+      ],
+      "traits": 12,
+      "difficulty": 14.823181589768984
+    },
+    {
+      "state": [
+        10,
+        0,
+        2
+      ],
+      "traits": 13,
+      "difficulty": 36.584994898233816
+    },
+    {
+      "state": [
+        10,
+        0,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 30.64489669598215
+    },
+    {
+      "state": [
+        10,
+        0,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        0,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        0,
+        3
+      ],
+      "traits": 5,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        0,
+        3
+      ],
+      "traits": 6,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        0,
+        3
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        0,
+        3
+      ],
+      "traits": 12,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        0,
+        3
+      ],
+      "traits": 13,
+      "difficulty": 36.584994898233816
     },
     {
       "state": [
@@ -783,8 +8193,7 @@
         3
       ],
       "traits": 14,
-      "difficulty": 8.410124311328676,
-      "loss": 0.09410124311328677
+      "difficulty": 51.933750928258334
     },
     {
       "state": [
@@ -793,8 +8202,178 @@
         4
       ],
       "traits": 2,
-      "difficulty": 7.411590794884492,
-      "loss": 0.08411590794884492
+      "difficulty": 30.64489669598215
+    },
+    {
+      "state": [
+        10,
+        0,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        0,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        0,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        0,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        0,
+        4
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        0,
+        4
+      ],
+      "traits": 8,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        0,
+        4
+      ],
+      "traits": 12,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        0,
+        4
+      ],
+      "traits": 13,
+      "difficulty": 29.173404103349327
+    },
+    {
+      "state": [
+        10,
+        0,
+        4
+      ],
+      "traits": 14,
+      "difficulty": 50.46225833562551
+    },
+    {
+      "state": [
+        10,
+        1,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        1,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        1,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        1,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        1,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        1,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        1,
+        0
+      ],
+      "traits": 8,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        1,
+        0
+      ],
+      "traits": 9,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        1,
+        0
+      ],
+      "traits": 11,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        1,
+        0
+      ],
+      "traits": 12,
+      "difficulty": 21.817345773571954
     },
     {
       "state": [
@@ -803,8 +8382,169 @@
         0
       ],
       "traits": 13,
-      "difficulty": 28.811509957374927,
-      "loss": 0.29811509957374926
+      "difficulty": 43.63469154714391
+    },
+    {
+      "state": [
+        10,
+        1,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        1,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        1,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        1,
+        1
+      ],
+      "traits": 5,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        1,
+        1
+      ],
+      "traits": 6,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        1,
+        1
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        1,
+        1
+      ],
+      "traits": 12,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        1,
+        1
+      ],
+      "traits": 13,
+      "difficulty": 21.761813308464834
+    },
+    {
+      "state": [
+        10,
+        1,
+        1
+      ],
+      "traits": 14,
+      "difficulty": 43.52362661692966
+    },
+    {
+      "state": [
+        10,
+        1,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 30.64489669598215
+    },
+    {
+      "state": [
+        10,
+        1,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        1,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        1,
+        2
+      ],
+      "traits": 5,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        1,
+        2
+      ],
+      "traits": 6,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        1,
+        2
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        1,
+        2
+      ],
+      "traits": 12,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        1,
+        2
+      ],
+      "traits": 13,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        10,
+        1,
+        2
+      ],
+      "traits": 14,
+      "difficulty": 43.52362661692966
     },
     {
       "state": [
@@ -813,8 +8553,79 @@
         3
       ],
       "traits": 2,
-      "difficulty": 7.411590794884492,
-      "loss": 0.08411590794884492
+      "difficulty": 30.64489669598215
+    },
+    {
+      "state": [
+        10,
+        1,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        1,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        1,
+        3
+      ],
+      "traits": 5,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        1,
+        3
+      ],
+      "traits": 6,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        1,
+        3
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        1,
+        3
+      ],
+      "traits": 12,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        1,
+        3
+      ],
+      "traits": 13,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        10,
+        1,
+        3
+      ],
+      "traits": 14,
+      "difficulty": 36.11203582204517
     },
     {
       "state": [
@@ -823,8 +8634,277 @@
         4
       ],
       "traits": 2,
-      "difficulty": 7.411590794884492,
-      "loss": 0.08411590794884492
+      "difficulty": 30.64489669598215
+    },
+    {
+      "state": [
+        10,
+        1,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 30.64489669598215
+    },
+    {
+      "state": [
+        10,
+        1,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        1,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        1,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        1,
+        4
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        1,
+        4
+      ],
+      "traits": 8,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        1,
+        4
+      ],
+      "traits": 12,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        1,
+        4
+      ],
+      "traits": 13,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        10,
+        1,
+        4
+      ],
+      "traits": 14,
+      "difficulty": 29.173404103349327
+    },
+    {
+      "state": [
+        10,
+        2,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        2,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        2,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        2,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        2,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        2,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        2,
+        0
+      ],
+      "traits": 8,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        2,
+        0
+      ],
+      "traits": 9,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        2,
+        0
+      ],
+      "traits": 11,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        2,
+        0
+      ],
+      "traits": 12,
+      "difficulty": 14.823181589768984
+    },
+    {
+      "state": [
+        10,
+        2,
+        0
+      ],
+      "traits": 13,
+      "difficulty": 29.228936568456447
+    },
+    {
+      "state": [
+        10,
+        2,
+        0
+      ],
+      "traits": 14,
+      "difficulty": 52.4622424695541
+    },
+    {
+      "state": [
+        10,
+        2,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        2,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        2,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        2,
+        1
+      ],
+      "traits": 5,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        2,
+        1
+      ],
+      "traits": 6,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        2,
+        1
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        2,
+        1
+      ],
+      "traits": 12,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        2,
+        1
+      ],
+      "traits": 13,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        10,
+        2,
+        1
+      ],
+      "traits": 14,
+      "difficulty": 36.11203582204517
     },
     {
       "state": [
@@ -833,8 +8913,79 @@
         2
       ],
       "traits": 2,
-      "difficulty": 7.411590794884492,
-      "loss": 0.08411590794884492
+      "difficulty": 30.64489669598215
+    },
+    {
+      "state": [
+        10,
+        2,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        2,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        2,
+        2
+      ],
+      "traits": 5,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        2,
+        2
+      ],
+      "traits": 6,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        2,
+        2
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        2,
+        2
+      ],
+      "traits": 12,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        2,
+        2
+      ],
+      "traits": 13,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        10,
+        2,
+        2
+      ],
+      "traits": 14,
+      "difficulty": 21.761813308464834
     },
     {
       "state": [
@@ -843,8 +8994,79 @@
         3
       ],
       "traits": 2,
-      "difficulty": 7.411590794884492,
-      "loss": 0.08411590794884492
+      "difficulty": 30.64489669598215
+    },
+    {
+      "state": [
+        10,
+        2,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        2,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        2,
+        3
+      ],
+      "traits": 5,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        2,
+        3
+      ],
+      "traits": 6,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        2,
+        3
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        2,
+        3
+      ],
+      "traits": 12,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        2,
+        3
+      ],
+      "traits": 13,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        10,
+        2,
+        3
+      ],
+      "traits": 14,
+      "difficulty": 21.761813308464834
     },
     {
       "state": [
@@ -853,8 +9075,439 @@
         4
       ],
       "traits": 2,
-      "difficulty": 7.411590794884492,
-      "loss": 0.08411590794884492
+      "difficulty": 31.643430212426335
+    },
+    {
+      "state": [
+        10,
+        2,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 30.64489669598215
+    },
+    {
+      "state": [
+        10,
+        2,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        2,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        2,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        2,
+        4
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        2,
+        4
+      ],
+      "traits": 8,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        2,
+        4
+      ],
+      "traits": 12,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        2,
+        4
+      ],
+      "traits": 13,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        10,
+        2,
+        4
+      ],
+      "traits": 14,
+      "difficulty": 21.761813308464834
+    },
+    {
+      "state": [
+        10,
+        3,
+        0
+      ],
+      "traits": 2,
+      "difficulty": 30.64489669598215
+    },
+    {
+      "state": [
+        10,
+        3,
+        0
+      ],
+      "traits": 3,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        3,
+        0
+      ],
+      "traits": 4,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        3,
+        0
+      ],
+      "traits": 5,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        3,
+        0
+      ],
+      "traits": 6,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        3,
+        0
+      ],
+      "traits": 7,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        3,
+        0
+      ],
+      "traits": 8,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        3,
+        0
+      ],
+      "traits": 9,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        3,
+        0
+      ],
+      "traits": 10,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        3,
+        0
+      ],
+      "traits": 12,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        3,
+        0
+      ],
+      "traits": 13,
+      "difficulty": 14.405754978687463
+    },
+    {
+      "state": [
+        10,
+        3,
+        0
+      ],
+      "traits": 14,
+      "difficulty": 30.22747008490063
+    },
+    {
+      "state": [
+        10,
+        3,
+        1
+      ],
+      "traits": 2,
+      "difficulty": 30.64489669598215
+    },
+    {
+      "state": [
+        10,
+        3,
+        1
+      ],
+      "traits": 3,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        3,
+        1
+      ],
+      "traits": 4,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        3,
+        1
+      ],
+      "traits": 5,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        3,
+        1
+      ],
+      "traits": 6,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        3,
+        1
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        3,
+        1
+      ],
+      "traits": 8,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        3,
+        1
+      ],
+      "traits": 13,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        3,
+        1
+      ],
+      "traits": 14,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        10,
+        3,
+        2
+      ],
+      "traits": 2,
+      "difficulty": 31.643430212426335
+    },
+    {
+      "state": [
+        10,
+        3,
+        2
+      ],
+      "traits": 3,
+      "difficulty": 30.64489669598215
+    },
+    {
+      "state": [
+        10,
+        3,
+        2
+      ],
+      "traits": 4,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        3,
+        2
+      ],
+      "traits": 5,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        3,
+        2
+      ],
+      "traits": 6,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        3,
+        2
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        3,
+        2
+      ],
+      "traits": 8,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        3,
+        2
+      ],
+      "traits": 13,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        3,
+        2
+      ],
+      "traits": 14,
+      "difficulty": 14.350222513580341
+    },
+    {
+      "state": [
+        10,
+        3,
+        3
+      ],
+      "traits": 2,
+      "difficulty": 39.05502100731083
+    },
+    {
+      "state": [
+        10,
+        3,
+        3
+      ],
+      "traits": 3,
+      "difficulty": 30.64489669598215
+    },
+    {
+      "state": [
+        10,
+        3,
+        3
+      ],
+      "traits": 4,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        3,
+        3
+      ],
+      "traits": 5,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        3,
+        3
+      ],
+      "traits": 6,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        3,
+        3
+      ],
+      "traits": 7,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        3,
+        3
+      ],
+      "traits": 8,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        3,
+        3
+      ],
+      "traits": 13,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        3,
+        3
+      ],
+      "traits": 14,
+      "difficulty": 14.350222513580341
     },
     {
       "state": [
@@ -863,8 +9516,88 @@
         4
       ],
       "traits": 2,
-      "difficulty": 7.411590794884492,
-      "loss": 0.08411590794884492
+      "difficulty": 40.05355452375501
+    },
+    {
+      "state": [
+        10,
+        3,
+        4
+      ],
+      "traits": 3,
+      "difficulty": 31.643430212426335
+    },
+    {
+      "state": [
+        10,
+        3,
+        4
+      ],
+      "traits": 4,
+      "difficulty": 30.64489669598215
+    },
+    {
+      "state": [
+        10,
+        3,
+        4
+      ],
+      "traits": 5,
+      "difficulty": 23.23330590109766
+    },
+    {
+      "state": [
+        10,
+        3,
+        4
+      ],
+      "traits": 6,
+      "difficulty": 15.82171510621317
+    },
+    {
+      "state": [
+        10,
+        3,
+        4
+      ],
+      "traits": 7,
+      "difficulty": 8.410124311328676
+    },
+    {
+      "state": [
+        10,
+        3,
+        4
+      ],
+      "traits": 8,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        3,
+        4
+      ],
+      "traits": 9,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        3,
+        4
+      ],
+      "traits": 13,
+      "difficulty": 7.411590794884492
+    },
+    {
+      "state": [
+        10,
+        3,
+        4
+      ],
+      "traits": 14,
+      "difficulty": 14.350222513580341
     }
   ]
 }
